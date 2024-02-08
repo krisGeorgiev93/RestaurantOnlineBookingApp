@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace RestaurantOnlineBooking.Common
+﻿namespace RestaurantOnlineBookingApp.Common
 {
     public static class ApplicationConstants
     {

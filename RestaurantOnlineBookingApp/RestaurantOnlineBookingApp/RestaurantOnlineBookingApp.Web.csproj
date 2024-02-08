@@ -16,7 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBooking.Common.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Data\RestaurantOnlineBookingApp.Data.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Web.ViewModels\RestaurantOnlineBookingApp.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

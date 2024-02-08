@@ -9,7 +9,7 @@ using System;
 
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(RestaurantOnlineBookingAppDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
