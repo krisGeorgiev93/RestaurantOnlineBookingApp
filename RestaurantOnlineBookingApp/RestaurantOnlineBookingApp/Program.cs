@@ -6,6 +6,8 @@ namespace RestaurantOnlineBookingApp.Web
     using Microsoft.EntityFrameworkCore;
 
     using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Models;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -16,7 +18,7 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<CustomUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
 

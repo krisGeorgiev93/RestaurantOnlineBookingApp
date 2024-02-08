@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>
