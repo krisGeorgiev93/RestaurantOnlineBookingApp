@@ -43,7 +43,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         public Guid? GuestId { get; set; }
 
-        public virtual CustomUser? Guest { get; set; }
+        public virtual AppUser? Guest { get; set; }
 
     }
 }

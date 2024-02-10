@@ -15,15 +15,17 @@ namespace RestaurantOnlineBookingApp.Web
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<RestaurantBookingDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<CustomUser>(options =>
+            builder.Services.AddDefaultIdentity<AppUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
 
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+             .AddRoles<IdentityRole<Guid>>()
+             .AddEntityFrameworkStores<RestaurantBookingDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();

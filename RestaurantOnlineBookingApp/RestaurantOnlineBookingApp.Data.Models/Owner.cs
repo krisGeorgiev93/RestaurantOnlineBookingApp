@@ -23,6 +23,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]  
         public Guid UserId { get; set; }
 
-        public virtual CustomUser User { get; set; } = null!;
+        public virtual AppUser User { get; set; } = null!;
     }
 }

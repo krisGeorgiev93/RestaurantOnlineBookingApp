@@ -6,9 +6,9 @@ namespace RestaurantOnlineBookingApp.Data
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBookingApp.Data.Models;
 
-    public class RestaurantOnlineBookingAppDbContext : IdentityDbContext<CustomUser, IdentityRole<Guid>, Guid>
+    public class RestaurantBookingDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
-        public RestaurantOnlineBookingAppDbContext(DbContextOptions<RestaurantOnlineBookingAppDbContext> options)
+        public RestaurantBookingDbContext(DbContextOptions<RestaurantBookingDbContext> options)
             : base(options)
         {
         }
