@@ -48,6 +48,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 Description = "Best food from Asia",
                 ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",
                 Rating = 4,
+                Capacity = 100,
                 CityId = 1,
                 CategoryId = 2,
                 OwnerId = Guid.Parse("92bc2551-2565-4fc4-8ed6-98deffe533b9")
@@ -62,6 +63,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 Description = "Best chinese in the country",
                 ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",
                 Rating = 5,
+                Capacity = 50,
                 CityId = 1,
                 CategoryId = 6,
                 OwnerId = Guid.Parse("92bc2551-2565-4fc4-8ed6-98deffe533b9")

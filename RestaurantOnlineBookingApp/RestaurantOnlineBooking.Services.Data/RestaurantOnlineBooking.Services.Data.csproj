@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Data\RestaurantOnlineBookingApp.Data.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Web.ViewModels\RestaurantOnlineBookingApp.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

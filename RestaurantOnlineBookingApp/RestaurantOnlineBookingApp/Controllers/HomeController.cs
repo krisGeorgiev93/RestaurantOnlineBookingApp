@@ -5,19 +5,22 @@ namespace RestaurantOnlineBookingApp.Controllers
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 
     public class HomeController : Controller
     {
+        private readonly IRestaurantService _restaurantService;
 
-        public HomeController()
+        public HomeController(IRestaurantService restaurantService)
         {
-         
+            _restaurantService = restaurantService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model =  await _restaurantService.GetAllAsync();
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

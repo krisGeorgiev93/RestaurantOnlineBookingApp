@@ -4,7 +4,8 @@ namespace RestaurantOnlineBookingApp.Web
     using Microsoft.AspNetCore.Identity;
 
     using Microsoft.EntityFrameworkCore;
-
+    using RestaurantOnlineBooking.Services.Data;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
 
@@ -18,6 +19,7 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddDbContext<RestaurantBookingDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+
             builder.Services.AddDefaultIdentity<AppUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
@@ -30,7 +32,10 @@ namespace RestaurantOnlineBookingApp.Web
              .AddRoles<IdentityRole<Guid>>()
              .AddEntityFrameworkStores<RestaurantBookingDbContext>();
 
+
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IRestaurantService,RestaurantService>();
 
             WebApplication app = builder.Build();
 

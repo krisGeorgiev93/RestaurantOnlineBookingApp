@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.Data.Models", "RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj", "{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0699B4E1-F490-4D0D-BEA1-FFAF7B959D1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBooking.Services.Data", "RestaurantOnlineBooking.Services.Data\RestaurantOnlineBooking.Services.Data.csproj", "{D77EEF7B-D21E-4694-9583-91CAA479682B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D77EEF7B-D21E-4694-9583-91CAA479682B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D77EEF7B-D21E-4694-9583-91CAA479682B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D77EEF7B-D21E-4694-9583-91CAA479682B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D77EEF7B-D21E-4694-9583-91CAA479682B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{3FC36E19-9495-4624-BE70-E55BCE068917} = {DA5A291F-811D-40D6-BF15-C79F10C36FD1}
 		{AAA32FD6-25EB-4384-AC6D-E315967B958E} = {DAD89F43-9627-41F4-8A48-78187F24ACF5}
 		{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5} = {DA5A291F-811D-40D6-BF15-C79F10C36FD1}
+		{D77EEF7B-D21E-4694-9583-91CAA479682B} = {0699B4E1-F490-4D0D-BEA1-FFAF7B959D1D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6A161CD-1335-40AE-B2D9-30FD86DE2FE3}

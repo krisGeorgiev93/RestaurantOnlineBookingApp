@@ -10,8 +10,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
 {
     using static RestaurantOnlineBookingApp.Common.ValidationConstants.Restaurant;
     public class Restaurant
-    {
-        
+    {        
         public Restaurant()
         {
             this.Id = Guid.NewGuid();
@@ -35,6 +34,10 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         [Range(1,5)]
         public double Rating { get; set; }
+
+        [Required]
+        [Range(1,300)]
+        public int Capacity { get; set; }
 
         [Required]
         public int CityId { get; set; }
