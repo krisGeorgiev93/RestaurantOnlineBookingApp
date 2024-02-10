@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,14 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string ImageUrl { get; set; } = null!;
 
         [Required]
+        public double Rating { get; set; }
+
+        public int CityId { get; set; }
+
+        [ForeignKey(nameof(CityId))]
+        public City City { get; set; }
+
+        [Required]
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; } = null!;
@@ -44,6 +53,8 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid? GuestId { get; set; }
 
         public virtual AppUser? Guest { get; set; }
+
+        public virtual ICollection<Table> Tables { get; set; }
 
     }
 }

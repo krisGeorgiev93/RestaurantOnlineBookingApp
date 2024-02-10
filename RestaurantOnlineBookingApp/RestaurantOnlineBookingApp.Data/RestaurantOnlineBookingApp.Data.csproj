@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>0f9680e8-1c4f-432c-8bb4-3a512b98d43a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,11 +14,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj" />
     <ProjectReference Include="..\RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configurations\Migrations\" />
   </ItemGroup>
 
 </Project>

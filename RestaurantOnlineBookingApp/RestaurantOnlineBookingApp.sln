@@ -5,17 +5,17 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.Web", "RestaurantOnlineBookingApp\RestaurantOnlineBookingApp.Web.csproj", "{A86BE289-D556-4F56-864A-142D1EC95472}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBookingApp.Common", "RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj", "{0491A102-D68F-4F87-AFDF-4E7083F75C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.Common", "RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj", "{0491A102-D68F-4F87-AFDF-4E7083F75C5F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DA5A291F-811D-40D6-BF15-C79F10C36FD1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{DAD89F43-9627-41F4-8A48-78187F24ACF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBookingApp.Data", "RestaurantOnlineBookingApp.Data\RestaurantOnlineBookingApp.Data.csproj", "{3FC36E19-9495-4624-BE70-E55BCE068917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.Data", "RestaurantOnlineBookingApp.Data\RestaurantOnlineBookingApp.Data.csproj", "{3FC36E19-9495-4624-BE70-E55BCE068917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBookingApp.Web.ViewModels", "RestaurantOnlineBookingApp.Web.ViewModels\RestaurantOnlineBookingApp.Web.ViewModels.csproj", "{AAA32FD6-25EB-4384-AC6D-E315967B958E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.Web.ViewModels", "RestaurantOnlineBookingApp.Web.ViewModels\RestaurantOnlineBookingApp.Web.ViewModels.csproj", "{AAA32FD6-25EB-4384-AC6D-E315967B958E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBookingApp.Data.Models", "RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj", "{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBookingApp.Data.Models", "RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj", "{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

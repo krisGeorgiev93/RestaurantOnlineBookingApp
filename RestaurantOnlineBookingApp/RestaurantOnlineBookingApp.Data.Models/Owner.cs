@@ -13,8 +13,10 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Owner()
         {
             this.Id = Guid.NewGuid();
+            this.OwnedRestaurants = new HashSet<Restaurant>();
         }
         public Guid Id { get; set; }
+
 
         [Required]
         [MaxLength(PhoneNumberMaxLength)]
@@ -24,5 +26,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid UserId { get; set; }
 
         public virtual AppUser User { get; set; } = null!;
+
+        public virtual ICollection<Restaurant> OwnedRestaurants { get; set; }
     }
 }
