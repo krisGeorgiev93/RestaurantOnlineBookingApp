@@ -33,8 +33,10 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string ImageUrl { get; set; } = null!;
 
         [Required]
+        [Range(1,5)]
         public double Rating { get; set; }
 
+        [Required]
         public int CityId { get; set; }
 
         [ForeignKey(nameof(CityId))]
@@ -42,18 +44,14 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         [Required]
         public int CategoryId { get; set; }
-
+        [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; } = null!;
 
         [Required]
         public Guid OwnerId { get; set; }
-
+        [ForeignKey(nameof(OwnerId))]
         public virtual Owner Owner { get; set; } = null!;
-
-        public Guid? GuestId { get; set; }
-
-        public virtual AppUser? Guest { get; set; }
-
+        public virtual ICollection<AppUser> Guests { get; set; }
         public virtual ICollection<Table> Tables { get; set; }
 
     }

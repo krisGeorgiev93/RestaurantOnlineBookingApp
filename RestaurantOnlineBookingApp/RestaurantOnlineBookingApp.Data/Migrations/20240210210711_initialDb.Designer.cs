@@ -12,8 +12,8 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    [Migration("20240210201935_Initial")]
-    partial class Initial
+    [Migration("20240210210711_initialDb")]
+    partial class initialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AppUserRestaurant", b =>
+                {
+                    b.Property<Guid>("BookedRestaurantsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GuestsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BookedRestaurantsId", "GuestsId");
+
+                    b.HasIndex("GuestsId");
+
+                    b.ToTable("AppUserRestaurant");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
@@ -180,11 +195,9 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -353,9 +366,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid?>("GuestId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(2000)
@@ -377,8 +387,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("GuestId");
 
                     b.HasIndex("OwnerId");
 
@@ -420,6 +428,21 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Table");
+                });
+
+            modelBuilder.Entity("AppUserRestaurant", b =>
+                {
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", null)
+                        .WithMany()
+                        .HasForeignKey("BookedRestaurantsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("GuestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -509,10 +532,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
-                        .WithMany("BookedRestaurants")
-                        .HasForeignKey("GuestId");
-
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Owner", "Owner")
                         .WithMany("OwnedRestaurants")
                         .HasForeignKey("OwnerId")
@@ -522,8 +541,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("City");
-
-                    b.Navigation("Guest");
 
                     b.Navigation("Owner");
                 });
@@ -548,11 +565,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Restaurant");
-                });
-
-            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.AppUser", b =>
-                {
-                    b.Navigation("BookedRestaurants");
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Category", b =>

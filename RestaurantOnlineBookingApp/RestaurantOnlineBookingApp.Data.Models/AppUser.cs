@@ -11,11 +11,9 @@ namespace RestaurantOnlineBookingApp.Data.Models
             this.BookedRestaurants = new HashSet<Restaurant>();
         }
 
-        [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         public virtual ICollection<Restaurant> BookedRestaurants { get; set; }
     }
 }
