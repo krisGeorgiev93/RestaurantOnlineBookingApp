@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
+using RestaurantOnlineBookingApp.Data.Models;
+using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,22 @@ namespace RestaurantOnlineBooking.Services.Data
             this.dBContext = dBContext;
         }
 
-        public async Task<bool> OwnerExistById(string id)
+        public async Task Create(string userId, JoinOwnerFormModel model)
+        {
+            Owner owner = new Owner()
+            {
+                PhoneNumber = model.PhoneNumber,
+                UserId = Guid.Parse(userId)
+            };
+
+            await dBContext.Owners.AddAsync(owner);
+            await dBContext.SaveChangesAsync();
+
+        }
+
+       
+
+        public async Task<bool> OwnerExistByIdAsync(string id)
         {
             bool result = await this.dBContext
                 .Owners
@@ -27,6 +44,15 @@ namespace RestaurantOnlineBooking.Services.Data
                 
             return result;
 
+        }
+
+        public async Task<bool> OwnerExistsByPhoneNumberAsync(string phoneNumber)
+        {
+            bool result = await this.dBContext
+                .Owners
+                .AnyAsync(o => o.PhoneNumber == phoneNumber);
+
+            return result;
         }
     }
 }

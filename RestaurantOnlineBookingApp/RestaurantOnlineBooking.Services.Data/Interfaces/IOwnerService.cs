@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,13 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 {
     public interface IOwnerService
     {
-        Task<bool> OwnerExistById(string id);
+        Task<bool> OwnerExistByIdAsync(string id);
+
+        Task<bool> OwnerExistsByPhoneNumberAsync(string phoneNumber);
+
+        Task Create(string userId, JoinOwnerFormModel model);
+
+
 
     }
 }
