@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace RestaurantOnlineBooking.Services.Data.Interfaces
 {
-    public class IOwnerService
+    public interface IOwnerService
     {
+        Task<bool> OwnerExistById(string id);
+
     }
 }
