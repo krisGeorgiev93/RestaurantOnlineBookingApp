@@ -1,5 +1,4 @@
 ﻿
-
 namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 {
     using RestaurantOnlineBookingApp.Web.ViewModels.Category;

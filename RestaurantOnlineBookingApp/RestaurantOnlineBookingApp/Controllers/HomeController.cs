@@ -11,10 +11,14 @@ namespace RestaurantOnlineBookingApp.Controllers
     public class HomeController : Controller
     {
         private readonly IRestaurantService _restaurantService;
+        private readonly IOwnerService _ownerService;
+        private readonly ICategoryService _categoryService;
 
-        public HomeController(IRestaurantService restaurantService)
+        public HomeController(IRestaurantService restaurantService, IOwnerService ownerService, ICategoryService categoryService)
         {
             _restaurantService = restaurantService;
+            _ownerService = ownerService;
+            _categoryService = categoryService;
         }
 
         public async Task<IActionResult> Index()

@@ -6,6 +6,5 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     {
         Task<IEnumerable<AllRestaurantsViewModel>> GetAllAsync();
 
-
     }
 }

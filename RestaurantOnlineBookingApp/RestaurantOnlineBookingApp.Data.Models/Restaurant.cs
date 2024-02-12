@@ -10,7 +10,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
 {
     using static RestaurantOnlineBookingApp.Common.ValidationConstants.Restaurant;
     public class Restaurant
-    {        
+    {
         public Restaurant()
         {
             this.Id = Guid.NewGuid();
@@ -32,18 +32,18 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [Range(1,5)]
+        [Range(1, 5)]
         public double Rating { get; set; }
 
         [Required]
-        [Range(1,300)]
+        [Range(1, 300)]
         public int Capacity { get; set; }
 
         [Required]
         public int CityId { get; set; }
 
         [ForeignKey(nameof(CityId))]
-        public City City { get; set; }
+        public City City { get; set; } = null!;
 
         [Required]
         public int CategoryId { get; set; }
@@ -54,8 +54,8 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid OwnerId { get; set; }
         [ForeignKey(nameof(OwnerId))]
         public virtual Owner Owner { get; set; } = null!;
-        public virtual ICollection<AppUser> Guests { get; set; }
-        public virtual ICollection<Table> Tables { get; set; }
+        public virtual ICollection<AppUser> Guests { get; set; } = null!;
+        public virtual ICollection<Table> Tables { get; set; } = null!;
 
     }
 }
