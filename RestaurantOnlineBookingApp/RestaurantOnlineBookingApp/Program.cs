@@ -38,6 +38,7 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddScoped<IRestaurantService,RestaurantService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IOwnerService,OwnerService>();
+            builder.Services.AddScoped<ICityService,CityService>();
 
 
             WebApplication app = builder.Build();

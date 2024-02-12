@@ -1,5 +1,5 @@
 ﻿using RestaurantOnlineBookingApp.Web.ViewModels.Category;
-using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
+using RestaurantOnlineBookingApp.Web.ViewModels.City;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace RestaurantOnlineBooking.Services.Data.Interfaces
 {
-    public interface ICategoryService
+    public interface ICityService
     {
-        Task<IEnumerable<SelectCategoryFormModel>> GetAllCategoriesAsync();
-
-        Task<bool>ExistByIdAsync(int id);
+        Task<IEnumerable<SelectCityFormModel>> GetAllCitiesAsync();
 
     }
 }

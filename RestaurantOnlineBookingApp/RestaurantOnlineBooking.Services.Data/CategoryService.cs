@@ -14,6 +14,12 @@ namespace RestaurantOnlineBooking.Services.Data
             this.dBContext = dBContext;
         }
 
+        public async Task<bool> ExistByIdAsync(int id)
+        {
+            bool result = await dBContext.Categories
+                .AnyAsync(c => c.Id == id);
+            return result;
+        }
 
         public async Task<IEnumerable<SelectCategoryFormModel>> GetAllCategoriesAsync()
         {

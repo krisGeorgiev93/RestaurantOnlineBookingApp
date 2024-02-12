@@ -54,5 +54,17 @@ namespace RestaurantOnlineBooking.Services.Data
 
             return result;
         }
+
+        public async Task<string> OwnerIdByUserIdAsync(string userId)
+        {
+            Owner? owner = await this.dBContext.Owners.FirstOrDefaultAsync(o => o.UserId.ToString() == userId);
+
+            if (owner == null)
+            {
+                return null;
+            }
+
+            return owner.Id.ToString();
+        }
     }
 }

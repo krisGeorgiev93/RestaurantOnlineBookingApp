@@ -13,6 +13,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<bool> OwnerExistsByPhoneNumberAsync(string phoneNumber);
 
+        Task<string?> OwnerIdByUserIdAsync(string userId);
+
         Task Create(string userId, JoinOwnerFormModel model);
     }
 }

@@ -2,6 +2,7 @@
 namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 {
     using RestaurantOnlineBookingApp.Web.ViewModels.Category;
+    using RestaurantOnlineBookingApp.Web.ViewModels.City;
     using System.ComponentModel.DataAnnotations;
 
     using static RestaurantOnlineBookingApp.Common.ValidationConstants.Restaurant;
@@ -10,6 +11,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         public RestaurantFormModel()
         {
             this.Categories = new HashSet<SelectCategoryFormModel>();
+            this.Cities = new HashSet<SelectCityFormModel>();   
         }
 
         [Required]
@@ -37,6 +39,14 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         [Required]
         [Range(1, 300)]
         public int Capacity { get; set; }
+
+        public Guid OwnerId { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        public int CityId { get; set; }
+
+        public IEnumerable<SelectCityFormModel> Cities { get; set; }
 
         [Required]
         [Display(Name = "Category")]

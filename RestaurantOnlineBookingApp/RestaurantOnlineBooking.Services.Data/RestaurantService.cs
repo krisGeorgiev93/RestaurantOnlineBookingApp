@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
+using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
+using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -12,6 +14,24 @@ namespace RestaurantOnlineBooking.Services.Data
         public RestaurantService(RestaurantBookingDbContext dBContext)
         {
             this.dBContext = dBContext;
+        }
+
+        public async Task CreateRestaurantAsync(RestaurantFormModel model, string ownerId)
+        {
+            Restaurant restaurant = new Restaurant()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Address = model.Address,
+                Rating = model.Rating,
+                ImageUrl = model.ImageUrl,
+                Capacity = model.Capacity,
+                CategoryId = model.CategoryId,
+                CityId = model.CityId,
+                OwnerId = Guid.Parse(ownerId)
+            };
+            await this.dBContext.Restaurants.AddAsync(restaurant);
+            await this.dBContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<AllRestaurantsViewModel>> GetAllAsync()

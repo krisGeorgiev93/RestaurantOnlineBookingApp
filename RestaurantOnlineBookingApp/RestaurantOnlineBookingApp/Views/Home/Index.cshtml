@@ -12,9 +12,7 @@
             var restaurant = restaurants[i];
             <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
                 <img class="d-block w-100" style="height:500px"
-                     src="@restaurant.ImageUrl" alt="@restaurant.Name">
-                © SoftUni – about.softuni.bg. Copyrighted document. Unauthorized copy, reproduction or use is not permitted.
-                Follow us: Page 25 of 69
+                     src="@restaurant.ImageUrl" alt="@restaurant.Name">               
                 <div class="carousel-caption d-none d-md-block">
                     <h5>
                         <a class="btn btn-primary" asp-controller="House" asp-action="Details"

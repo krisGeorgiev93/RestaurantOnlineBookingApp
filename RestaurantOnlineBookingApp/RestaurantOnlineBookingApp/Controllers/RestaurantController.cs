@@ -14,12 +14,17 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     {
         private readonly IOwnerService _ownerService;
         private readonly ICategoryService _categoryService;
+        private readonly IRestaurantService _restaurantService;
+        private readonly ICityService _cityService;
         private readonly RestaurantBookingDbContext _dbContext;
 
-        public RestaurantController(IOwnerService ownerService, ICategoryService categoryService, RestaurantBookingDbContext dbContext)
-        {           
+        public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
+            RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService)
+        {
             _ownerService = ownerService;
             _categoryService = categoryService;
+            _restaurantService = restaurantService;
+            _cityService = cityService;
             _dbContext = dbContext;
         }
 
@@ -44,10 +49,53 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             RestaurantFormModel model = new RestaurantFormModel()
             {
-                Categories = await this._categoryService.GetAllCategoriesAsync()
+                Categories = await this._categoryService.GetAllCategoriesAsync(),
+                Cities = await this._cityService.GetAllCitiesAsync()                
             };
-
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(RestaurantFormModel model)
+        {
+            bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            if (!isOwner)
+            {
+                this.TempData[ErrorMessage] = "You must become an owner to add new restaurants!";
+
+                return RedirectToAction("Join", "Owner");
+            }
+
+            bool categoryExists = await this._categoryService.ExistByIdAsync(model.CategoryId);
+
+            if (!categoryExists)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "This category does not exist!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await this._categoryService.GetAllCategoriesAsync();
+
+                return this.View(model);
+            }
+
+            try
+            {
+                string? ownerId = await _ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                await this._restaurantService.CreateRestaurantAsync(model, ownerId!);
+            }
+            catch (Exception e)
+            {
+
+                this.ModelState.AddModelError(string.Empty, "Unexpected error! Please try again later or contact administrator!");
+                model.Categories = await this._categoryService.GetAllCategoriesAsync();
+
+                return View(model);
+            }
+
+            return RedirectToAction("All", "Restaurant");
         }
     }
 }
