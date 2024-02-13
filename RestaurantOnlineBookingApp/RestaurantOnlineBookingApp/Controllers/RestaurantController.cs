@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestaurantOnlineBooking.Services.Data;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
+using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 using System.Security.Claims;
@@ -29,9 +30,16 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> All()
+        [AllowAnonymous]
+        public async Task<IActionResult> All([FromQuery] AllRestaurantsQueryModel queryModel)
         {
-            return View();
+            AllRestaurantsFilteredServiceModel serviceModel =
+                await this._restaurantService.AllAsync(queryModel);
+
+            queryModel.Restaurants = serviceModel.Restaurants;
+            queryModel.Categories = await _categoryService.AllCategoryNamesAsync();
+            queryModel.TotalRestaurants = serviceModel.TotalRestaurantsCount;
+            return View(queryModel);
         }
 
         [HttpGet]
@@ -50,7 +58,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             RestaurantFormModel model = new RestaurantFormModel()
             {
                 Categories = await this._categoryService.GetAllCategoriesAsync(),
-                Cities = await this._cityService.GetAllCitiesAsync()                
+                Cities = await this._cityService.GetAllCitiesAsync()
             };
             return View(model);
         }

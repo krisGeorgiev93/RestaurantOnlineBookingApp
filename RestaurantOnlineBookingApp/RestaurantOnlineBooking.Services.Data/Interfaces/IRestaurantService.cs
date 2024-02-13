@@ -1,4 +1,5 @@
-﻿using RestaurantOnlineBookingApp.Web.ViewModels.Home;
+﻿using RestaurantOnlineBooking.Services.Data.Models;
+using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 
 namespace RestaurantOnlineBooking.Services.Data.Interfaces
@@ -8,6 +9,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task<IEnumerable<AllRestaurantsViewModel>> GetAllAsync();
 
         Task CreateRestaurantAsync(RestaurantFormModel model, string ownerId);
+
+        Task<AllRestaurantsFilteredServiceModel> AllAsync(AllRestaurantsQueryModel model);
 
     }
 }

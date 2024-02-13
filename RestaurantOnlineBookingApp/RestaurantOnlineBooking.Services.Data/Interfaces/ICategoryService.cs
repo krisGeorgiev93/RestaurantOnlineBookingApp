@@ -14,5 +14,6 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<bool>ExistByIdAsync(int id);
 
+        Task<IEnumerable<string>> AllCategoryNamesAsync();
     }
 }
