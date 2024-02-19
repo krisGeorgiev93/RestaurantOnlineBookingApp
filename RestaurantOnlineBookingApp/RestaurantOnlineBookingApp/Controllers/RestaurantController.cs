@@ -37,6 +37,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 await this._restaurantService.AllAsync(queryModel);
 
             queryModel.Restaurants = serviceModel.Restaurants;
+            queryModel.Cities = await _cityService.AllCitiesNamesAsync();
             queryModel.Categories = await _categoryService.AllCategoryNamesAsync();
             queryModel.TotalRestaurants = serviceModel.TotalRestaurantsCount;
             return View(queryModel);

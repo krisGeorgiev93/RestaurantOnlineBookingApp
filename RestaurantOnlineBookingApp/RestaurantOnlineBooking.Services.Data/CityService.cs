@@ -19,6 +19,16 @@ namespace RestaurantOnlineBooking.Services.Data
             this.dBContext = dBContext;
         }
 
+        public async Task<IEnumerable<string>> AllCitiesNamesAsync()
+        {
+            IEnumerable<string> allCitiesNames = await dBContext
+                 .Cities
+                 .Select(c => c.CityName)
+                 .ToArrayAsync();
+
+            return allCitiesNames;
+        }
+
         public async Task<IEnumerable<SelectCityFormModel>> GetAllCitiesAsync()
         {
             var allCities = await this.dBContext.Cities

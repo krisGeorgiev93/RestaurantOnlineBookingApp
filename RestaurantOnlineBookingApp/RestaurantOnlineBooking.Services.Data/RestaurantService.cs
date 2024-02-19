@@ -28,6 +28,11 @@ namespace RestaurantOnlineBooking.Services.Data
                 restaurantQuery = restaurantQuery.Where(r => r.Category.Name == model.Category);
             }
 
+            if (!string.IsNullOrWhiteSpace(model.City))
+            {
+                restaurantQuery = restaurantQuery.Where(r => r.City.CityName == model.City);
+            }
+
             if (!string.IsNullOrWhiteSpace(model.Search))
             {
                 string wildCard = $"%{model.Search.ToLower()}%";

@@ -12,5 +12,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     {
         Task<IEnumerable<SelectCityFormModel>> GetAllCitiesAsync();
 
+        Task<IEnumerable<string>> AllCitiesNamesAsync();
+
+
     }
 }
