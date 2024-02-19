@@ -106,5 +106,28 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             return RedirectToAction("All", "Restaurant");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            List<RestaurantAllViewModel> myRestaurants = new List<RestaurantAllViewModel>();
+
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(userId);
+
+            if (isUserOwner)
+            {
+                string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(userId);
+
+                myRestaurants.AddRange(await this._restaurantService.AllByOwnerIdAsync(ownerId!));
+            }
+            else
+            {
+                myRestaurants.AddRange(await this._restaurantService.AllByUserIdAsync(userId));
+            }
+
+            return View(myRestaurants);
+        }
     }
 }
