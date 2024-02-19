@@ -2,7 +2,6 @@
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 
@@ -21,7 +20,7 @@ namespace RestaurantOnlineBooking.Services.Data
         {
             //we can build expression tree
             //only with 1 query
-            IQueryable<Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
+            IQueryable<RestaurantOnlineBookingApp.Data.Models.Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(model.Category))
             {
@@ -66,9 +65,44 @@ namespace RestaurantOnlineBooking.Services.Data
             };
         }
 
+        public async Task<IEnumerable<RestaurantAllViewModel>> AllByOwnerIdAsync(string ownerId)
+        {
+            IEnumerable<RestaurantAllViewModel> ownerRestaurants = await dBContext
+                 .Restaurants
+                 .Where(r => r.OwnerId.ToString() == ownerId)
+                 .Select(r => new RestaurantAllViewModel
+                 {
+                     Id = r.Id.ToString(),
+                     Name = r.Name,
+                     Address = r.Address,
+                     Description = r.Description,
+                     ImageUrl = r.ImageUrl,
+                     Capacity = r.Capacity,
+                 }).ToListAsync();
+
+            return ownerRestaurants;
+        }
+
+        public async Task<IEnumerable<RestaurantAllViewModel>> AllByUserIdAsync(string userId)
+        {
+            IEnumerable<RestaurantAllViewModel> userRestaurants = await dBContext
+                .Restaurants
+                .Where(r => r.GuestId.ToString() == userId)
+                .Select(r => new RestaurantAllViewModel
+                {
+                    Id = r.Id.ToString(),
+                    Name = r.Name,
+                    Address = r.Address,
+                    Description = r.Description,
+                    ImageUrl = r.ImageUrl,
+                    Capacity = r.Capacity,
+                }).ToListAsync();
+            return userRestaurants;
+        }
+
         public async Task CreateRestaurantAsync(RestaurantFormModel model, string ownerId)
         {
-            Restaurant restaurant = new Restaurant()
+            RestaurantOnlineBookingApp.Data.Models.Restaurant restaurant = new RestaurantOnlineBookingApp.Data.Models.Restaurant()
             {
                 Name = model.Name,
                 Description = model.Description,

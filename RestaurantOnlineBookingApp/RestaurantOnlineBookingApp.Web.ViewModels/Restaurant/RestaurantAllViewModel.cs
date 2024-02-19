@@ -8,7 +8,6 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 {
     public class RestaurantAllViewModel
     {
-
         public string Id { get; set; }
 
         public string Name { get; set; }

@@ -54,8 +54,11 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid OwnerId { get; set; }
         [ForeignKey(nameof(OwnerId))]
         public virtual Owner Owner { get; set; } = null!;
-        public virtual ICollection<AppUser> Guests { get; set; } = null!;
-        public virtual ICollection<Table> Tables { get; set; } = null!;
+
+        public Guid? GuestId { get; set; }
+
+        [ForeignKey(nameof(GuestId))]
+        public virtual AppUser? Guest {  get; set; }
 
     }
 }
