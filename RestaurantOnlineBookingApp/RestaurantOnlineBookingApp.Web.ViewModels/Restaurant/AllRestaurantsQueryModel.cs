@@ -21,6 +21,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 
         public int TotalRestaurants { get; set; }
 
+        [Display(Name = "Restaurants On Page")]
         public int RestaurantsPerPage { get; set; }
 
         public int CurrentPage {  get; set; }
