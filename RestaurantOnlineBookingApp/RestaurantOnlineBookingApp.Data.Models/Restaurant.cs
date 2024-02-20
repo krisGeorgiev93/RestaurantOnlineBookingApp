@@ -32,9 +32,11 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [Range(1, 5)]
-        public double Rating { get; set; }
+        public TimeSpan StartingTime { get; set; }
 
+        [Required]
+        public TimeSpan EndingTime { get; set; }
+        
         [Required]
         [Range(1, 300)]
         public int Capacity { get; set; }

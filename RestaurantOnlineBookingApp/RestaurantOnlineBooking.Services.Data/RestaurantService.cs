@@ -4,6 +4,7 @@ using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
+using System.Globalization;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -46,7 +47,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 .Skip((model.CurrentPage - 1) * model.RestaurantsPerPage)
                 .Take(model.RestaurantsPerPage)
                 .Select(r => new RestaurantAllViewModel
-                { 
+                {
                     Id = r.Id.ToString(),
                     Name = r.Name,
                     Address = r.Address,
@@ -102,13 +103,15 @@ namespace RestaurantOnlineBooking.Services.Data
 
         public async Task CreateRestaurantAsync(RestaurantFormModel model, string ownerId)
         {
+
             RestaurantOnlineBookingApp.Data.Models.Restaurant restaurant = new RestaurantOnlineBookingApp.Data.Models.Restaurant()
             {
                 Name = model.Name,
                 Description = model.Description,
                 Address = model.Address,
-                Rating = model.Rating,
                 ImageUrl = model.ImageUrl,
+                StartingTime = model.StartingTime,
+                EndingTime = model.EndingTime,
                 Capacity = model.Capacity,
                 CategoryId = model.CategoryId,
                 CityId = model.CityId,
@@ -129,7 +132,6 @@ namespace RestaurantOnlineBooking.Services.Data
                     Address = r.Address,
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
-                    Rating = r.Rating,
                     Capacity = r.Capacity,
                     City = r.City.CityName
                 })

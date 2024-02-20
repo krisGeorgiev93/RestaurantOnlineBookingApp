@@ -30,15 +30,17 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         [Required]
         [MaxLength(ImageUrlMaxLength)]
         [Display(Name = "Image link")]
-        public string ImageUrl { get; set; } = null!;
-
-        [Required]
-        [Range(1, 5)]
-        public double Rating { get; set; }
+        public string ImageUrl { get; set; } = null!;       
 
         [Required]
         [Range(1, 300)]
         public int Capacity { get; set; }
+
+        [Required]
+        public TimeSpan StartingTime {  get; set; }
+
+        [Required]
+        public TimeSpan EndingTime { get; set; }  
 
         public Guid OwnerId { get; set; }
 
