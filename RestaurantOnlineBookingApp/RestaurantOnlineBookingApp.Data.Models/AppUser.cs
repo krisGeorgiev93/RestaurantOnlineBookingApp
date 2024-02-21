@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantOnlineBookingApp.Data.Models
 {
@@ -8,12 +9,16 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public AppUser()
         {
             this.Id = Guid.NewGuid();
-            this.BookedRestaurants = new HashSet<Restaurant>();
-        }
-
+            this.BookedRestaurants = new List<Restaurant>();
+            this.FavoriteRestaurants = new List<Restaurant>();
+        }       
         public string? FirstName { get; set; }
-
+       
         public string? LastName { get; set; }
-        public virtual ICollection<Restaurant> BookedRestaurants { get; set; }
+
+        [NotMapped]
+        public  ICollection<Restaurant> BookedRestaurants { get; set; }
+        [NotMapped]
+        public ICollection<Restaurant> FavoriteRestaurants { get; set; }
     }
 }

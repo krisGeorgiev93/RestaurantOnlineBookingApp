@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,14 @@ namespace RestaurantOnlineBookingApp.Data.Models
             this.Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
+
+        [Range(0,10)]
+        public int ReviewGrade { get; set; }
+
+        public Guid GuestId { get; set; }
+
+        [ForeignKey(nameof(GuestId))]
+        public AppUser Guest { get; set; }
         public Guid RestaurantId { get; set; }
 
         [ForeignKey(nameof(RestaurantId))]

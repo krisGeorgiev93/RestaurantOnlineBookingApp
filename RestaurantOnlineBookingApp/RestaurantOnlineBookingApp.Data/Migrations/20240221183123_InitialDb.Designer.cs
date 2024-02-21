@@ -12,8 +12,8 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    [Migration("20240220204236_updateDb2")]
-    partial class updateDb2
+    [Migration("20240221183123_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,9 +180,11 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -455,36 +457,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Restaurants");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("46289cac-faaa-4c7c-bb5d-3cbcd841e244"),
-                            Address = "Ivan Vazov 26",
-                            Capacity = 100,
-                            CategoryId = 2,
-                            CityId = 1,
-                            Description = "Best food from Asia",
-                            EndingTime = new TimeSpan(0, 0, 0, 0, 0),
-                            ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",
-                            Name = "Asian Buffet",
-                            OwnerId = new Guid("92bc2551-2565-4fc4-8ed6-98deffe533b9"),
-                            StartingTime = new TimeSpan(0, 0, 0, 0, 0)
-                        },
-                        new
-                        {
-                            Id = new Guid("b3f4fe5d-b0e0-44ab-961e-93c1c6a4549e"),
-                            Address = "Hristo Botev 76",
-                            Capacity = 50,
-                            CategoryId = 6,
-                            CityId = 1,
-                            Description = "Best chinese in the country",
-                            EndingTime = new TimeSpan(0, 0, 0, 0, 0),
-                            ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",
-                            Name = "Best Of China",
-                            OwnerId = new Guid("92bc2551-2565-4fc4-8ed6-98deffe533b9"),
-                            StartingTime = new TimeSpan(0, 0, 0, 0, 0)
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Review", b =>

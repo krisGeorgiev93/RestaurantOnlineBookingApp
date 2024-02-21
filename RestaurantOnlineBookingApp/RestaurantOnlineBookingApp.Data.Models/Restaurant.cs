@@ -14,6 +14,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Restaurant()
         {
             this.Id = Guid.NewGuid();
+            this.Reviews = new List<Review>();
         }
         public Guid Id { get; set; }
 
@@ -36,7 +37,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         [Required]
         public TimeSpan EndingTime { get; set; }
-        
+
         [Required]
         [Range(1, 300)]
         public int Capacity { get; set; }
@@ -60,7 +61,13 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid? GuestId { get; set; }
 
         [ForeignKey(nameof(GuestId))]
-        public virtual AppUser? Guest {  get; set; }
+        public virtual AppUser? Guest { get; set; }
+
+        public ICollection<Review> Reviews { get; set; }
+
+        public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewGrade) / Reviews.Count : 0;
+
+       
 
     }
 }

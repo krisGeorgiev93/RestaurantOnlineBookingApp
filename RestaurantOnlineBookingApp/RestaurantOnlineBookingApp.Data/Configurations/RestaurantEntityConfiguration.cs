@@ -33,6 +33,12 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                .HasForeignKey(r => r.CityId)
                .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .HasOne(r => r.Guest)
+                .WithMany(g => g.BookedRestaurants)
+                .HasForeignKey(r => r.GuestId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
         }
 
@@ -44,13 +50,15 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             restaurant = new Restaurant()
             {
                 Name = "Asian Buffet",
-                Address = "Ivan Vazov 26",
+                Address = "Ivan Ivanov 26",
                 Description = "Best food from Asia",
+                StartingTime = new TimeSpan(17,0,0),
+                EndingTime = new TimeSpan(23,30,0),
                 ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",                
                 Capacity = 100,
                 CityId = 1,
                 CategoryId = 2,
-                OwnerId = Guid.Parse("92bc2551-2565-4fc4-8ed6-98deffe533b9")
+                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
             };
 
             restaurants.Add(restaurant);
@@ -60,11 +68,13 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 Name = "Best Of China",
                 Address = "Hristo Botev 76",
                 Description = "Best chinese in the country",
+                StartingTime = new TimeSpan(18, 0,0),
+                EndingTime = new TimeSpan(23, 0, 0),
                 ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",                
                 Capacity = 50,
                 CityId = 1,
                 CategoryId = 6,
-                OwnerId = Guid.Parse("92bc2551-2565-4fc4-8ed6-98deffe533b9")
+                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
             };
 
             restaurants.Add(restaurant);
