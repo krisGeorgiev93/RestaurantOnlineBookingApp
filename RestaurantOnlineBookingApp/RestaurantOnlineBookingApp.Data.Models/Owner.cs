@@ -20,7 +20,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Key]
         public Guid Id { get; set; }
 
-
         [Required]
         [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; }

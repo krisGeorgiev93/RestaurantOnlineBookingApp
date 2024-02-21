@@ -2,8 +2,10 @@
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
+using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
+using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
 using System.Globalization;
 
 namespace RestaurantOnlineBooking.Services.Data
@@ -136,6 +138,38 @@ namespace RestaurantOnlineBooking.Services.Data
                     City = r.City.CityName
                 })
                 .ToListAsync();
+        }
+
+        public async Task<RestaurantDetailsViewModel?> GetDetailsByIdAsync(string restaurantId)
+        {
+            Restaurant? restaurant = await this.dBContext
+                .Restaurants
+                .Include(r=> r.Category)
+                .Include(r=> r.Owner)
+                .ThenInclude(a=> a.User)
+                .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+
+            if (restaurant == null)
+            {
+                return null;
+            }
+
+            return new RestaurantDetailsViewModel()
+            {
+                Id = restaurant.Id.ToString(),
+                Name = restaurant.Name,
+                Description = restaurant.Description,
+                Address = restaurant.Address,
+                ImageUrl = restaurant.ImageUrl,
+                Capacity = restaurant.Capacity,
+                Category = restaurant.Category.Name,
+                OpeningTime = restaurant.StartingTime.ToString(),
+                ClosingTime = restaurant.EndingTime.ToString(),
+                OwnerInfo = new OwnerInfoOnRestaurantViewModel
+                {
+                    PhoneNumber = restaurant.Owner.PhoneNumber
+                }
+            };
         }
     }
 }

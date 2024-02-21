@@ -16,5 +16,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<IEnumerable<RestaurantAllViewModel>> AllByUserIdAsync(string userId);
 
+        Task<RestaurantDetailsViewModel> GetDetailsByIdAsync(string restaurantId);
+
     }
 }
