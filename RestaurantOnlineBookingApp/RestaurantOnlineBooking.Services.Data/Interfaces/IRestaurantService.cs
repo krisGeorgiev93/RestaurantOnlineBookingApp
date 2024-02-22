@@ -20,6 +20,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<bool> RestaurantExistsById(string restaurantId);
 
+        Task<bool> IsOwnerWithIdOwnedRestaurantWithIdAsync(string restaurantId, string ownerId);
+
         Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId);
 
     }

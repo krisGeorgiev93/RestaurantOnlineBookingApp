@@ -147,5 +147,52 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             return View(myRestaurants);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            bool restaurantExists = await this._restaurantService.RestaurantExistsById(id);
+            if (!restaurantExists)
+            {
+                this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
+                return this.RedirectToAction("All", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService
+                .OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
+
+                return this.RedirectToAction("Join", "Owner");
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+                .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+
+            RestaurantFormModel model = await this._restaurantService
+                .GetRestaurantForEditByIdAsync(id);
+
+            model.Categories = await this._categoryService.GetAllCategoriesAsync();
+            model.Cities = await this._cityService.GetAllCitiesAsync();
+
+            return this.View(model);
+
+        }
+
+
+        // Get currently logged-in user's Id
+        private string GetUserId()
+           => User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }
