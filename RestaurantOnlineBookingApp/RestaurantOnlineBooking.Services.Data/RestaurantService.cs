@@ -122,6 +122,24 @@ namespace RestaurantOnlineBooking.Services.Data
             await this.dBContext.SaveChangesAsync();
         }
 
+        public async Task EditRestaurantById(string restaurantId, RestaurantFormModel model)
+        {
+            Restaurant restaurant = await this.dBContext
+                .Restaurants
+                .FirstAsync(r => r.Id.ToString() == restaurantId);
+
+            restaurant.Name = model.Name;
+            restaurant.Capacity = model.Capacity;
+            restaurant.Address = model.Address;
+            restaurant.ImageUrl = model.ImageUrl;
+            restaurant.CategoryId = model.CategoryId;
+            restaurant.CityId = model.CityId;
+            restaurant.StartingTime = model.StartingTime;
+            restaurant.EndingTime = model.EndingTime;
+
+            await this.dBContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<AllRestaurantsViewModel>> GetAllAsync()
         {
             return await dBContext

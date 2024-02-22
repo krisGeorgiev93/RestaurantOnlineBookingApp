@@ -180,15 +180,80 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return this.RedirectToAction("Mine", "Restaurant");
             }
 
-            RestaurantFormModel model = await this._restaurantService
+            try
+            {
+                RestaurantFormModel model = await this._restaurantService
                 .GetRestaurantForEditByIdAsync(id);
 
-            model.Categories = await this._categoryService.GetAllCategoriesAsync();
-            model.Cities = await this._cityService.GetAllCitiesAsync();
+                model.Categories = await this._categoryService.GetAllCategoriesAsync();
+                model.Cities = await this._cityService.GetAllCitiesAsync();
 
-            return this.View(model);
+                return this.View(model);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error";
+                return this.RedirectToAction("Index", "Home");
+            }
+            
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, RestaurantFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Cities = await this._cityService.GetAllCitiesAsync();
+                model.Categories = await this._categoryService.GetAllCategoriesAsync();
+                return this.View(model);
+            }
+            bool restaurantExists = await this._restaurantService.RestaurantExistsById(id);
+            if (!restaurantExists)
+            {
+                this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
+                return this.RedirectToAction("All", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService
+                .OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
+
+                return this.RedirectToAction("Join", "Owner");
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+                .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+
+            try
+            {
+                await this._restaurantService.EditRestaurantById(id, model);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "Unexpected error");
+                model.Categories = await this._categoryService.GetAllCategoriesAsync();
+                model.Cities = await this._cityService.GetAllCitiesAsync();
+
+                return this.View(model);
+            }
+
+            return this.RedirectToAction("Details", "Restaurant", new {id = id});
+        }
+
+
 
 
         // Get currently logged-in user's Id
