@@ -111,14 +111,16 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
-            RestaurantDetailsViewModel? model = await this._restaurantService
-                .GetDetailsByIdAsync(id);
-
-            if (model == null)
+            bool restaurantExists = await this._restaurantService.RestaurantExistsById(id);
+            if (!restaurantExists)
             {
                 this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
                 return this.RedirectToAction("All", "Restaurant");
             }
+
+            RestaurantDetailsViewModel model = await this._restaurantService
+                .GetDetailsByIdAsync(id);
+                      
 
             return View(model);
         }

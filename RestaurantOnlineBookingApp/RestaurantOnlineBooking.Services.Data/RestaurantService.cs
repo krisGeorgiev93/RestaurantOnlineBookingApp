@@ -4,9 +4,8 @@ using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
-using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
-using System.Globalization;
+using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -140,7 +139,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 .ToListAsync();
         }
 
-        public async Task<RestaurantDetailsViewModel?> GetDetailsByIdAsync(string restaurantId)
+        public async Task<RestaurantDetailsViewModel> GetDetailsByIdAsync(string restaurantId)
         {
             Restaurant? restaurant = await this.dBContext
                 .Restaurants
@@ -148,11 +147,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 .Include(r=> r.Owner)
                 .ThenInclude(a=> a.User)
                 .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
-
-            if (restaurant == null)
-            {
-                return null;
-            }
+           
 
             return new RestaurantDetailsViewModel()
             {
@@ -170,6 +165,39 @@ namespace RestaurantOnlineBooking.Services.Data
                     PhoneNumber = restaurant.Owner.PhoneNumber
                 }
             };
+        }
+                
+
+        public async Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId)
+        {
+            Restaurant restaurant = await this
+                .dBContext
+                .Restaurants
+                .Include(r=> r.Category)
+                .FirstAsync(r=> r.Id.ToString() == restaurantId);
+
+            return new RestaurantFormModel()
+            {
+                Name = restaurant.Name,
+                Description = restaurant.Description,
+                Address = restaurant.Address,
+                ImageUrl = restaurant.ImageUrl,
+                Capacity = restaurant.Capacity,
+                StartingTime = restaurant.StartingTime,
+                EndingTime = restaurant.EndingTime,
+                CityId = restaurant.CityId,
+                CategoryId = restaurant.CategoryId
+            };
+
+        }
+
+        public async Task<bool> RestaurantExistsById(string restaurantId)
+        {
+            bool IsExists = await this.dBContext
+                .Restaurants
+                .AnyAsync(r => r.Id.ToString() == restaurantId);
+
+            return IsExists;
         }
     }
 }

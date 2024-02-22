@@ -18,5 +18,9 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<RestaurantDetailsViewModel> GetDetailsByIdAsync(string restaurantId);
 
+        Task<bool> RestaurantExistsById(string restaurantId);
+
+        Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId);
+
     }
 }

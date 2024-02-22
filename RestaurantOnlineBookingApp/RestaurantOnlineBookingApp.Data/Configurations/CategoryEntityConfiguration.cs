@@ -39,7 +39,13 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             category = new Category()
             {
                 Id = 3,
-                Name = "Coffee house"
+                Name = "Coffee 
+                
+                
+                
+                
+                
+                "
             };
             categories.Add(category);
 
