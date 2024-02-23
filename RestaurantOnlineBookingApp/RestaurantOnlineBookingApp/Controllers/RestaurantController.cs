@@ -55,13 +55,19 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
                 return RedirectToAction("Join", "Owner");
             }
-
-            RestaurantFormModel model = new RestaurantFormModel()
+            try
             {
-                Categories = await this._categoryService.GetAllCategoriesAsync(),
-                Cities = await this._cityService.GetAllCitiesAsync()
-            };
-            return View(model);
+                RestaurantFormModel model = new RestaurantFormModel()
+                {
+                    Categories = await this._categoryService.GetAllCategoriesAsync(),
+                    Cities = await this._cityService.GetAllCitiesAsync()
+                };
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }            
         }
 
         [HttpPost]
@@ -92,19 +98,22 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             try
             {
-                string? ownerId = await _ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-                await this._restaurantService.CreateRestaurantAsync(model, ownerId!);
-            }
-            catch (Exception e)
-            {
+                string? ownerId = 
+                    await _ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+              string restaurantId =
+                    await this._restaurantService.CreateAndReturnRestaurantIdAsync(model, ownerId!);
 
+                return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
+
+            }
+            catch (Exception)
+            {
                 this.ModelState.AddModelError(string.Empty, "Unexpected error! Please try again later or contact administrator!");
                 model.Categories = await this._categoryService.GetAllCategoriesAsync();
 
                 return View(model);
             }
 
-            return RedirectToAction("All", "Restaurant");
         }
 
         [HttpGet]
@@ -118,11 +127,18 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return this.RedirectToAction("All", "Restaurant");
             }
 
-            RestaurantDetailsViewModel model = await this._restaurantService
+            try
+            {
+                RestaurantDetailsViewModel model = await this._restaurantService
                 .GetDetailsByIdAsync(id);
-                      
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }
+            
         }
 
         [HttpGet]
@@ -134,18 +150,25 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(userId);
 
-            if (isUserOwner)
+            try
             {
-                string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(userId);
+                if (isUserOwner)
+                {
+                    string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(userId);
 
-                myRestaurants.AddRange(await this._restaurantService.AllByOwnerIdAsync(ownerId!));
+                    myRestaurants.AddRange(await this._restaurantService.AllByOwnerIdAsync(ownerId!));
+                }
+                else
+                {
+                    myRestaurants.AddRange(await this._restaurantService.AllByUserIdAsync(userId));
+                }
+
+                return View(myRestaurants);
             }
-            else
+            catch (Exception)
             {
-                myRestaurants.AddRange(await this._restaurantService.AllByUserIdAsync(userId));
+                return Error();
             }
-
-            return View(myRestaurants);
         }
 
         [HttpGet]
@@ -254,7 +277,11 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
 
-
+        private IActionResult Error()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error";
+            return this.RedirectToAction("Index", "Home");
+        }
 
         // Get currently logged-in user's Id
         private string GetUserId()

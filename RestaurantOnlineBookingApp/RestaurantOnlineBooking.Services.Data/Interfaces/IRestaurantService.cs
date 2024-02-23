@@ -8,7 +8,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     {
         Task<IEnumerable<AllRestaurantsViewModel>> GetAllAsync();
 
-        Task CreateRestaurantAsync(RestaurantFormModel model, string ownerId);
+        Task<string> CreateAndReturnRestaurantIdAsync(RestaurantFormModel model, string ownerId);
 
         Task<AllRestaurantsFilteredServiceModel> AllAsync(AllRestaurantsQueryModel model);
 

@@ -102,10 +102,10 @@ namespace RestaurantOnlineBooking.Services.Data
             return userRestaurants;
         }
 
-        public async Task CreateRestaurantAsync(RestaurantFormModel model, string ownerId)
+        public async Task<string> CreateAndReturnRestaurantIdAsync(RestaurantFormModel model, string ownerId)
         {
 
-            RestaurantOnlineBookingApp.Data.Models.Restaurant restaurant = new RestaurantOnlineBookingApp.Data.Models.Restaurant()
+            Restaurant restaurant = new Restaurant()
             {
                 Name = model.Name,
                 Description = model.Description,
@@ -120,6 +120,8 @@ namespace RestaurantOnlineBooking.Services.Data
             };
             await this.dBContext.Restaurants.AddAsync(restaurant);
             await this.dBContext.SaveChangesAsync();
+
+            return restaurant.Id.ToString();
         }
 
         public async Task EditRestaurantById(string restaurantId, RestaurantFormModel model)
