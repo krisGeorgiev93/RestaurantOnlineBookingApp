@@ -103,6 +103,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
               string restaurantId =
                     await this._restaurantService.CreateAndReturnRestaurantIdAsync(model, ownerId!);
 
+                this.TempData[SuccessMessage] = "Restaurant was added successfully!";
                 return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
 
             }
@@ -273,8 +274,11 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return this.View(model);
             }
 
+            this.TempData[SuccessMessage] = "Restaurant was edited successfully!";
             return this.RedirectToAction("Details", "Restaurant", new {id = id});
         }
+
+
 
 
         private IActionResult Error()
