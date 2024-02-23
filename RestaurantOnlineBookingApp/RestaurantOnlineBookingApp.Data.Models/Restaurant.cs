@@ -42,6 +42,8 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Range(1, 300)]
         public int Capacity { get; set; }
 
+        public bool IsActive { get; set; }
+
         [Required]
         public int CityId { get; set; }
 
