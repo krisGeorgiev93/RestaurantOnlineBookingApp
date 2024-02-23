@@ -15,6 +15,9 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
         {
             builder.HasData(this.UploadRestaurants());
 
+            builder.Property(r => r.IsActive)
+                .HasDefaultValue(true);
+
             builder.
                 HasOne(r=> r.Category)
                 .WithMany(c=> c.Restaurants)

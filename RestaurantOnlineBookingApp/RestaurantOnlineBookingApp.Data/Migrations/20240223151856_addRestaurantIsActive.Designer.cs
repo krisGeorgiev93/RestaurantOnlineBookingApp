@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantOnlineBookingApp.Data;
 
@@ -11,9 +12,10 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    partial class RestaurantBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240223151856_addRestaurantIsActive")]
+    partial class addRestaurantIsActive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -483,9 +485,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -513,7 +513,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("29becd48-333c-462a-834d-5f1810e38e18"),
+                            Id = new Guid("1eac07d2-62d7-488a-92c3-62e737cc792b"),
                             Address = "Ivan Ivanov 26",
                             Capacity = 100,
                             CategoryId = 2,
@@ -528,7 +528,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("674edcab-dd38-44d7-86aa-99ae4ed51ca6"),
+                            Id = new Guid("3f9a6b1f-9f3e-48a6-b704-5650fe494fbc"),
                             Address = "Hristo Botev 76",
                             Capacity = 50,
                             CategoryId = 6,

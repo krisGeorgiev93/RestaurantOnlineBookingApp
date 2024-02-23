@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantOnlineBookingApp.Data;
 
@@ -11,9 +12,10 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    partial class RestaurantBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240223152621_updateIsActive")]
+    partial class updateIsActive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -483,9 +485,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -513,7 +513,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("29becd48-333c-462a-834d-5f1810e38e18"),
+                            Id = new Guid("c02e6a37-6249-4a7b-bb9c-c752ba89c062"),
                             Address = "Ivan Ivanov 26",
                             Capacity = 100,
                             CategoryId = 2,
@@ -521,14 +521,14 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             Description = "Best food from Asia",
                             EndingTime = new TimeSpan(0, 23, 30, 0, 0),
                             ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Asian Buffet",
                             OwnerId = new Guid("c4f8569c-1cda-4b0b-94e4-16b44a4631cf"),
                             StartingTime = new TimeSpan(0, 17, 0, 0, 0)
                         },
                         new
                         {
-                            Id = new Guid("674edcab-dd38-44d7-86aa-99ae4ed51ca6"),
+                            Id = new Guid("4c8c97a8-fb4d-4fc6-888d-56592cb5d422"),
                             Address = "Hristo Botev 76",
                             Capacity = 50,
                             CategoryId = 6,
@@ -536,7 +536,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             Description = "Best chinese in the country",
                             EndingTime = new TimeSpan(0, 23, 0, 0, 0),
                             ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",
-                            IsActive = false,
+                            IsActive = true,
                             Name = "Best Of China",
                             OwnerId = new Guid("c4f8569c-1cda-4b0b-94e4-16b44a4631cf"),
                             StartingTime = new TimeSpan(0, 18, 0, 0, 0)
