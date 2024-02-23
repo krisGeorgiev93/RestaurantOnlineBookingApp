@@ -121,7 +121,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
-            bool restaurantExists = await this._restaurantService.RestaurantExistsById(id);
+            bool restaurantExists = await this._restaurantService.RestaurantExistsByIdAsync(id);
             if (!restaurantExists)
             {
                 this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
@@ -175,7 +175,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            bool restaurantExists = await this._restaurantService.RestaurantExistsById(id);
+            bool restaurantExists = await this._restaurantService.RestaurantExistsByIdAsync(id);
             if (!restaurantExists)
             {
                 this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
@@ -232,7 +232,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 model.Categories = await this._categoryService.GetAllCategoriesAsync();
                 return this.View(model);
             }
-            bool restaurantExists = await this._restaurantService.RestaurantExistsById(id);
+            bool restaurantExists = await this._restaurantService.RestaurantExistsByIdAsync(id);
             if (!restaurantExists)
             {
                 this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
@@ -263,7 +263,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             try
             {
-                await this._restaurantService.EditRestaurantById(id, model);
+                await this._restaurantService.EditRestaurantByIdAsync(id, model);
             }
             catch (Exception)
             {
@@ -277,6 +277,97 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             this.TempData[SuccessMessage] = "Restaurant was edited successfully!";
             return this.RedirectToAction("Details", "Restaurant", new {id = id});
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool restaurantExists = await this._restaurantService.RestaurantExistsByIdAsync(id);
+            if (!restaurantExists)
+            {
+                this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
+                return this.RedirectToAction("All", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService
+                .OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
+
+                return this.RedirectToAction("Join", "Owner");
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+                .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+
+            try
+            {
+                RestaurantDeleteDetailsViewModel model = 
+                    await this._restaurantService.GetRestaurantForDeleteByIdAsync(id);
+
+                return this.View(model);
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(RestaurantDeleteDetailsViewModel model,string id)
+        {
+            bool restaurantExists = await this._restaurantService.RestaurantExistsByIdAsync(id);
+            if (!restaurantExists)
+            {
+                this.TempData[ErrorMessage] = "Restaurant with this id does not exist!";
+                return this.RedirectToAction("All", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService
+                .OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
+
+                return this.RedirectToAction("Join", "Owner");
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+                .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+
+            try
+            {
+                await this._restaurantService.DeleteRestaurantByIdAsync(id);
+
+                this.TempData[WarningMessage] = "The restaurant was successfully deleted!";
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }
+        }
+
 
 
 

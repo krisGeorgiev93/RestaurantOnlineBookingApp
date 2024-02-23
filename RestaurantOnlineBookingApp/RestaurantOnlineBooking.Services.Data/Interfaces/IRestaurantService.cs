@@ -18,13 +18,17 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<RestaurantDetailsViewModel> GetDetailsByIdAsync(string restaurantId);
 
-        Task<bool> RestaurantExistsById(string restaurantId);
+        Task<bool> RestaurantExistsByIdAsync(string restaurantId);
 
         Task<bool> IsOwnerWithIdOwnedRestaurantWithIdAsync(string restaurantId, string ownerId);
 
+        Task<RestaurantDeleteDetailsViewModel> GetRestaurantForDeleteByIdAsync(string restaurantId);
+
+        Task DeleteRestaurantByIdAsync(string restaurantId);
+
         Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId);
 
-        Task EditRestaurantById(string restaurantId, RestaurantFormModel model);
+        Task EditRestaurantByIdAsync(string restaurantId, RestaurantFormModel model);
 
     }
 }

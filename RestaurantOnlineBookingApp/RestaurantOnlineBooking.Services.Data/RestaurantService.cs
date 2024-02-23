@@ -124,7 +124,17 @@ namespace RestaurantOnlineBooking.Services.Data
             return restaurant.Id.ToString();
         }
 
-        public async Task EditRestaurantById(string restaurantId, RestaurantFormModel model)
+        public async Task DeleteRestaurantByIdAsync(string restaurantId)
+        {
+            Restaurant restaurantToDelete = await this.dBContext
+                 .Restaurants
+                 .FirstAsync(r => r.Id.ToString() == restaurantId);
+
+            this.dBContext.Restaurants.Remove(restaurantToDelete);
+            await this.dBContext.SaveChangesAsync();
+        }
+
+        public async Task EditRestaurantByIdAsync(string restaurantId, RestaurantFormModel model)
         {
             Restaurant restaurant = await this.dBContext
                 .Restaurants
@@ -186,7 +196,21 @@ namespace RestaurantOnlineBooking.Services.Data
                 }
             };
         }
-                
+
+        public async Task<RestaurantDeleteDetailsViewModel> GetRestaurantForDeleteByIdAsync(string restaurantId)
+        {
+            Restaurant restaurant = await this.dBContext
+                  .Restaurants
+                  .FirstAsync(r => r.Id.ToString() == restaurantId);
+
+            return new RestaurantDeleteDetailsViewModel()
+            {
+                Name = restaurant.Name,
+                Description = restaurant.Description,
+                Address = restaurant.Address,
+                ImageUrl = restaurant.ImageUrl
+            };
+        }
 
         public async Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId)
         {
@@ -223,7 +247,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 
         }
 
-        public async Task<bool> RestaurantExistsById(string restaurantId)
+        public async Task<bool> RestaurantExistsByIdAsync(string restaurantId)
         {
             bool IsExists = await this.dBContext
                 .Restaurants
