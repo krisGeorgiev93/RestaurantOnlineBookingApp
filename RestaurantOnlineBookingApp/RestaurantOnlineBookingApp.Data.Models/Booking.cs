@@ -11,7 +11,9 @@ namespace RestaurantOnlineBookingApp.Data.Models
     {
         public Guid Id { get; set; }
 
-        public DateTime BookingTime { get; set; }
+        public DateTime BookingDate { get; set; }
+
+        public TimeSpan ReservedTime { get; set; }
 
         public int NumberOfGuests { get; set; }
 
@@ -26,7 +28,12 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid GuestId { get; set; }
 
         [ForeignKey(nameof(GuestId))]
-        public AppUser Guest { get; set; }
+        public AppUser Guest { get; set; } = null!;
+
+        public Guid RestaurantId { get; set; }
+
+        [ForeignKey(nameof(RestaurantId))]
+        public Restaurant Restaurant { get; set; } = null!;
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -7,21 +8,18 @@ using System.Threading.Tasks;
 
 namespace RestaurantOnlineBookingApp.Data.Models
 {
-    public class Menu
+    public class RestaurantGuest
     {
-        public Menu()
-        {
-            this.Meals = new List<Meal>();
-        }
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
+        [Required]
         public Guid RestaurantId { get; set; }
+
         [ForeignKey(nameof(RestaurantId))]
         public Restaurant Restaurant { get; set; } = null!;
 
-        public ICollection<Meal> Meals { get; set; } = null!;
+        [Required]
+        public Guid GuestId { get; set; }
+
+        [ForeignKey(nameof(GuestId))]
+        public AppUser Guest { get; set; } = null!;
     }
 }

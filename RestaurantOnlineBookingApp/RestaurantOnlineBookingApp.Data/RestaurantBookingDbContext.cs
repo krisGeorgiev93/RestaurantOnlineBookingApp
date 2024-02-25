@@ -29,6 +29,8 @@ namespace RestaurantOnlineBookingApp.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<RestaurantGuest>()
+                .HasKey(rg=> new { rg.RestaurantId, rg.GuestId });
 
             Assembly assembly = Assembly.GetAssembly(typeof(RestaurantBookingDbContext))
                 ?? Assembly.GetExecutingAssembly();

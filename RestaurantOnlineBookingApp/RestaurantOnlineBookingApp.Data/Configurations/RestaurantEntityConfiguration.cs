@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestaurantOnlineBookingApp.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantOnlineBookingApp.Data.Configurations
 {
@@ -16,8 +11,8 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             builder.HasData(this.UploadRestaurants());
 
             builder.Property(r => r.IsActive)
-                .HasDefaultValue(true);
-
+                .HasDefaultValue(true);          
+           
             builder.
                 HasOne(r=> r.Category)
                 .WithMany(c=> c.Restaurants)
@@ -34,15 +29,10 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                .HasOne(r => r.City)
                .WithMany(o => o.Restaurants)
                .HasForeignKey(r => r.CityId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Restrict);                   
 
-            builder
-                .HasOne(r => r.Guest)
-                .WithMany(g => g.BookedRestaurants)
-                .HasForeignKey(r => r.GuestId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
+           
+          
         }
 
         private Restaurant[] UploadRestaurants()

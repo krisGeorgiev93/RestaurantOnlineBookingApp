@@ -63,9 +63,15 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid? GuestId { get; set; }
 
         [ForeignKey(nameof(GuestId))]
+        [NotMapped]
         public virtual AppUser? Guest { get; set; }
 
+        public ICollection<RestaurantGuest> RestaurantGuests { get; set; }
+
         public ICollection<Review> Reviews { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; }       
+        public Menu Menu { get; set; }
 
         public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewGrade) / Reviews.Count : 0;
 
