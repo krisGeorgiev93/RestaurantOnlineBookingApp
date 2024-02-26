@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantOnlineBookingApp.Data;
 
@@ -11,9 +12,10 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    partial class RestaurantBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240226183719_ChangeDataSeed2")]
+    partial class ChangeDataSeed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -402,9 +404,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -417,7 +418,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             Description = "The best salad in Greece",
                             ImageUrl = "https://www.themediterraneandish.com/wp-content/uploads/2023/08/Greek-salad-web-story-poster-image.jpeg",
                             Name = "Greek Salad",
-                            Price = 2.50m
+                            Price = 2.5
                         },
                         new
                         {
@@ -425,7 +426,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             Description = "The best salad in Bulgaria",
                             ImageUrl = "https://www.craftbeering.com/wp-content/uploads/2020/07/Shopska-salad-Original-Bulgarian-cucumber-tomato-salad-1-720x720.jpg",
                             Name = "Shopska Salad",
-                            Price = 2.60m
+                            Price = 2.6000000000000001
                         });
                 });
 
@@ -587,7 +588,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1abf47ef-5bd0-4a83-b257-999596434dac"),
+                            Id = new Guid("3354826f-f73b-46aa-bb40-adf709fbcadd"),
                             Address = "Ivan Ivanov 2",
                             Capacity = 100,
                             CategoryId = 2,
@@ -603,7 +604,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("46f86dff-976c-43de-a9ef-0b614b114b9b"),
+                            Id = new Guid("152c8ea1-969f-4fdf-91cc-b8d979ac8d74"),
                             Address = "Hristo Botev 7",
                             Capacity = 50,
                             CategoryId = 6,

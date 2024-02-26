@@ -17,6 +17,11 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Meal
         [Required]
         public string Description { get; set; } = null!;
 
-        public double Price { get; set; }
+        [Required]
+        public string ImageUrl { get; set; } = null!;
+
+        [Required(ErrorMessage = "Price is required")]
+        [RegularExpression(@"^\d+(\.\d{1,2})?|\d+(,\d{1,2})?$", ErrorMessage = "Price must have up to two decimal places")]
+        public decimal Price { get; set; }
     }
 }

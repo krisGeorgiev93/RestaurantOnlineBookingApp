@@ -13,10 +13,30 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<MenuMeal> builder)
         {
-            builder.HasData(
-                 new MenuMeal { MenuId = 1, MealId = 11 }, // MenuId 1 contains MealId 1
-                 new MenuMeal { MenuId = 2, MealId = 22 }  // MenuId 2 contains MealId 2
-             );
+            builder.HasData(this.UploadMenuMeal());
+        }
+
+        private MenuMeal[] UploadMenuMeal()
+        {
+            ICollection<MenuMeal> menuMeals = new HashSet<MenuMeal>();
+
+            MenuMeal menuMeal;
+
+            menuMeal = new MenuMeal()
+            {
+                MenuId = 1,
+                MealId = 11
+            };
+            menuMeals.Add(menuMeal);
+
+            menuMeal = new MenuMeal()
+            {
+                MenuId = 2,
+                MealId = 22
+            };
+            menuMeals.Add(menuMeal);
+
+            return menuMeals.ToArray();
         }
     }
 }

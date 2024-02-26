@@ -55,10 +55,10 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 EndingTime = new TimeSpan(23, 30, 0),
                 ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",
                 Capacity = 100,
-                CityId = 1,         
-                CategoryId = 2,          
-                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF"),
+                CityId = 1,    
                 MenuId = 1,
+                CategoryId = 2,          
+                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")               
             };
 
             restaurants.Add(restaurant);
@@ -72,10 +72,10 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 EndingTime = new TimeSpan(23, 0, 0),
                 ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",
                 Capacity = 50,
-                CityId = 1,             
-                CategoryId = 6,
-                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF"),
+                CityId = 1,        
                 MenuId = 2,
+                CategoryId = 6,
+                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF"),               
             };
 
             restaurants.Add(restaurant);

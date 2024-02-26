@@ -16,6 +16,8 @@
                    class="btn btn-danger">Delete</a>
                 <a asp-controller="Meal" asp-action="Create" asp-route-id="@Model.Id"
                    class="btn btn-primary">Add Meals</a>
+                <a asp-controller="Meal" asp-action="All" asp-route-id="@Model.Id"
+                   class="btn btn-primary">All Meals</a>
                 <p></p>
                 <form asp-controller="Restaurant" asp-action="Leave"
                       asp-route-id="@Model.Id" method="post">
