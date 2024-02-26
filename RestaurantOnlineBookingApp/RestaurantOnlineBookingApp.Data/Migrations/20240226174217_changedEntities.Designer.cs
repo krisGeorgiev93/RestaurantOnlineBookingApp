@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantOnlineBookingApp.Data;
 
@@ -11,9 +12,10 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    partial class RestaurantBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240226174217_changedEntities")]
+    partial class changedEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -408,24 +410,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Meals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 11,
-                            Description = "The best salad in Greece",
-                            ImageUrl = "https://www.themediterraneandish.com/wp-content/uploads/2023/08/Greek-salad-web-story-poster-image.jpeg",
-                            Name = "Greek Salad",
-                            Price = 2.5
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Description = "The best salad in Bulgaria",
-                            ImageUrl = "https://www.craftbeering.com/wp-content/uploads/2020/07/Shopska-salad-Original-Bulgarian-cucumber-tomato-salad-1-720x720.jpg",
-                            Name = "Shopska Salad",
-                            Price = 2.6000000000000001
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Menu", b =>
@@ -447,20 +431,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Menus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Try our delicious food",
-                            Name = "Menu1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Try our delicious food",
-                            Name = "Menu2"
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.MenuMeal", b =>
@@ -476,18 +446,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("MealId");
 
                     b.ToTable("MenuMeals");
-
-                    b.HasData(
-                        new
-                        {
-                            MenuId = 1,
-                            MealId = 11
-                        },
-                        new
-                        {
-                            MenuId = 2,
-                            MealId = 22
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Owner", b =>
@@ -586,8 +544,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f6f5e385-8ae2-473b-88f4-1c36536cae5a"),
-                            Address = "Ivan Ivanov 2",
+                            Id = new Guid("38361ab1-27ea-49dc-96a1-8642266be01e"),
+                            Address = "Ivan Ivanov 26",
                             Capacity = 100,
                             CategoryId = 2,
                             CityId = 1,
@@ -595,15 +553,14 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             EndingTime = new TimeSpan(0, 23, 30, 0, 0),
                             ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",
                             IsActive = false,
-                            MenuId = 1,
                             Name = "Asian Buffet",
                             OwnerId = new Guid("c4f8569c-1cda-4b0b-94e4-16b44a4631cf"),
                             StartingTime = new TimeSpan(0, 17, 0, 0, 0)
                         },
                         new
                         {
-                            Id = new Guid("ff89ec22-93a9-49dd-a6e8-c2862f9d77a7"),
-                            Address = "Hristo Botev 7",
+                            Id = new Guid("b82eb850-4371-4615-8c14-b7930adc7dde"),
+                            Address = "Hristo Botev 76",
                             Capacity = 50,
                             CategoryId = 6,
                             CityId = 1,
@@ -611,7 +568,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             EndingTime = new TimeSpan(0, 23, 0, 0, 0),
                             ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",
                             IsActive = false,
-                            MenuId = 2,
                             Name = "Best Of China",
                             OwnerId = new Guid("c4f8569c-1cda-4b0b-94e4-16b44a4631cf"),
                             StartingTime = new TimeSpan(0, 18, 0, 0, 0)
