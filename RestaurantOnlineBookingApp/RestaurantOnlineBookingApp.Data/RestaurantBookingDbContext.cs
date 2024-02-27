@@ -15,17 +15,13 @@ namespace RestaurantOnlineBookingApp.Data
         }
 
         public DbSet<Booking> Bookings { get; set; }
-
         public DbSet<Category> Categories { get; set; }
-
         public DbSet<Review> Reviews { get; set; }
         public DbSet<City> Cities { get; set; }
-
-        public DbSet<Menu> Menus { get; set; }
-
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Owner> Owners { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

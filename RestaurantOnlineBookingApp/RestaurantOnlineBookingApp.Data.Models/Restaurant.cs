@@ -15,6 +15,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         {
             this.Id = Guid.NewGuid();
             this.Reviews = new List<Review>();
+            this.Meals = new List<Meal>();
         }
         public Guid Id { get; set; }
 
@@ -66,12 +67,13 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [NotMapped]
         public virtual AppUser? Guest { get; set; }
 
+        public ICollection<Meal> Meals { get; set; }
+
         public ICollection<RestaurantGuest> RestaurantGuests { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; }       
-        public Menu Menu { get; set; }
+        public ICollection<Booking> Bookings { get; set; }    
 
         public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewGrade) / Reviews.Count : 0;
 
