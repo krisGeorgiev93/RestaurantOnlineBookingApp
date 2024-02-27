@@ -27,19 +27,10 @@ namespace RestaurantOnlineBookingApp.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Owner> Owners { get; set; }
 
-        public DbSet<MenuMeal> MenuMeals { get; set; }
-
-        public DbSet<RestaurantGuest> RestaurantGuests { get; set; }
-
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<RestaurantGuest>()
                 .HasKey(rg=> new { rg.RestaurantId, rg.GuestId });
-
-            builder.Entity<MenuMeal>()
-                .HasKey(mm => new { mm.MenuId, mm.MealId });
 
             Assembly assembly = Assembly.GetAssembly(typeof(RestaurantBookingDbContext))
                 ?? Assembly.GetExecutingAssembly();

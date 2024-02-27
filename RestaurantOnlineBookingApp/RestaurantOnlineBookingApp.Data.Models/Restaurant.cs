@@ -70,12 +70,8 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         public ICollection<Review> Reviews { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; }
-
-        public int? MenuId { get; set; }
-
-        [ForeignKey(nameof(MenuId))]
-        public virtual Menu? Menu { get; set; }
+        public ICollection<Booking> Bookings { get; set; }       
+        public Menu Menu { get; set; }
 
         public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewGrade) / Reviews.Count : 0;
 

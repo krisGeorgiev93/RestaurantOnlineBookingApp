@@ -19,8 +19,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Range(0,10)]
         public int ReviewGrade { get; set; }
 
-        public string Comment { get; set; }
-
         public Guid GuestId { get; set; }
 
         [ForeignKey(nameof(GuestId))]

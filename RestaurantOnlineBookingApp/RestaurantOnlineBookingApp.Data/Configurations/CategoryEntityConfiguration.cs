@@ -13,7 +13,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.HasData(this.UploadCategories());
+           builder.HasData(this.UploadCategories());
         }
 
         private Category[] UploadCategories()

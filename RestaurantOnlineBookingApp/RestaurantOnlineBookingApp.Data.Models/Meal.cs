@@ -9,10 +9,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
 {
     public class Meal
     {
-        public Meal()
-        {
-            this.MenuMeals = new List<MenuMeal>();
-        }
         public int Id { get; set; }
 
         [Required]
@@ -21,11 +17,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string Description { get; set; } = null!;
 
         [Required]
-        public decimal Price { get; set; }
-
-        [Required]
-        public string ImageUrl { get; set; } = null!;
-
-        public ICollection<MenuMeal> MenuMeals { get; set; } = null!;
+        public double Price { get; set; }
     }
 }

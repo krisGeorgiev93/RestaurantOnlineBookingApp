@@ -8,7 +8,6 @@ namespace RestaurantOnlineBookingApp.Web
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
-    using System.Globalization;
 
     public class Program
     {
@@ -20,13 +19,6 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddDbContext<RestaurantBookingDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            //Culture Settings:   application's culture settings are configured
-            //correctly to accept both . and , as decimal separators.
-            var cultureInfo = new CultureInfo("en-US");
-            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
-            cultureInfo.NumberFormat.NumberGroupSeparator = ",";
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>
             {
@@ -47,7 +39,6 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IOwnerService,OwnerService>();
             builder.Services.AddScoped<ICityService,CityService>();
-            builder.Services.AddScoped<IMealService,MealService>();
 
 
             WebApplication app = builder.Build();
