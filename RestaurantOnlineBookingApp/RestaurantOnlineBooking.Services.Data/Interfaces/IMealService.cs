@@ -12,5 +12,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task CreateAsync(MealFormViewModel mealFormViewModel);
 
+        Task<IEnumerable<MealAllViewModel>> GetAllMealsAsync();
+
+
     }
 }

@@ -32,5 +32,22 @@ namespace RestaurantOnlineBooking.Services.Data
             await this.dBContext.Meals.AddAsync(meal);
             await this.dBContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<MealAllViewModel>> GetAllMealsAsync()
+        {
+            var meals = await this.dBContext
+                 .Meals
+                .Select(m => new MealAllViewModel()
+                {
+                    Id = m.Id.ToString(),
+                    Name = m.Name,
+                    Description = m.Description,
+                    Price = m.Price.ToString(),
+                    ImageUrl = m.ImageUrl,
+                })
+                .ToListAsync();
+
+            return meals;
+        }
     }
 }

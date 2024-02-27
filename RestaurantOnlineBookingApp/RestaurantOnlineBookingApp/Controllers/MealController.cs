@@ -34,7 +34,15 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return RedirectToAction("Mine", "Restaurant");
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            var meals = await this._mealService.GetAllMealsAsync();
+
+            return View(meals);
+
+        }
+
 
         private IActionResult Error()
         {
