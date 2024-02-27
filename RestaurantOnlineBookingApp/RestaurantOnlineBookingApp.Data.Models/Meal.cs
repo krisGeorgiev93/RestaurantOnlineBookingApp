@@ -20,6 +20,9 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         public double Price { get; set; }
 
+        [Required]
+        public string ImageUrl { get; set; } = null!;
+
         public Guid RestaurantId { get; set; }
 
         [ForeignKey(nameof(RestaurantId))]

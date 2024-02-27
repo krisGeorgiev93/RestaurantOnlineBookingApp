@@ -218,8 +218,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 this.TempData[ErrorMessage] = "Unexpected error";
                 return this.RedirectToAction("Index", "Home");
-            }
-            
+            }           
 
         }
 
@@ -367,9 +366,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return this.Error();
             }
         }
-
-
-
 
 
         private IActionResult Error()
