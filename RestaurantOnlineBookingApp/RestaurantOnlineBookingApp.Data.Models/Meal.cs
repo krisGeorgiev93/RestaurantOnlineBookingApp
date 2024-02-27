@@ -23,9 +23,9 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         public string ImageUrl { get; set; } = null!;
 
-        public Guid RestaurantId { get; set; }
+        public Guid? RestaurantId { get; set; }
 
-        [ForeignKey(nameof(RestaurantId))]
-        public Restaurant Restaurant { get; set; } = null!;
+        [ForeignKey(nameof(RestaurantId))]       
+        public Restaurant? Restaurant { get; set; } 
     }
 }

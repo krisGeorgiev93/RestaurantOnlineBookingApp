@@ -1,0 +1,25 @@
+﻿@model MealFormViewModel
+@using RestaurantOnlineBookingApp.Web.ViewModels.Meal
+
+<h1>Add Meal</h1>
+<form method="post" action="Create" class="mt-5">
+    <input type="hidden" asp-for="Id" /> <!-- Add a hidden input field for the Id -->
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Description</label>
+        <input type="text" class="form-control" asp-for="Description">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">ImageUrl</label>
+        <input type="text" class="form-control" asp-for="ImageUrl">
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

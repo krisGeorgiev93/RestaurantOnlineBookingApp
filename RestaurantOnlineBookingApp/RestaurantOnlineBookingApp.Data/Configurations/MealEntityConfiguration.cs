@@ -4,6 +4,7 @@ using RestaurantOnlineBookingApp.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,12 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
         public void Configure(EntityTypeBuilder<Meal> builder)
         {
             builder.HasData(this.UploadMeals());
+
+            builder
+            .HasOne(m => m.Restaurant)
+            .WithMany(r => r.Meals)
+            .HasForeignKey(m => m.RestaurantId);
+
         }
 
         private Meal[] UploadMeals()
