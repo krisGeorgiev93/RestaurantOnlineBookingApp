@@ -19,10 +19,10 @@
                       asp-route-id="@Model.Id" method="post">
                     <input class="btn btn-primary" type="submit" value="Leave" />
                 </form>
-                <a asp-controller="Meal" asp-action="Create" asp-route-id="@Model.Id"
-                   class="btn btn-primary">Create Meals</a>
-                <a asp-controller="Meal" asp-action="All" asp-route-id="@Model.Id"
-                   class="btn btn-primary">All Meals</a>
+
+                <!-- Button to Add Meal -->
+                <a asp-controller="Meal" asp-action="AddToRestaurant" asp-route-restaurantId="@Model.Id"
+                   class="btn btn-info">Add Meal</a>
             }
         </div>
     </div>

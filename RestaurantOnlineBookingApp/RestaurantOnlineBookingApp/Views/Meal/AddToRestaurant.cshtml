@@ -1,0 +1,37 @@
+﻿@model RestaurantOnlineBookingApp.Web.ViewModels.Meal.MealFormViewModel
+
+<form asp-controller="Meal" asp-action="AddToRestaurant" method="post">
+    <!-- Meal Name -->
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="Name" required>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" name="Description" rows="3" required></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <!-- Image URL -->
+    <div class="form-group">
+        <label for="imageUrl">Image URL:</label>
+        <input type="text" class="form-control" id="imageUrl" name="ImageUrl" required>
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="text" class="form-control" id="price" name="Price" required>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <!-- Hidden Field for RestaurantId -->
+    <input type="hidden" name="RestaurantId" value="@Model.RestaurantId">
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Add Meal to Restaurant</button>
+</form>

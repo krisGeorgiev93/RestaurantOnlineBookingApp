@@ -23,5 +23,8 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Meal
         [Required(ErrorMessage = "Price is required")]
         [RegularExpression(@"^\d+(\.\d{1,2})?|\d+(,\d{1,2})?$", ErrorMessage = "Price must have up to two decimal places")]
         public double Price { get; set; }
+
+        [Required]
+        public Guid RestaurantId { get; set; }
     }
 }

@@ -18,7 +18,36 @@ namespace RestaurantOnlineBooking.Services.Data
         public MealService(RestaurantBookingDbContext dBContext)
         {
             this.dBContext = dBContext;
-        }        
+        }
+
+        public async Task AddMealToRestaurantAsync(string restaurantId, MealFormViewModel mealViewModel)
+        {
+            if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
+            {
+                throw new ArgumentException("Invalid restaurantId");
+            }
+
+            var restaurant = await this.dBContext.Restaurants.FindAsync(restaurantGuid);
+
+            if (restaurant == null)
+            {
+                throw new InvalidOperationException("Restaurant not found.");
+            }
+
+            var meal = new Meal
+            {
+                Name = mealViewModel.Name,
+                Description = mealViewModel.Description,
+                Price = mealViewModel.Price,
+                ImageUrl = mealViewModel.ImageUrl,
+                RestaurantId = restaurantGuid // Associate the meal with the restaurant
+            };
+
+            restaurant.Meals.Add(meal);
+            await dBContext.SaveChangesAsync();
+        }
+
+
         public async Task CreateAsync(MealFormViewModel mealFormViewModel)
         {
             Meal meal = new Meal()
