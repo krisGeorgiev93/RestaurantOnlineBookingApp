@@ -83,6 +83,28 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                var mealForDelete = await this._mealService.GetMealByIdAsync(id);
+                if (mealForDelete == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var restaurantId = mealForDelete.RestaurantId;
+
+                await this._mealService.DeleteMealAsync(id);
+                return RedirectToAction("Menu", "Restaurant", new { restaurantId });
+            }
+            catch (Exception)
+            {
+                return Error();
+            }
+        }
+
         //[HttpGet]
         //public async Task<IActionResult> MealsByRestaurant(string restaurantId)
         //{

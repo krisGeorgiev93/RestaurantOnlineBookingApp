@@ -62,6 +62,21 @@ namespace RestaurantOnlineBooking.Services.Data
             await this.dBContext.SaveChangesAsync();
         }
 
+        public async Task DeleteMealAsync(string mealId)
+        {
+            var meal = await this.dBContext
+                  .Meals.FirstAsync(m => m.Id.ToString() == mealId);
+
+            if (meal == null)
+            {
+                throw new InvalidOperationException("Meal not found.");
+            }
+
+            this.dBContext.Meals.Remove(meal);
+
+            await this.dBContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<MealAllViewModel>> GetAllMealsAsync()
         {
             var meals = await this.dBContext
@@ -85,6 +100,29 @@ namespace RestaurantOnlineBooking.Services.Data
                 .Meals
                 .Where(m => m.RestaurantId.ToString() == restaurantId)
                 .ToListAsync();
+        }
+
+        public async Task<MealFormViewModel> GetMealByIdAsync(string mealId)
+        {
+            var meal = await this.dBContext.Meals.FirstAsync(m => m.Id.ToString() == mealId);
+
+            if (meal == null)
+            {
+                throw new InvalidOperationException("Meal not found.");
+            }
+
+            var mealForm = new MealFormViewModel()
+            {
+                Id = meal.Id,
+                Name = meal.Name,
+                Description = meal.Description,
+                ImageUrl = meal.ImageUrl,
+                Price = meal.Price,
+                RestaurantId = (Guid)meal.RestaurantId
+            };
+
+            return mealForm;
+
         }
     }
 }
