@@ -78,5 +78,13 @@ namespace RestaurantOnlineBooking.Services.Data
 
             return meals;
         }
+
+        public async Task<IEnumerable<Meal>> GetAllMealsForRestaurantByIdAsync(Guid restaurantId)
+        {
+            return await this.dBContext
+                .Meals
+                .Where(m => m.RestaurantId == restaurantId)
+                .ToListAsync();
+        }
     }
 }

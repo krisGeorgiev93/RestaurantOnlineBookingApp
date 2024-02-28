@@ -1,4 +1,5 @@
-﻿using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+﻿using RestaurantOnlineBookingApp.Data.Models;
+using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task<IEnumerable<MealAllViewModel>> GetAllMealsAsync();
 
         Task AddMealToRestaurantAsync(string restaurantId, MealFormViewModel mealViewModel);
+
+        Task<IEnumerable<Meal>> GetAllMealsForRestaurantByIdAsync(Guid restaurantId);
 
 
     }

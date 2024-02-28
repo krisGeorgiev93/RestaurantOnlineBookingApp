@@ -1,0 +1,35 @@
+﻿@model List<MealAllViewModel>
+@using RestaurantOnlineBookingApp.Web.ViewModels.Meal
+
+<h1 style="color: white;">All Meals in Restaurant</h1>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="color: white;">Name</th>
+                <th style="color: white;">Description</th>
+                <th style="color: white;">Image</th>
+                <th style="color: white;">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meal in Model)
+            {
+                <tr>
+                    <td style="color: white;">@meal.Name</td>
+                    <td style="color: white;">@meal.Description</td>
+                    <td>
+                        <img src="@meal.ImageUrl" alt="Meal Image" style="max-width: 100px; max-height: 100px;" />
+                    </td>
+                    <td style="color: white;">@meal.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p style="color: white;">No meals found in this restaurant.</p>
+}

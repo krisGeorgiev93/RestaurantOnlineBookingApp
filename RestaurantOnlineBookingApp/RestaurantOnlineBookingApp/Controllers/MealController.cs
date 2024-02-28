@@ -75,12 +75,38 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 await _mealService.AddMealToRestaurantAsync(model.RestaurantId.ToString(), model);
                 return RedirectToAction("Details", "Restaurant", new { id = model.RestaurantId });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception or handle it appropriately
                 return this.Error();
             }
         }
+
+
+        public async Task<IActionResult> Menu(string restaurantId)
+        {
+            if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
+            {
+                // Handle invalid restaurantId
+                return BadRequest("Invalid restaurantId");
+            }
+
+            var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantGuid);
+            var mealViewModels = meals.Select(m => new MealAllViewModel
+            {
+                Id = m.Id.ToString(),
+                Name = m.Name,
+                Description = m.Description,
+                ImageUrl = m.ImageUrl,
+                Price = m.Price.ToString()
+            }).ToList();
+
+            return View(mealViewModels);
+        }
+
+
+
+
 
 
         private IActionResult Error()
