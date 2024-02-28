@@ -83,7 +83,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> MealsByRestaurant(string restaurantId)
         {
             if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
@@ -104,7 +104,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             return View(mealViewModels);
         }
-
 
 
 

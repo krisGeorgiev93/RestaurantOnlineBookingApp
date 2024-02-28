@@ -10,4 +10,9 @@
     <ProjectReference Include="..\RestaurantOnlineBooking.Common\RestaurantOnlineBookingApp.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Event\" />
+    <Folder Include="Booking\" />
+  </ItemGroup>
+
 </Project>
