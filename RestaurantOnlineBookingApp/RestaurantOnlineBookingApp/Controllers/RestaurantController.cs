@@ -388,7 +388,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                     Name = m.Name,
                     Description = m.Description,
                     ImageUrl = m.ImageUrl,
-                    Price = m.Price.ToString()
+                    Price = m.Price
                 });
 
                 return View(mealViewModels);

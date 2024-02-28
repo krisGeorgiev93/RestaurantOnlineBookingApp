@@ -16,7 +16,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Meal
 
         public string ImageUrl { get; set; }
 
-        public string Price { get; set; }
+        public double Price { get; set; }
 
     }
 }

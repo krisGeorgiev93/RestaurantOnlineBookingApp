@@ -83,27 +83,27 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> MealsByRestaurant(string restaurantId)
-        {
-            if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
-            {
-                // Handle invalid restaurantId
-                return BadRequest("Invalid restaurantId");
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> MealsByRestaurant(string restaurantId)
+        //{
+        //    if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
+        //    {
+        //        // Handle invalid restaurantId
+        //        return BadRequest("Invalid restaurantId");
+        //    }
 
-            var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantGuid.ToString());
-            var mealViewModels = meals.Select(m => new MealAllViewModel
-            {
-                Id = m.Id.ToString(),
-                Name = m.Name,
-                Description = m.Description,
-                ImageUrl = m.ImageUrl,
-                Price = m.Price.ToString()
-            }).ToList();
+        //    var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantGuid.ToString());
+        //    var mealViewModels = meals.Select(m => new MealAllViewModel
+        //    {
+        //        Id = m.Id.ToString(),
+        //        Name = m.Name,
+        //        Description = m.Description,
+        //        ImageUrl = m.ImageUrl,
+        //        Price = m.Price.ToString()
+        //    }).ToList();
 
-            return View(mealViewModels);
-        }
+        //    return View(mealViewModels);
+        //}
 
 
 

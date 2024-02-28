@@ -71,7 +71,7 @@ namespace RestaurantOnlineBooking.Services.Data
                     Id = m.Id.ToString(),
                     Name = m.Name,
                     Description = m.Description,
-                    Price = m.Price.ToString(),
+                    Price = m.Price,
                     ImageUrl = m.ImageUrl,
                 })
                 .ToListAsync();
