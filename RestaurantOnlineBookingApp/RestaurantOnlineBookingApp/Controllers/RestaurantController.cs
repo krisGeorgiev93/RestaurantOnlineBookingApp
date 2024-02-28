@@ -4,6 +4,7 @@ using RestaurantOnlineBooking.Services.Data;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
+using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 using System.Security.Claims;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -17,16 +18,18 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IRestaurantService _restaurantService;
         private readonly ICityService _cityService;
+        private readonly IMealService _mealService;
         private readonly RestaurantBookingDbContext _dbContext;
 
         public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
-            RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService)
+            RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService)
         {
             _ownerService = ownerService;
             _categoryService = categoryService;
             _restaurantService = restaurantService;
             _cityService = cityService;
             _dbContext = dbContext;
+            _mealService = mealService;
         }
 
         [HttpGet]
@@ -365,6 +368,36 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 return this.Error();
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Menu(string restaurantId)
+        {
+            var restaurant = await _restaurantService.GetRestaurantByIdAsync(restaurantId);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantId);
+                var mealViewModels = meals.Select(m => new MealAllViewModel
+                {
+                    Id = m.Id.ToString(),
+                    Name = m.Name,
+                    Description = m.Description,
+                    ImageUrl = m.ImageUrl,
+                    Price = m.Price.ToString()
+                });
+
+                return View(mealViewModels);
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }
+            
         }
 
 

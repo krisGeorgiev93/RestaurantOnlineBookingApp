@@ -44,7 +44,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddToRestaurant(string restaurantId)
+        public IActionResult AddMeal(string restaurantId)
         {
             if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
             {
@@ -63,7 +63,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToRestaurant(MealFormViewModel model)
+        public async Task<IActionResult> AddMeal(MealFormViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +73,8 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             try
             {
                 await _mealService.AddMealToRestaurantAsync(model.RestaurantId.ToString(), model);
-                return RedirectToAction("Details", "Restaurant", new { id = model.RestaurantId });
+                // Redirect to the menu of the restaurant that the meal was added to
+                return RedirectToAction("Menu", "Restaurant", new { restaurantId = model.RestaurantId });
             }
             catch (Exception)
             {
@@ -83,7 +84,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Menu(string restaurantId)
+        public async Task<IActionResult> MealsByRestaurant(string restaurantId)
         {
             if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
             {
@@ -91,7 +92,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return BadRequest("Invalid restaurantId");
             }
 
-            var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantGuid);
+            var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantGuid.ToString());
             var mealViewModels = meals.Select(m => new MealAllViewModel
             {
                 Id = m.Id.ToString(),

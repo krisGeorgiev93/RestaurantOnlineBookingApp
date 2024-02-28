@@ -79,11 +79,11 @@ namespace RestaurantOnlineBooking.Services.Data
             return meals;
         }
 
-        public async Task<IEnumerable<Meal>> GetAllMealsForRestaurantByIdAsync(Guid restaurantId)
+        public async Task<IEnumerable<Meal>> GetAllMealsForRestaurantByIdAsync(string restaurantId)
         {
             return await this.dBContext
                 .Meals
-                .Where(m => m.RestaurantId == restaurantId)
+                .Where(m => m.RestaurantId.ToString() == restaurantId)
                 .ToListAsync();
         }
     }

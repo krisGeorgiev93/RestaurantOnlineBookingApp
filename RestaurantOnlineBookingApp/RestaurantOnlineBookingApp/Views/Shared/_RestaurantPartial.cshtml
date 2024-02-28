@@ -21,11 +21,13 @@
                 </form>
 
                 <!-- Button to Add Meal -->
-                <a asp-controller="Meal" asp-action="AddToRestaurant" asp-route-restaurantId="@Model.Id"
+                <a asp-controller="Meal" asp-action="AddMeal" asp-route-restaurantId="@Model.Id"
                    class="btn btn-info">Add Meal</a>
-                <!-- Button to See the Menu -->
-                <a asp-controller="Meal" asp-action="Menu" asp-route-restaurantId="@Model.Id"
-                   class="btn btn-info">Restaurant Menu</a>
+                <!-- Button to See the Meals by Restaurant Id -->
+                <a asp-controller="Meal" asp-action="MealsByRestaurant" asp-route-restaurantId="@Model.Id"
+                   class="btn btn-info">Restaurant Meals</a>
+                <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
+
             }
         </div>
     </div>

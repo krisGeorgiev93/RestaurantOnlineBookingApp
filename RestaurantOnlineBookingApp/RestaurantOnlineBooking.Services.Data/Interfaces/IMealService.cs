@@ -17,7 +17,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task AddMealToRestaurantAsync(string restaurantId, MealFormViewModel mealViewModel);
 
-        Task<IEnumerable<Meal>> GetAllMealsForRestaurantByIdAsync(Guid restaurantId);
+        Task<IEnumerable<Meal>> GetAllMealsForRestaurantByIdAsync(string restaurantId);
 
 
     }

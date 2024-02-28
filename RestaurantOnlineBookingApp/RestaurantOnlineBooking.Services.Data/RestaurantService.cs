@@ -202,6 +202,12 @@ namespace RestaurantOnlineBooking.Services.Data
             };
         }
 
+        public async Task<Restaurant> GetRestaurantByIdAsync(string restaurantId)
+        {
+            // Retrieve the restaurant by its ID
+            return await dBContext.Restaurants.FirstOrDefaultAsync(r=> r.Id.ToString() == restaurantId);
+        }
+
         public async Task<RestaurantDeleteDetailsViewModel> GetRestaurantForDeleteByIdAsync(string restaurantId)
         {
             Restaurant restaurant = await this.dBContext
