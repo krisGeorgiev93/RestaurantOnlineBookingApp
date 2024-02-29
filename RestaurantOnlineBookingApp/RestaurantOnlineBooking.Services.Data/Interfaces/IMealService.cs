@@ -1,5 +1,6 @@
 ﻿using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 {
     public interface IMealService
     {
-
         Task CreateAsync(MealFormViewModel mealFormViewModel);
 
         Task<IEnumerable<MealAllViewModel>> GetAllMealsAsync();
@@ -22,6 +22,11 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task DeleteMealAsync(string mealId);
 
         Task<MealFormViewModel> GetMealByIdAsync(string mealId);
+
+        Task EditMealAsync(MealFormViewModel model);
+
+
+
 
 
     }

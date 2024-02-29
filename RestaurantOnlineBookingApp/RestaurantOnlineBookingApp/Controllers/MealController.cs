@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+using System.Security.Claims;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
@@ -11,7 +12,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
         public MealController(IMealService mealService)
         {
-            _mealService = mealService;
+            _mealService = mealService;           
         }
 
         [HttpGet]
@@ -105,6 +106,48 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var meal = await this._mealService.GetMealByIdAsync(id);
+
+            if (meal == null)
+            {
+                return NotFound();
+            }
+
+            var mealModel = new MealFormViewModel()
+            {
+                Id = meal.Id,
+                Name = meal.Name,
+                Description = meal.Description,
+                ImageUrl = meal.ImageUrl,
+                Price = meal.Price,
+                RestaurantId = meal.RestaurantId
+            };
+
+            return View(mealModel);
+        }
+      
+        public async Task<IActionResult> Edit(MealFormViewModel mealModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(mealModel);
+            }
+
+            try
+            {
+                await this._mealService.EditMealAsync(mealModel);
+                var restaurantId = mealModel.RestaurantId;
+                return RedirectToAction("Menu", "Restaurant", new { restaurantId });
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }
+        }
+
         //[HttpGet]
         //public async Task<IActionResult> MealsByRestaurant(string restaurantId)
         //{
@@ -129,6 +172,9 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
 
 
+        // Get currently logged-in user's Id
+        private string GetUserId()
+           => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 
         private IActionResult Error()

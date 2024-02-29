@@ -3,11 +3,13 @@ using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RestaurantOnlineBookingApp.Common.ValidationConstants;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -77,6 +79,24 @@ namespace RestaurantOnlineBooking.Services.Data
             await this.dBContext.SaveChangesAsync();
         }
 
+        public async Task EditMealAsync(MealFormViewModel model)
+        {
+            var meal = await this.dBContext.Meals.FindAsync(model.Id);
+
+            if (meal == null)
+            {
+                throw new InvalidOperationException("Meal not found.");
+            }
+
+            meal.Name = model.Name;
+            meal.Description = model.Description;
+            meal.Price = model.Price;
+            meal.ImageUrl = model.ImageUrl;
+            meal.RestaurantId = model.RestaurantId;
+
+            await this.dBContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<MealAllViewModel>> GetAllMealsAsync()
         {
             var meals = await this.dBContext
@@ -124,5 +144,7 @@ namespace RestaurantOnlineBooking.Services.Data
             return mealForm;
 
         }
+
+       
     }
 }

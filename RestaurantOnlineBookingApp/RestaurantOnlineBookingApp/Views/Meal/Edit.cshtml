@@ -1,0 +1,38 @@
+﻿@model MealFormViewModel
+@using RestaurantOnlineBookingApp.Web.ViewModels.Meal
+
+<h1>Edit Meal</h1>
+
+@if (ViewData["ErrorMessage"] != null)
+{
+        <div class="alert alert-danger" role="alert">
+        @ViewData["ErrorMessage"]
+        </div>
+}
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="RestaurantId" /> <!--include a hidden field for the RestaurantId because of Redirection to the menu of this Restaurant-->
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" step="any" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Menu" asp-controller="Restaurant" asp-route-restaurantId="@Model.RestaurantId" class="btn btn-secondary">Cancel</a>
+</form>
