@@ -25,6 +25,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task EditMealAsync(MealFormViewModel model);
 
+        Task<bool> MealExistsByIdAsync(string mealId);
 
 
 

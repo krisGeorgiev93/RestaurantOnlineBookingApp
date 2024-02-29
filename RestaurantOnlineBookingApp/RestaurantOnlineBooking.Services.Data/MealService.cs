@@ -145,6 +145,13 @@ namespace RestaurantOnlineBooking.Services.Data
 
         }
 
-       
+        public async Task<bool> MealExistsByIdAsync(string mealId)
+        {
+            bool IsExists = await this.dBContext
+                .Meals
+                .AnyAsync(r => r.Id.ToString() == mealId);
+
+            return IsExists;
+        }
     }
 }

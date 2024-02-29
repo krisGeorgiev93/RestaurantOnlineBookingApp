@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
+using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
 using System.Security.Claims;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -9,11 +10,15 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     public class MealController : Controller
     {
         private readonly IMealService _mealService;
-
-        public MealController(IMealService mealService)
+        private readonly IOwnerService _ownerService;
+        private readonly IRestaurantService _restaurantService;
+        public MealController(IMealService mealService, IOwnerService ownerService, IRestaurantService restaurantService)
         {
             _mealService = mealService;           
+            _ownerService = ownerService;
+            _restaurantService = restaurantService;
         }
+
 
         [HttpGet]
         public IActionResult Create()
@@ -109,28 +114,98 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
+            bool mealExists = await this._mealService.MealExistsByIdAsync(id);
+
+            if (!mealExists)
+            {
+                TempData[ErrorMessage] = "Meal with the provided id does not exist!";
+
+                return RedirectToAction("Mine", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "Only owners can edit the restaurant menu information!";
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+                        
+
             var meal = await this._mealService.GetMealByIdAsync(id);
 
             if (meal == null)
             {
-                return NotFound();
+                TempData[ErrorMessage] = "Meal with the provided id does not exist!";
+                return RedirectToAction("Mine", "Restaurant");
             }
 
-            var mealModel = new MealFormViewModel()
-            {
-                Id = meal.Id,
-                Name = meal.Name,
-                Description = meal.Description,
-                ImageUrl = meal.ImageUrl,
-                Price = meal.Price,
-                RestaurantId = meal.RestaurantId
-            };
+            string restaurantId = meal.RestaurantId.ToString();
 
-            return View(mealModel);
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+               .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+            try
+            {
+                var mealModel = new MealFormViewModel()
+                {
+                    Id = meal.Id,
+                    Name = meal.Name,
+                    Description = meal.Description,
+                    ImageUrl = meal.ImageUrl,
+                    Price = meal.Price,
+                    RestaurantId = meal.RestaurantId
+                };
+
+                return View(mealModel);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error";
+                return this.RedirectToAction("Index", "Home");
+            }
+           
         }
-      
+
+        [HttpPost]
         public async Task<IActionResult> Edit(MealFormViewModel mealModel)
         {
+            bool mealExists = await this._mealService.MealExistsByIdAsync(mealModel.Id.ToString());
+
+            if (!mealExists)
+            {
+                TempData[ErrorMessage] = "Meal with the provided id does not exist!";
+
+                return RedirectToAction("Mine", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "Only owners can edit the restaurant menu information!";
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            string restaurantId = mealModel.RestaurantId.ToString();
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+               .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(mealModel);
@@ -138,14 +213,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             try
             {
-                await this._mealService.EditMealAsync(mealModel);
-                var restaurantId = mealModel.RestaurantId;
-                return RedirectToAction("Menu", "Restaurant", new { restaurantId });
+                await this._mealService.EditMealAsync(mealModel);            
             }
             catch (Exception)
             {
-                return this.Error();
+                this.ModelState.AddModelError(string.Empty, "Unexpected error");
             }
+            this.TempData[SuccessMessage] = "Menu was edited successfully!";          
+            return RedirectToAction("Menu", "Restaurant", new { restaurantId });
         }
 
         //[HttpGet]
