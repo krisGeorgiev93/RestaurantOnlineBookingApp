@@ -55,8 +55,8 @@ namespace RestaurantOnlineBookingApp.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseExceptionHandler("/Home/Error/500");
+                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
             }
 
             app.UseHttpsRedirection();
