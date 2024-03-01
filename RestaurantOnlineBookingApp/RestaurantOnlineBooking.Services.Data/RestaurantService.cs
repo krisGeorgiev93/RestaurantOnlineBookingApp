@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBooking.Services.Data.Models;
+using RestaurantOnlineBooking.Services.Data.Models.Statistics;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
@@ -45,7 +46,7 @@ namespace RestaurantOnlineBooking.Services.Data
             }
 
             IEnumerable<RestaurantAllViewModel> allRestaurants = await restaurantQuery
-                .Where(r=> r.IsActive)
+                .Where(r => r.IsActive)
                 .Skip((model.CurrentPage - 1) * model.RestaurantsPerPage)
                 .Take(model.RestaurantsPerPage)
                 .Select(r => new RestaurantAllViewModel
@@ -129,7 +130,7 @@ namespace RestaurantOnlineBooking.Services.Data
         {
             Restaurant restaurantToDelete = await this.dBContext
                  .Restaurants
-                 .Where(r=> r.IsActive)
+                 .Where(r => r.IsActive)
                  .FirstAsync(r => r.Id.ToString() == restaurantId);
 
             restaurantToDelete.IsActive = false;
@@ -141,7 +142,7 @@ namespace RestaurantOnlineBooking.Services.Data
         {
             Restaurant restaurant = await this.dBContext
                 .Restaurants
-                .Where(r=> r.IsActive)
+                .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
             restaurant.Name = model.Name;
@@ -177,12 +178,12 @@ namespace RestaurantOnlineBooking.Services.Data
         {
             Restaurant? restaurant = await this.dBContext
                 .Restaurants
-                .Include(r=> r.Category)
-                .Include(r=> r.Owner)
-                .ThenInclude(a=> a.User)
-                .Where(r=> r.IsActive)
+                .Include(r => r.Category)
+                .Include(r => r.Owner)
+                .ThenInclude(a => a.User)
+                .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
-           
+
 
             return new RestaurantDetailsViewModel()
             {
@@ -205,14 +206,14 @@ namespace RestaurantOnlineBooking.Services.Data
         public async Task<Restaurant> GetRestaurantByIdAsync(string restaurantId)
         {
             // Retrieve the restaurant by its ID
-            return await dBContext.Restaurants.FirstOrDefaultAsync(r=> r.Id.ToString() == restaurantId);
+            return await dBContext.Restaurants.FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
         }
 
         public async Task<RestaurantDeleteDetailsViewModel> GetRestaurantForDeleteByIdAsync(string restaurantId)
         {
             Restaurant restaurant = await this.dBContext
                   .Restaurants
-                  .Where(r=> r.IsActive)
+                  .Where(r => r.IsActive)
                   .FirstAsync(r => r.Id.ToString() == restaurantId);
 
             return new RestaurantDeleteDetailsViewModel()
@@ -229,9 +230,9 @@ namespace RestaurantOnlineBooking.Services.Data
             Restaurant restaurant = await this
                 .dBContext
                 .Restaurants
-                .Include(r=> r.Category)
-                .Where(r=> r.IsActive)
-                .FirstAsync(r=> r.Id.ToString() == restaurantId);
+                .Include(r => r.Category)
+                .Where(r => r.IsActive)
+                .FirstAsync(r => r.Id.ToString() == restaurantId);
 
             return new RestaurantFormModel()
             {
@@ -248,27 +249,37 @@ namespace RestaurantOnlineBooking.Services.Data
 
         }
 
+        public async Task<StatisticsServiceModel> GetStatisticsAsync()
+        {
+            return new StatisticsServiceModel()
+            {
+                TotalRestaurants = await this.dBContext.Restaurants.CountAsync(),
+                TotalBookings = await this.dBContext.Restaurants.Where(r => r.GuestId.HasValue).CountAsync()
+            };
+        }
+
         public async Task<bool> IsOwnerWithIdOwnedRestaurantWithIdAsync(string restaurantId, string ownerId)
         {
             Restaurant restaurant = await this.dBContext
                 .Restaurants
-                .Where(r=> r.IsActive)
+                .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
             bool result = restaurant.OwnerId.ToString() == ownerId;
 
             return result;
-                
+
         }
 
         public async Task<bool> RestaurantExistsByIdAsync(string restaurantId)
         {
             bool IsExists = await this.dBContext
                 .Restaurants
-                .Where(r=> r.IsActive)
+                .Where(r => r.IsActive)
                 .AnyAsync(r => r.Id.ToString() == restaurantId);
 
             return IsExists;
         }
     }
+
 }

@@ -1,4 +1,5 @@
 ﻿using RestaurantOnlineBooking.Services.Data.Models;
+using RestaurantOnlineBooking.Services.Data.Models.Statistics;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
@@ -29,6 +30,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task DeleteRestaurantByIdAsync(string restaurantId);
 
         Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId);
+
+        Task<StatisticsServiceModel> GetStatisticsAsync();
 
         Task EditRestaurantByIdAsync(string restaurantId, RestaurantFormModel model);
 
