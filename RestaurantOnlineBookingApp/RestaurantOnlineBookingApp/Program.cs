@@ -21,11 +21,6 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddDbContext<RestaurantBookingDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            //var culture = new CultureInfo("en-US");
-            //culture.NumberFormat.NumberDecimalSeparator = ",";
-            //culture.NumberFormat.CurrencyDecimalSeparator = ",";
-
-
             builder.Services.AddDefaultIdentity<AppUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");

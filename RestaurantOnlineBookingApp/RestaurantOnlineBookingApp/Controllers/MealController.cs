@@ -93,6 +93,45 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            bool mealExists = await this._mealService.MealExistsByIdAsync(id);
+
+            if (!mealExists)
+            {
+                TempData[ErrorMessage] = "Meal with the provided id does not exist!";
+
+                return RedirectToAction("Mine", "Restaurant");
+            }
+
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "Only owners can delete the restaurant menu!";
+            }
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+
+            var meal = await this._mealService.GetMealByIdAsync(id);
+
+            if (meal == null)
+            {
+                TempData[ErrorMessage] = "Meal with the provided id does not exist!";
+                return RedirectToAction("Mine", "Restaurant");
+            }
+
+            string mealRestaurantId = meal.RestaurantId.ToString();
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+               .IsOwnerWithIdOwnedRestaurantWithIdAsync(mealRestaurantId, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the menu"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+
             try
             {
                 var mealForDelete = await this._mealService.GetMealByIdAsync(id);
