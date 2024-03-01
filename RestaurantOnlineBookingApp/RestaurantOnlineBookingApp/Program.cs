@@ -2,12 +2,13 @@
 namespace RestaurantOnlineBookingApp.Web
 {
     using Microsoft.AspNetCore.Identity;
-
+    using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Infrastructure.ModelBinders;
     using System.Globalization;
 
     public class Program
@@ -20,13 +21,10 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddDbContext<RestaurantBookingDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            //Culture Settings:   application's culture settings are configured
-            //correctly to accept both . and , as decimal separators.
-            var cultureInfo = new CultureInfo("en-US");
-            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
-            cultureInfo.NumberFormat.NumberGroupSeparator = ",";
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+            //var culture = new CultureInfo("en-US");
+            //culture.NumberFormat.NumberDecimalSeparator = ",";
+            //culture.NumberFormat.CurrencyDecimalSeparator = ",";
+
 
             builder.Services.AddDefaultIdentity<AppUser>(options =>
             {
@@ -41,7 +39,11 @@ namespace RestaurantOnlineBookingApp.Web
              .AddEntityFrameworkStores<RestaurantBookingDbContext>();
 
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             builder.Services.AddScoped<IRestaurantService,RestaurantService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();

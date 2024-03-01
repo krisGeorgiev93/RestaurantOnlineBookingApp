@@ -21,13 +21,13 @@
     <ProjectReference Include="..\RestaurantOnlineBooking.Services.Data\RestaurantOnlineBooking.Services.Data.csproj" />
     <ProjectReference Include="..\RestaurantOnlineBookingApp.Data.Models\RestaurantOnlineBookingApp.Data.Models.csproj" />
     <ProjectReference Include="..\RestaurantOnlineBookingApp.Data\RestaurantOnlineBookingApp.Data.csproj" />
+    <ProjectReference Include="..\RestaurantOnlineBookingApp.Infrastructure\RestaurantOnlineBookingApp.Infrastructure.csproj" />
     <ProjectReference Include="..\RestaurantOnlineBookingApp.Web.ViewModels\RestaurantOnlineBookingApp.Web.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Views\Event\" />
     <Folder Include="Views\Booking\" />
-    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>

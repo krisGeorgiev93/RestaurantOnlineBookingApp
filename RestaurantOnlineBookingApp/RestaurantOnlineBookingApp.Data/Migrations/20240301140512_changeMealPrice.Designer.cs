@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantOnlineBookingApp.Data;
 
@@ -11,9 +12,10 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    partial class RestaurantBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240301140512_changeMealPrice")]
+    partial class changeMealPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -445,35 +447,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Meals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 12,
-                            Description = "Italian pizza with cheese and peperoni",
-                            ImageUrl = "https://www.simplyrecipes.com/thmb/KE6iMblr3R2Db6oE8HdyVsFSj2A=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-3-1024x682-583b275444104ef189d693a64df625da.jpg",
-                            Name = "Pizza Peperoni",
-                            Price = 10.50m,
-                            RestaurantId = new Guid("1604f79d-c4a9-4413-9708-76a07686370d")
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "Chinese chicken noodles with eggs and onion",
-                            ImageUrl = "https://sinfullyspicy.com/wp-content/uploads/2023/01/1200-by-1200-images-5-500x375.jpg",
-                            Name = "Chicken Noodles",
-                            Price = 7.50m,
-                            RestaurantId = new Guid("1604f79d-c4a9-4413-9708-76a07686370d")
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Description = "Chinese chicken fried rice with eggs",
-                            ImageUrl = "https://tildaricelive.s3.eu-central-1.amazonaws.com/wp-content/uploads/2021/05/04111234/chicken-fried-rice-low-res-2.png",
-                            Name = "Chicken Fried Rice",
-                            Price = 9.20m,
-                            RestaurantId = new Guid("1604f79d-c4a9-4413-9708-76a07686370d")
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Owner", b =>
@@ -562,7 +535,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1d84b36e-3ec6-4ec2-8a25-a5c1a6a70fdc"),
+                            Id = new Guid("eca04dfa-3887-4868-bd8f-524834f8ef67"),
                             Address = "Ivan Ivanov 26",
                             Capacity = 100,
                             CategoryId = 2,
@@ -577,7 +550,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0e7a1442-48ef-421d-b11b-c19eebcf2bd8"),
+                            Id = new Guid("a84c4c91-77d1-4db8-a621-e7fed7ececa7"),
                             Address = "Hristo Botev 76",
                             Capacity = 50,
                             CategoryId = 6,

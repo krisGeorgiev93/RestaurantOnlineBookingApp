@@ -42,9 +42,10 @@ namespace RestaurantOnlineBookingApp.Common
 
         }
 
-        public static class Menu
+        public static class Meal
         {
-
+            public const string PriceMinValue = "0";
+            public const string PriceMaxValue = "6000";
         }
 
         public static class Owner

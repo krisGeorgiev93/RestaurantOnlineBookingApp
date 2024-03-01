@@ -18,7 +18,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string Description { get; set; } = null!;
 
         [Required]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public string ImageUrl { get; set; } = null!;

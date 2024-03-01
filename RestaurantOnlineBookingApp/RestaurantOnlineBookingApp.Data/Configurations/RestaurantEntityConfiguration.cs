@@ -9,7 +9,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
-            builder.HasData(this.UploadRestaurants());
+           builder.HasData(this.UploadRestaurants());
 
             builder.Property(r => r.IsActive)
                 .HasDefaultValue(true);
@@ -40,6 +40,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             //  .HasForeignKey(m => m.RestaurantId)
             //  .OnDelete(DeleteBehavior.Cascade);
 
+           
 
         }
         private Restaurant[] UploadRestaurants()

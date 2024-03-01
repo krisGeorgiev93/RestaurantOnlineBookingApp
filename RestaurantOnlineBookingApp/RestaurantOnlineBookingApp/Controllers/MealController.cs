@@ -2,6 +2,7 @@
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+using System.Globalization;
 using System.Security.Claims;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
@@ -103,6 +104,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 var restaurantId = mealForDelete.RestaurantId;
 
                 await this._mealService.DeleteMealAsync(id);
+                this.TempData[SuccessMessage] = "Menu was deleted successfully!";
                 return RedirectToAction("Menu", "Restaurant", new { restaurantId });
             }
             catch (Exception)
@@ -221,29 +223,9 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
             this.TempData[SuccessMessage] = "Menu was edited successfully!";          
             return RedirectToAction("Menu", "Restaurant", new { restaurantId });
-        }
+        }      
 
-        //[HttpGet]
-        //public async Task<IActionResult> MealsByRestaurant(string restaurantId)
-        //{
-        //    if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
-        //    {
-        //        // Handle invalid restaurantId
-        //        return BadRequest("Invalid restaurantId");
-        //    }
 
-        //    var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantGuid.ToString());
-        //    var mealViewModels = meals.Select(m => new MealAllViewModel
-        //    {
-        //        Id = m.Id.ToString(),
-        //        Name = m.Name,
-        //        Description = m.Description,
-        //        ImageUrl = m.ImageUrl,
-        //        Price = m.Price.ToString()
-        //    }).ToList();
-
-        //    return View(mealViewModels);
-        //}
 
 
 

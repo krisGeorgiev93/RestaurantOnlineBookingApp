@@ -21,7 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{06
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBooking.Services.Data", "RestaurantOnlineBooking.Services.Data\RestaurantOnlineBooking.Services.Data.csproj", "{D77EEF7B-D21E-4694-9583-91CAA479682B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBooking.Services.Data.Models", "RestaurantOnlineBooking.Services.Data.Models\RestaurantOnlineBooking.Services.Data.Models.csproj", "{BBCF360C-1136-4E3C-B6A2-FF7450DAED6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBooking.Services.Data.Models", "RestaurantOnlineBooking.Services.Data.Models\RestaurantOnlineBooking.Services.Data.Models.csproj", "{BBCF360C-1136-4E3C-B6A2-FF7450DAED6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantOnlineBookingApp.Infrastructure", "RestaurantOnlineBookingApp.Infrastructure\RestaurantOnlineBookingApp.Infrastructure.csproj", "{7A5F310E-F439-4C72-89F5-B5708DDE79C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{BBCF360C-1136-4E3C-B6A2-FF7450DAED6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCF360C-1136-4E3C-B6A2-FF7450DAED6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBCF360C-1136-4E3C-B6A2-FF7450DAED6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A5F310E-F439-4C72-89F5-B5708DDE79C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A5F310E-F439-4C72-89F5-B5708DDE79C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A5F310E-F439-4C72-89F5-B5708DDE79C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A5F310E-F439-4C72-89F5-B5708DDE79C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{0EBB286F-2506-46CF-BEC5-EFBC365D0DA5} = {DA5A291F-811D-40D6-BF15-C79F10C36FD1}
 		{D77EEF7B-D21E-4694-9583-91CAA479682B} = {0699B4E1-F490-4D0D-BEA1-FFAF7B959D1D}
 		{BBCF360C-1136-4E3C-B6A2-FF7450DAED6A} = {0699B4E1-F490-4D0D-BEA1-FFAF7B959D1D}
+		{7A5F310E-F439-4C72-89F5-B5708DDE79C0} = {DAD89F43-9627-41F4-8A48-78187F24ACF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6A161CD-1335-40AE-B2D9-30FD86DE2FE3}
