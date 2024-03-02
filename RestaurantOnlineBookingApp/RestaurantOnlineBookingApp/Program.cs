@@ -39,7 +39,7 @@ namespace RestaurantOnlineBookingApp.Web
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>(); //Secure the App against CSRF;
                 });
 
             builder.Services.AddScoped<IRestaurantService,RestaurantService>();

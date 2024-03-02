@@ -1,4 +1,12 @@
-﻿@model RestaurantAllViewModel
+﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using System.Security.Claims
+@model RestaurantAllViewModel
+
+@inject IOwnerService OwnerService
+@{
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+}
+
 <div class="col-md-4">
     <div class="card mb-3">
         <img class="card-img-top" src="@Model.ImageUrl" alt="Restaurant Image">
@@ -8,17 +16,17 @@
             <br />
             <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
-            @if (this.User.Identity?.IsAuthenticated ?? false)
+            @if (this.User.Identity?.IsAuthenticated ?? false && isUserOwner)
             {
                 <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id"
                    class="btn btn-warning">Edit</a>
                 <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id"
                    class="btn btn-danger">Delete</a>
                 <p></p>
-                <form asp-controller="Restaurant" asp-action="Leave"
+               @*  <form asp-controller="Restaurant" asp-action="Leave"
                       asp-route-id="@Model.Id" method="post">
                     <input class="btn btn-primary" type="submit" value="Leave" />
-                </form>
+                </form> *@
 
                 <!-- Button to Add Meal -->
                 <a asp-controller="Meal" asp-action="AddMeal" asp-route-restaurantId="@Model.Id"
