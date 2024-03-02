@@ -2,6 +2,7 @@
 namespace RestaurantOnlineBookingApp.Web
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data;
@@ -38,6 +39,7 @@ namespace RestaurantOnlineBookingApp.Web
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
             builder.Services.AddScoped<IRestaurantService,RestaurantService>();

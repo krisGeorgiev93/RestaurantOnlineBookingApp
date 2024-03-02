@@ -1,5 +1,9 @@
-﻿@using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
-
+﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
+@inject IOwnerService OwnerService
+@{
+   // bool isUserAgent = await OwnerService.OwnerExistByIdAsync(this.User.GetId());
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +73,7 @@
     </footer>
    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

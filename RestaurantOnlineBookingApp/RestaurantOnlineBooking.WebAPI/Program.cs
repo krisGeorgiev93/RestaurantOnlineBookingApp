@@ -22,6 +22,18 @@ namespace RestaurantOnlineBooking.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+            builder.Services.AddCors(setup =>
+            {
+                setup.AddPolicy("RestaurantBookingOnlineApp", policyBuilder =>
+                {
+                    policyBuilder
+                        .WithOrigins("https://localhost:7212")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -36,6 +48,8 @@ namespace RestaurantOnlineBooking.WebAPI
 
 
             app.MapControllers();
+
+            app.UseCors("RestaurantBookingOnlineApp");
 
             app.Run();
         }
