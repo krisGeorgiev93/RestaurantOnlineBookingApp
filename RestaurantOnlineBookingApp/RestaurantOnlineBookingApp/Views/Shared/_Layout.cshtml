@@ -1,8 +1,9 @@
 ﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using System.Security.Claims
 @using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
 @inject IOwnerService OwnerService
 @{
-   // bool isUserAgent = await OwnerService.OwnerExistByIdAsync(this.User.GetId());
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -35,12 +36,15 @@
                         </li>
                         @if (this.User.Identity?.IsAuthenticated ?? false)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Mine">My Restaurants</a>
-                            </li>
+                            if (isUserOwner)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Add">Add Restaurant</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Mine">My Restaurants</a>
+                                </li>
+                            }                           
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Mine">My Bookings</a>
                             </li>
