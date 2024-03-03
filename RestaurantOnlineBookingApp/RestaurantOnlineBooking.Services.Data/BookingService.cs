@@ -63,5 +63,19 @@ namespace RestaurantOnlineBooking.Services.Data
 
 
         }
+
+        public async Task<IEnumerable<BookingAllViewModel>> GetBookingsByUserIdAsync(string userId)
+        {
+            return await this.dBContext.Bookings
+                .Where(b => b.GuestId.ToString() == userId)
+                 .Select(b => new BookingAllViewModel
+                 {
+                     BookingDate = b.BookingDate,
+                     ReservedTime = b.ReservedTime,
+                     NumberOfGuests = b.NumberOfGuests,
+                     RestaurantName = b.Restaurant.Name
+                 })
+                 .ToListAsync();
+        }
     }
 }

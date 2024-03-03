@@ -12,6 +12,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     {
         Task<bool> BookTableAsync(string restaurantId, BookingFormViewModel model,string userId);
 
+        Task<IEnumerable<BookingAllViewModel>> GetBookingsByUserIdAsync(string userId);
+
 
     }
 }

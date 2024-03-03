@@ -57,5 +57,13 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
             }
         }
+
+
+        public async Task<IActionResult> Mine()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var bookings = await _bookingService.GetBookingsByUserIdAsync(userId);
+            return View(bookings);
+        }
     }
 }

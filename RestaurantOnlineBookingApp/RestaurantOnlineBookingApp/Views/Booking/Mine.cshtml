@@ -1,0 +1,34 @@
+﻿@model IEnumerable<RestaurantOnlineBookingApp.Web.ViewModels.Booking.BookingAllViewModel>
+
+
+<h3 style="color: white;">My Bookings</h3>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="color: white;">Booking Date</th>
+                <th style="color: white;">Reserved Time</th>
+                <th style="color: white;">Number of Guests</th>
+                <th style="color: white;">Restaurant</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                <tr>
+                    <td style="color: white;">@booking.BookingDate.ToShortDateString()</td>
+                    <td style="color: white;">@booking.ReservedTime</td>
+                    <td style="color: white;">@booking.NumberOfGuests</td>
+                    <td style="color: white;">@booking.RestaurantName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p style="color: white;">No bookings found.</p>
+}
+</html>
