@@ -34,7 +34,20 @@ namespace RestaurantOnlineBooking.Services.Data
 
         }
 
-       
+        public async Task<bool> HasRestaurantWithIdAsync(string? userId, string restaurantId)
+        {
+            Owner? owner = await this.dBContext
+               .Owners
+               .Include(a => a.OwnedRestaurants)
+               .FirstOrDefaultAsync(a => a.UserId.ToString() == userId);
+            if (owner == null)
+            {
+                return false;
+            }
+
+            restaurantId = restaurantId.ToLower();
+            return owner.OwnedRestaurants.Any(h => h.Id.ToString() == restaurantId);
+        }
 
         public async Task<bool> OwnerExistByIdAsync(string id)
         {

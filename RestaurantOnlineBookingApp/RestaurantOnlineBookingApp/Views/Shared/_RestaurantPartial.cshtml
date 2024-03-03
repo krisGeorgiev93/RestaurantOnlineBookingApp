@@ -4,6 +4,7 @@
 
 @inject IOwnerService OwnerService
 @{
+    bool isUserOwnerOfTheRestaurant = await OwnerService.HasRestaurantWithIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), Model.Id);
     bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 
@@ -12,31 +13,38 @@
         <img class="card-img-top" src="@Model.ImageUrl" alt="Restaurant Image">
         <div class="card-body text-center">
             <h4>@Model.Name</h4>
-            <h6>Address: <b>@Model.Address</b></h6>                        
+            <h6>Address: <b>@Model.Address</b></h6>
             <br />
             <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
-            @if (this.User.Identity?.IsAuthenticated ?? false && isUserOwner)
+            @if (this.User.Identity?.IsAuthenticated ?? false)
             {
-                <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Edit</a>
-                <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Delete</a>
-                <p></p>
-               @*  <form asp-controller="Restaurant" asp-action="Leave"
-                      asp-route-id="@Model.Id" method="post">
-                    <input class="btn btn-primary" type="submit" value="Leave" />
-                </form> *@
+                @if (isUserOwner && isUserOwnerOfTheRestaurant)
+                {
+                    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+                    <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                    <p></p>
+                    @*  <form asp-controller="Restaurant" asp-action="Leave"
+            asp-route-id="@Model.Id" method="post">
+            <input class="btn btn-primary" type="submit" value="Leave" />
+            </form> *@
 
-                <!-- Button to Add Meal -->
-                <a asp-controller="Meal" asp-action="AddMeal" asp-route-restaurantId="@Model.Id"
-                   class="btn btn-info">Add Meal</a>
-                <!-- Button to See the Meals by Restaurant Id -->
-               @*  <a asp-controller="Meal" asp-action="MealsByRestaurant" asp-route-restaurantId="@Model.Id"
-                   class="btn btn-info">Restaurant Meals</a> *@
-                <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
-
-            }
+                    <!-- Button to Add Meal -->
+                    <a asp-controller="Meal" asp-action="AddMeal" asp-route-restaurantId="@Model.Id"
+                       class="btn btn-info">Add Meal</a>
+                    <!-- Button to See the Meals by Restaurant Id -->
+                    @*  <a asp-controller="Meal" asp-action="MealsByRestaurant" asp-route-restaurantId="@Model.Id"
+            class="btn btn-info">Restaurant Meals</a> *@
+                    <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
+                }
+                else
+                {
+                    <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
+                    <a asp-controller="Booking" asp-action="BookTable" asp-route-restaurantId="@Model.Id" class="btn btn-primary">Book Table</a>
+                }
+            }            
         </div>
     </div>
 </div>

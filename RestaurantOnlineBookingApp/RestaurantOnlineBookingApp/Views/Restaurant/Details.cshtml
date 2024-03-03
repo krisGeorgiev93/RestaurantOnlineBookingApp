@@ -1,6 +1,13 @@
-﻿@model RestaurantDetailsViewModel
+﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using System.Security.Claims
+@model RestaurantDetailsViewModel
 @{
     ViewBag.Title = "Restaurant Details";
+}
+@inject IOwnerService OwnerService
+@{
+    bool isUserOwnerOfTheRestaurant = await OwnerService.HasRestaurantWithIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), Model.Id);
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
@@ -18,24 +25,23 @@
             <div class="form-inline">
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    <a class="btn btn-warning" asp-controller="Restaurant" asp-action="Edit"
-                       asp-route-id="@Model.Id">Edit</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Restaurant" asp-action="Delete"
-                       asp-route-id="@Model.Id">Delete</a>
-                    @if (Model.Capacity > 1)
+                    if (isUserOwner && isUserOwnerOfTheRestaurant)
                     {
-                        <form class="ml-2" asp-controller="Restaurant"
-                              asp-action="BookTable" asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Book" />
-                        </form>
-                    }
+                        <a class="btn btn-warning" asp-controller="Restaurant" asp-action="Edit"
+                           asp-route-id="@Model.Id">Edit</a>
+                        <a class="ml-2 btn btn-danger" asp-controller="Restaurant" asp-action="Delete"
+                           asp-route-id="@Model.Id">Delete</a>
+                    }  
                     else
                     {
-                        <form class="ml-2" asp-controller="Restaurant" asp-action="Leave"
-                              asp-route-id="@Model.Id" method="post">
-                            <input class="btn btn-primary" type="submit" value="Leave" />
-                        </form>
-                    }
+                        @if (Model.Capacity > 1)
+                        {
+                            <form class="ml-2" asp-controller="Booking"
+                                  asp-action="BookTable" asp-route-id="@Model.Id" method="post">
+                                <input class="btn btn-primary" type="submit" value="Book Table" />
+                            </form>
+                        }
+                    }                                 
                 }
             </div>           
             <p></p>
