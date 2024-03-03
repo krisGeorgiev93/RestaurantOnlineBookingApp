@@ -35,5 +35,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task EditRestaurantByIdAsync(string restaurantId, RestaurantFormModel model);
 
+        Task<(TimeSpan startTime, TimeSpan endTime)> GetRestaurantOperatingHoursAsync(Guid restaurantId);
+        List<string> GenerateTimeSlots(TimeSpan startTime, TimeSpan endTime);
+
     }
 }

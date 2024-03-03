@@ -20,5 +20,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<bool> BookingExistsByIdAsync(string bookingId);
 
+        List<string> GetReservedTimes(TimeSpan startingTime, TimeSpan endingTime, TimeSpan interval);
+
     }
 }

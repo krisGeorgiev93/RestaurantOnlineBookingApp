@@ -11,11 +11,13 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;
+        private readonly IRestaurantService _restaurantService;
         private readonly RestaurantBookingDbContext _dBContext;
-        public BookingController(IBookingService bookingService, RestaurantBookingDbContext dBContext)
+        public BookingController(IBookingService bookingService, RestaurantBookingDbContext dBContext, IRestaurantService restaurantService)
         {
             _bookingService = bookingService;
             _dBContext = dBContext;
+            _restaurantService = restaurantService;
         }
 
         [HttpGet]
@@ -57,14 +59,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             var startingTime = restaurant.StartingTime;
             var endingTime = restaurant.EndingTime;
 
-            var bookingTime = model.ReservedTime;
-
-            // Check if the booking falls outside of the restaurant's operating hours
-            if (bookingTime < startingTime || bookingTime > endingTime)
-            {
-                TempData[ErrorMessage] = "Booking must be within the restaurant's operating hours.";
-                return View(model);
-            }
+            var bookingTime = model.ReservedTime;           
 
             // Check if the requested number of guests exceeds the restaurant's capacity
             if (model.NumberOfGuests > restaurant.Capacity)
@@ -147,7 +142,38 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
+        public IActionResult GetReservedTimes(Guid restaurantId)
+        {
+            // Get the restaurant's operating hours from the database
+            var restaurant = this._restaurantService.GetRestaurantByIdAsync(restaurantId.ToString()).Result;
 
+            // If the restaurant is not found or its operating hours are not set, return an empty list
+            if (restaurant == null || restaurant.StartingTime == null || restaurant.EndingTime == null)
+            {
+                return Json(new List<string>());
+            }
+
+            // Calculate the reserved times based on the restaurant's operating hours
+            TimeSpan startingTime = restaurant.StartingTime;
+            TimeSpan endingTime = restaurant.EndingTime;
+            TimeSpan interval = TimeSpan.FromHours(1); // Adjust the interval as needed
+            var reservedTimes = GetReservedTimes(startingTime, endingTime, interval);
+
+            return Json(reservedTimes);
+        }
+
+        // Helper method to calculate reserved times
+        private List<string> GetReservedTimes(TimeSpan startingTime, TimeSpan endingTime, TimeSpan interval)
+        {
+            List<string> reservedTimes = new List<string>();
+
+            for (TimeSpan time = startingTime; time < endingTime; time = time.Add(interval))
+            {
+                reservedTimes.Add(time.ToString(@"hh\:mm"));
+            }
+
+            return reservedTimes;
+        }
 
         private IActionResult Error()
         {

@@ -157,6 +157,20 @@ namespace RestaurantOnlineBooking.Services.Data
             await this.dBContext.SaveChangesAsync();
         }
 
+        public List<string> GenerateTimeSlots(TimeSpan startTime, TimeSpan endTime)
+        {
+            var timeSlots = new List<string>();
+            var currentTime = startTime;
+
+            while (currentTime <= endTime)
+            {
+                timeSlots.Add(currentTime.ToString("hh\\:mm tt")); // Format time as "hh:mm AM/PM"
+                currentTime = currentTime.Add(new TimeSpan(0, 30, 0)); // Increment by 30 minutes
+            }
+
+            return timeSlots;
+        }
+
         public async Task<IEnumerable<AllRestaurantsViewModel>> GetAllAsync()
         {
             return await dBContext
@@ -247,6 +261,22 @@ namespace RestaurantOnlineBooking.Services.Data
                 CategoryId = restaurant.CategoryId
             };
 
+        }
+
+        public async Task<(TimeSpan startTime, TimeSpan endTime)> GetRestaurantOperatingHoursAsync(Guid restaurantId)
+        {
+            var restaurant = await this.dBContext.Restaurants.FindAsync(restaurantId);
+
+            if (restaurant == null)
+            {
+                throw new ArgumentException("Invalid restaurant ID");
+            }
+
+            // Restaurant entity has properties for starting and ending times
+            var startTime = restaurant.StartingTime;
+            var endTime = restaurant.EndingTime;
+
+            return (startTime, endTime);
         }
 
         public async Task<StatisticsServiceModel> GetStatisticsAsync()

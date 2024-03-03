@@ -3,13 +3,7 @@ using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using static RestaurantOnlineBookingApp.Common.ValidationConstants;
+using System.Globalization;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -47,6 +41,20 @@ namespace RestaurantOnlineBooking.Services.Data
             
             restaurant.Capacity -= model.NumberOfGuests;
 
+            // Parse the string ReservedTime to a TimeSpan object
+            TimeSpan reservedTime;
+            if (!TimeSpan.TryParse(model.ReservedTime, out reservedTime))
+            {
+                throw new FormatException("Invalid format for ReservedTime");
+            }
+
+            // Parse the string BookingDate to a DateTime object
+            DateTime bookingDate;
+            if (!DateTime.TryParseExact(model.BookingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out bookingDate))
+            {
+                throw new FormatException("Invalid format for BookingDate");
+            }
+
             var booking = new Booking
             {                
                 FirstName = model.FirstName,
@@ -54,8 +62,8 @@ namespace RestaurantOnlineBooking.Services.Data
                 Email = model.Email,
                 NumberOfGuests = model.NumberOfGuests,
                 PhoneNumber = model.PhoneNumber,
-                BookingDate = model.BookingDate,
-                ReservedTime = model.ReservedTime,
+                BookingDate = bookingDate,
+                ReservedTime = reservedTime,
                 RestaurantId = restaurantGuid,
                 GuestId = Guid.Parse(userId)
             };
@@ -101,8 +109,8 @@ namespace RestaurantOnlineBooking.Services.Data
                 LastName = booking.LastName,
                 PhoneNumber = booking.PhoneNumber,
                 Email = booking.Email,
-                ReservedTime = booking.ReservedTime,
-                BookingDate = booking.BookingDate,
+                ReservedTime = booking.ReservedTime.ToString(),
+                BookingDate = booking.BookingDate.ToString(),
                 NumberOfGuests = booking.NumberOfGuests,              
 
             };
@@ -129,5 +137,18 @@ namespace RestaurantOnlineBooking.Services.Data
             }).ToList();
         }
 
+        public List<string> GetReservedTimes(TimeSpan startingTime, TimeSpan endingTime, TimeSpan interval)
+        {
+            var reservedTimes = new List<string>();
+            var currentTime = startingTime;
+
+            while (currentTime <= endingTime)
+            {
+                reservedTimes.Add(currentTime.ToString("hh\\:mm"));
+                currentTime = currentTime.Add(interval);
+            }
+
+            return reservedTimes;
+        }
     }
 }

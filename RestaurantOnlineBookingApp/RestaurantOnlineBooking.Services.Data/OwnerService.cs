@@ -3,11 +3,6 @@ using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantOnlineBooking.Services.Data
 {

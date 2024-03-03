@@ -14,11 +14,11 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Booking
         [Required(ErrorMessage = "Booking date is required")]
         [Display(Name = "Booking Date")]
         [DataType(DataType.Date)]       
-        public DateTime BookingDate { get; set; }
+        public string BookingDate { get; set; }
 
-        [Required(ErrorMessage = "Reserved time is required")]
+        [Required]
         [Display(Name = "Reserved Time")]
-        public TimeSpan ReservedTime { get; set; }
+        public string ReservedTime { get; set; }
 
         [Required(ErrorMessage = "Number of guests is required")]
         [Display(Name = "Number of Guests")]
@@ -44,6 +44,9 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Booking
         public string PhoneNumber { get; set; } = null!;
 
         public Guid RestaurantId { get; set; }
+
+        // Property to store the list of reserved time options for the select menu
+        public List<string> ReservedTimeOptions { get; set; } = new List<string>();
 
     }
 }
