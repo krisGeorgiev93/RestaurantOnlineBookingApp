@@ -44,13 +44,7 @@ namespace RestaurantOnlineBooking.Services.Data
             {
                 throw new ArgumentException("Invalid restaurant ID");
             }
-
-            // Check if the requested number of guests exceeds the restaurant's capacity
-            if (model.NumberOfGuests > restaurant.Capacity)
-            {
-                throw new InvalidOperationException("Number of guests exceeds restaurant capacity");
-            }
-
+            
             restaurant.Capacity -= model.NumberOfGuests;
 
             var booking = new Booking
@@ -77,12 +71,16 @@ namespace RestaurantOnlineBooking.Services.Data
         public async Task DeleteBookingAsync(string bookingId)
         {
             var booking = await this.dBContext
-                  .Bookings.FindAsync(Guid.Parse(bookingId));
+                  .Bookings
+                  .Include(b=> b.Restaurant)
+                  .FirstOrDefaultAsync(b=> b.Id.ToString() == bookingId);
 
             if (booking == null)
             {
                 throw new InvalidOperationException("Booking not found.");
             }
+            // Increase the restaurant's capacity by the number of guests from the deleted booking
+            booking.Restaurant.Capacity += booking.NumberOfGuests;
 
             this.dBContext.Bookings.Remove(booking);
             await this.dBContext.SaveChangesAsync();
@@ -130,5 +128,6 @@ namespace RestaurantOnlineBooking.Services.Data
                 ImageUrl = b.Restaurant.ImageUrl // Assuming Restaurant has an ImageUrl property
             }).ToList();
         }
+
     }
 }

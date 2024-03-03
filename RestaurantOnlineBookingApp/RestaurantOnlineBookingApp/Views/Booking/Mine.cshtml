@@ -21,7 +21,7 @@
                     <!-- Delete button -->
                     <form asp-controller="Booking" asp-action="Delete" method="post" style="display: inline;">
                         <input type="hidden" name="id" value="@booking.Id" /> <!-- Set the ID as a hidden input -->
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?')">Delete booking</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this booking?')">Delete Booking</button>
                     </form>
 
                     <a href="@Url.Action("Details", "Restaurant", new { id = booking.RestaurantId })" class="btn btn-primary">Restaurant Details</a>

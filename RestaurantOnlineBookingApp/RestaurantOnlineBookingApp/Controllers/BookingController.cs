@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
+using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
 using System.Security.Claims;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -9,10 +11,11 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;
-
-        public BookingController(IBookingService bookingService)
+        private readonly RestaurantBookingDbContext _dBContext;
+        public BookingController(IBookingService bookingService, RestaurantBookingDbContext dBContext)
         {
             _bookingService = bookingService;
+            _dBContext = dBContext;
         }
 
         [HttpGet]
@@ -37,12 +40,39 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
-            
+            }           
           
             var bookingDate = DateTime.Now.Date; 
             var restaurantId = model.RestaurantId.ToString();
 
+            // Retrieve the restaurant from the database
+            var restaurant = await this._dBContext.Restaurants.FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+            if (restaurant == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid restaurant ID");
+                return View(model);
+            }
+
+            // Get the starting and ending times of the restaurant
+            var startingTime = restaurant.StartingTime;
+            var endingTime = restaurant.EndingTime;
+
+            var bookingTime = model.ReservedTime;
+
+            // Check if the booking falls outside of the restaurant's operating hours
+            if (bookingTime < startingTime || bookingTime > endingTime)
+            {
+                TempData[ErrorMessage] = "Booking must be within the restaurant's operating hours.";
+                return View(model);
+            }
+
+            // Check if the requested number of guests exceeds the restaurant's capacity
+            if (model.NumberOfGuests > restaurant.Capacity)
+            {
+               TempData[ErrorMessage] = "Number of guests exceeds restaurant capacity";
+                return View(model);
+               //return RedirectToAction("All", "Restaurant");
+            }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _bookingService.BookTableAsync(restaurantId,model,userId);
 
