@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
-using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
-using System.Globalization;
 using System.Security.Claims;
+using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
@@ -67,6 +66,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             var model = bookings.Select(b => new BookingAllViewModel
             {
+                Id = b.Id,
                 BookingDate = b.BookingDate,
                 ReservedTime = b.ReservedTime,
                 NumberOfGuests = b.NumberOfGuests,
@@ -76,6 +76,53 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }).ToList();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool bookingExists = await this._bookingService.BookingExistsByIdAsync(id);
+
+            if (!bookingExists)
+            {
+                TempData[ErrorMessage] = "Booking with the provided id does not exist!";
+
+                return RedirectToAction("Mine", "Booking");
+            }
+
+            var booking = await this._bookingService.GetBookingByIdAsync(id);
+
+            if (booking == null)
+            {
+                TempData[ErrorMessage] = "Booking with the provided id does not exist!";
+                return RedirectToAction("Mine", "Booking");
+            }
+                        
+            try
+            {
+                var bookingForDelete = await this._bookingService.GetBookingByIdAsync(id);
+
+                if (bookingForDelete == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                await this._bookingService.DeleteBookingAsync(id);
+                TempData["SuccessMessage"] = "Booking was deleted successfully!";
+                return RedirectToAction("Mine", "Booking");
+            }
+            catch (Exception)
+            {
+                return this.Error();
+            }
+        }
+
+
+
+        private IActionResult Error()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error";
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

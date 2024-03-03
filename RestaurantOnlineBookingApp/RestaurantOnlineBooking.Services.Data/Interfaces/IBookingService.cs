@@ -14,6 +14,11 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<IEnumerable<BookingAllViewModel>> GetBookingsByUserIdAsync(string userId);
 
+        Task DeleteBookingAsync(string bookingId);
+
+        Task<BookingFormViewModel> GetBookingByIdAsync(string bookingId);
+
+        Task<bool> BookingExistsByIdAsync(string bookingId);
 
     }
 }

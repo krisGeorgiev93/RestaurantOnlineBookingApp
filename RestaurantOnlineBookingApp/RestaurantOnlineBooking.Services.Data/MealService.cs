@@ -148,7 +148,7 @@ namespace RestaurantOnlineBooking.Services.Data
         {
             bool IsExists = await this.dBContext
                 .Meals
-                .AnyAsync(r => r.Id.ToString() == mealId);
+                .AnyAsync(m => m.Id.ToString() == mealId);
 
             return IsExists;
         }

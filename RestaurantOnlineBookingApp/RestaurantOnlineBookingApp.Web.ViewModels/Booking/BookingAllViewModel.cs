@@ -9,6 +9,8 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Booking
 {
     public class BookingAllViewModel
     {
+        public Guid Id { get; set; }
+
         [Display(Name = "Booking Date")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public string BookingDate { get; set; }

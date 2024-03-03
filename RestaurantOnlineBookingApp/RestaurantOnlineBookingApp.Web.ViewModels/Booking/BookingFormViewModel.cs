@@ -9,6 +9,8 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Booking
 {
     public class BookingFormViewModel
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "Booking date is required")]
         [Display(Name = "Booking Date")]
         [DataType(DataType.Date)]       

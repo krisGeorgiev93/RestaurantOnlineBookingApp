@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static RestaurantOnlineBookingApp.Common.ValidationConstants;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -19,6 +20,15 @@ namespace RestaurantOnlineBooking.Services.Data
         public BookingService(RestaurantBookingDbContext dBContext)
         {
             this.dBContext = dBContext;
+        }
+
+        public async Task<bool> BookingExistsByIdAsync(string bookingId)
+        {
+            bool IsExists = await this.dBContext
+                .Bookings
+                .AnyAsync(r => r.Id.ToString() == bookingId);
+
+            return IsExists;
         }
 
         public async Task<bool> BookTableAsync(string restaurantId, BookingFormViewModel model, string userId)
@@ -44,7 +54,7 @@ namespace RestaurantOnlineBooking.Services.Data
             restaurant.Capacity -= model.NumberOfGuests;
 
             var booking = new Booking
-            {
+            {                
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
@@ -64,6 +74,44 @@ namespace RestaurantOnlineBooking.Services.Data
 
         }
 
+        public async Task DeleteBookingAsync(string bookingId)
+        {
+            var booking = await this.dBContext
+                  .Bookings.FindAsync(Guid.Parse(bookingId));
+
+            if (booking == null)
+            {
+                throw new InvalidOperationException("Booking not found.");
+            }
+
+            this.dBContext.Bookings.Remove(booking);
+            await this.dBContext.SaveChangesAsync();
+        }
+
+        public async Task<BookingFormViewModel> GetBookingByIdAsync(string bookingId)
+        {
+            var booking = await this.dBContext.Bookings.FirstAsync(b=> b.Id.ToString() == bookingId);
+
+            if (booking == null)
+            {
+                throw new InvalidOperationException("Booking not found.");
+            }
+
+            var bookingModel = new BookingFormViewModel()
+            {                
+                FirstName = booking.FirstName,
+                LastName = booking.LastName,
+                PhoneNumber = booking.PhoneNumber,
+                Email = booking.Email,
+                ReservedTime = booking.ReservedTime,
+                BookingDate = booking.BookingDate,
+                NumberOfGuests = booking.NumberOfGuests,              
+
+            };
+
+            return bookingModel;
+        }
+
         public async Task<IEnumerable<BookingAllViewModel>> GetBookingsByUserIdAsync(string userId)
         {
             var bookings = await this.dBContext.Bookings
@@ -73,6 +121,7 @@ namespace RestaurantOnlineBooking.Services.Data
 
             return bookings.Select(b => new BookingAllViewModel
             {
+                Id = b.Id, //this id have to be set because of delete action
                 BookingDate = b.BookingDate.Date.ToString("dd-MM-yyyy"),
                 ReservedTime = b.ReservedTime.ToString(@"hh\:mm"),
                 NumberOfGuests = b.NumberOfGuests,
