@@ -2,6 +2,7 @@
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
@@ -58,12 +59,23 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Mine()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var bookings = await _bookingService.GetBookingsByUserIdAsync(userId);
-            return View(bookings);
+
+            var model = bookings.Select(b => new BookingAllViewModel
+            {
+                BookingDate = b.BookingDate,
+                ReservedTime = b.ReservedTime,
+                NumberOfGuests = b.NumberOfGuests,
+                RestaurantId = b.RestaurantId,
+                RestaurantName = b.RestaurantName,
+                ImageUrl = b.ImageUrl,
+            }).ToList();
+
+            return View(model);
         }
     }
 }

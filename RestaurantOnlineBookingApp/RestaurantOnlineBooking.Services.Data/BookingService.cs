@@ -66,16 +66,20 @@ namespace RestaurantOnlineBooking.Services.Data
 
         public async Task<IEnumerable<BookingAllViewModel>> GetBookingsByUserIdAsync(string userId)
         {
-            return await this.dBContext.Bookings
+            var bookings = await this.dBContext.Bookings
+                .Include(b => b.Restaurant) // Include Restaurant entity to access its properties
                 .Where(b => b.GuestId.ToString() == userId)
-                 .Select(b => new BookingAllViewModel
-                 {
-                     BookingDate = b.BookingDate,
-                     ReservedTime = b.ReservedTime,
-                     NumberOfGuests = b.NumberOfGuests,
-                     RestaurantName = b.Restaurant.Name
-                 })
                  .ToListAsync();
+
+            return bookings.Select(b => new BookingAllViewModel
+            {
+                BookingDate = b.BookingDate.Date.ToString("dd-MM-yyyy"),
+                ReservedTime = b.ReservedTime.ToString(@"hh\:mm"),
+                NumberOfGuests = b.NumberOfGuests,
+                RestaurantId = b.RestaurantId,
+                RestaurantName = b.Restaurant.Name, // Assuming Restaurant has a Name property
+                ImageUrl = b.Restaurant.ImageUrl // Assuming Restaurant has an ImageUrl property
+            }).ToList();
         }
     }
 }

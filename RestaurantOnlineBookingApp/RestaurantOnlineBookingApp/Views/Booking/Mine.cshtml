@@ -1,34 +1,30 @@
 ﻿@model IEnumerable<RestaurantOnlineBookingApp.Web.ViewModels.Booking.BookingAllViewModel>
 
 
-<h3 style="color: white;">My Bookings</h3>
+<h1 style="color: white;">My Bookings</h1>
 
 @if (Model.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th style="color: white;">Booking Date</th>
-                <th style="color: white;">Reserved Time</th>
-                <th style="color: white;">Number of Guests</th>
-                <th style="color: white;">Restaurant</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var booking in Model)
-            {
-                <tr>
-                    <td style="color: white;">@booking.BookingDate.ToShortDateString()</td>
-                    <td style="color: white;">@booking.ReservedTime</td>
-                    <td style="color: white;">@booking.NumberOfGuests</td>
-                    <td style="color: white;">@booking.RestaurantName</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card-columns">
+        @foreach (var booking in Model)
+        {
+            <div class="card">
+                <img src="@booking.ImageUrl" alt="Restaurant Image" class="card-img-top" style="width: 300px; height: auto;" /> <!-- Adjust the width as needed -->
+
+                <div class="card-body">
+                    <h5 class="card-title">@booking.RestaurantName</h5>
+                    <p class="card-text">
+                        <strong>Booking Date:</strong> @booking.BookingDate <br />
+                        <strong>Reserved Time:</strong> @booking.ReservedTime <br />
+                        <strong>Number of Guests:</strong> @booking.NumberOfGuests
+                    </p>
+                    <a href="@Url.Action("Details", "Restaurant", new { id = booking.RestaurantId })" class="btn btn-primary">Restaurant Details</a>
+                </div>
+            </div>
+        }
+    </div>
 }
 else
 {
     <p style="color: white;">No bookings found.</p>
 }
-</html>

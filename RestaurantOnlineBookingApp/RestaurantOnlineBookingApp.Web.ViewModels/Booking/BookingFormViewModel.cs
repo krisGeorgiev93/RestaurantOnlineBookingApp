@@ -11,6 +11,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Booking
     {
         [Required(ErrorMessage = "Booking date is required")]
         [Display(Name = "Booking Date")]
+        [DataType(DataType.Date)]       
         public DateTime BookingDate { get; set; }
 
         [Required(ErrorMessage = "Reserved time is required")]
