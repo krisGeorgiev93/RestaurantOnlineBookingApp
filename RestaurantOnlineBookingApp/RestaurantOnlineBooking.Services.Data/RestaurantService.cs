@@ -142,6 +142,14 @@ namespace RestaurantOnlineBooking.Services.Data
                  .FirstAsync(r => r.Id.ToString() == restaurantId);
 
             restaurantToDelete.IsActive = false;
+            // Изтриване на данните за капацитета за ресторанта
+            var capacities = await this.dBContext.CapacitiesParDate
+                .Where(c => c.RestaurantId == restaurantToDelete.Id)
+                .ToListAsync();
+            if (capacities.Any())
+            {
+                this.dBContext.CapacitiesParDate.RemoveRange(capacities);
+            }
 
             await this.dBContext.SaveChangesAsync();
         }

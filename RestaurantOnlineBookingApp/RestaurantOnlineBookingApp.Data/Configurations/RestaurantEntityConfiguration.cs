@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestaurantOnlineBookingApp.Data.Models;
-using System.Reflection.Emit;
 
 namespace RestaurantOnlineBookingApp.Data.Configurations
 {
     public class RestaurantEntityConfiguration : IEntityTypeConfiguration<Restaurant>
     {
+        private readonly RestaurantBookingDbContext _context;
+        public RestaurantEntityConfiguration(RestaurantBookingDbContext context)
+        {
+            _context = context;
+        }
+
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
            builder.HasData(this.UploadRestaurants());
