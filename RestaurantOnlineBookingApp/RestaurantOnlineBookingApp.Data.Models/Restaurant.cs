@@ -16,6 +16,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
             this.Id = Guid.NewGuid();
             this.Reviews = new List<Review>();
             this.Meals = new List<Meal>();
+            this.CapacityPerDates = new List<CapacityPerDate>();
         }
         public Guid Id { get; set; }
 
@@ -43,7 +44,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Range(1, 300)]
         public int Capacity { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         [Required]
         public int CityId { get; set; }
@@ -73,8 +74,9 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         public ICollection<Review> Reviews { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; }    
+        public ICollection<Booking> Bookings { get; set; }
 
+        public ICollection<CapacityPerDate> CapacityPerDates { get; set; }
         public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewGrade) / Reviews.Count : 0;
 
        

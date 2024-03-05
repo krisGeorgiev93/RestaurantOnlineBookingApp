@@ -37,10 +37,8 @@ namespace RestaurantOnlineBooking.Services.Data
             if (restaurant == null)
             {
                 throw new ArgumentException("Invalid restaurant ID");
-            }
-            
-            restaurant.Capacity -= model.NumberOfGuests;
-
+            }          
+           
             // Parse the string ReservedTime to a TimeSpan object
             TimeSpan reservedTime;
             if (!TimeSpan.TryParse(model.ReservedTime, out reservedTime))
@@ -53,6 +51,15 @@ namespace RestaurantOnlineBooking.Services.Data
             if (!DateTime.TryParseExact(model.BookingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out bookingDate))
             {
                 throw new FormatException("Invalid format for BookingDate");
+            }
+           
+            // Проверка за наличност на капацитета за конкретната дата
+            var capacityForDate = await this.dBContext.CapacitiesParDate
+                .FirstOrDefaultAsync(c => c.RestaurantId == restaurantGuid && c.Date == bookingDate);
+
+            if (capacityForDate == null || capacityForDate.Capacity < model.NumberOfGuests)
+            {
+                throw new Exception("Няма достатъчно наличен капацитет за тази дата.");
             }
 
             var booking = new Booking
@@ -69,11 +76,12 @@ namespace RestaurantOnlineBooking.Services.Data
             };
 
             await this.dBContext.Bookings.AddAsync(booking);
+            // Намаляване на капацитета за конкретната дата
+            capacityForDate.Capacity -= model.NumberOfGuests;
+
             await this.dBContext.SaveChangesAsync();
 
             return true;
-
-
         }
 
         public async Task DeleteBookingAsync(string bookingId)

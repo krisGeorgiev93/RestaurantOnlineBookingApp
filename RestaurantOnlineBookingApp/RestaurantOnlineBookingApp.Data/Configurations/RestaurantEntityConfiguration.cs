@@ -5,7 +5,7 @@ using System.Reflection.Emit;
 
 namespace RestaurantOnlineBookingApp.Data.Configurations
 {
-    internal class RestaurantEntityConfiguration : IEntityTypeConfiguration<Restaurant>
+    public class RestaurantEntityConfiguration : IEntityTypeConfiguration<Restaurant>
     {
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
@@ -50,6 +50,21 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
 
             restaurant = new Restaurant()
             {
+                Name = "Turkish Restaurant",
+                Address = "Georgi Ivanov 26",
+                Description = "Best food from Turkey",
+                StartingTime = new TimeSpan(12, 0, 0),
+                EndingTime = new TimeSpan(23, 30, 0),
+                ImageUrl = "https://images.squarespace-cdn.com/content/v1/62f4e2e25f95bb5d35522adc/0c8e42d8-aa26-4c9e-acbc-bcfd336b3731/Havin_a_Turkish_X_socialawakening+18.jpg",
+                Capacity = 135,
+                CityId = 3,
+                CategoryId = 4,
+                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
+            };
+
+            restaurants.Add(restaurant);
+            restaurant = new Restaurant()
+            {
                 Name = "Asian Buffet",
                 Address = "Ivan Ivanov 26",
                 Description = "Best food from Asia",
@@ -75,6 +90,22 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 Capacity = 50,
                 CityId = 1,
                 CategoryId = 6,
+                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
+            };
+
+            restaurants.Add(restaurant);
+
+            restaurant = new Restaurant()
+            {
+                Name = "Bulgarian Taste",
+                Address = "Hristo Hristov 74",
+                Description = "Traditional food from Bulgarian Kitchen",
+                StartingTime = new TimeSpan(12, 0, 0),
+                EndingTime = new TimeSpan(23, 45, 0),
+                ImageUrl = "https://media-cdn.tripadvisor.com/media/photo-s/03/b7/8b/ed/chevermeto-traditional.jpg",
+                Capacity = 150,
+                CityId = 2,
+                CategoryId = 1,
                 OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
             };
 

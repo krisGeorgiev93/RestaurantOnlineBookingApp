@@ -7,6 +7,7 @@ using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
+using System.Globalization;
 
 namespace RestaurantOnlineBooking.Services.Data
 {
@@ -122,6 +123,13 @@ namespace RestaurantOnlineBooking.Services.Data
             };
             await this.dBContext.Restaurants.AddAsync(restaurant);
             await this.dBContext.SaveChangesAsync();
+
+            // Извикване на метода за добавяне на капацитети за следващите 60 дни
+            var capacityService = new CapacityService(this.dBContext);
+            string formattedDate = DateTime.Now.ToString("MM-dd-yyyy");
+
+            // Извикване на метода за добавяне на капацитетите за следващите 60 дни с форматираната дата
+            await capacityService.AddCapacitiesFor60DaysAsync(restaurant.Id, model.Capacity, formattedDate);
 
             return restaurant.Id.ToString();
         }
