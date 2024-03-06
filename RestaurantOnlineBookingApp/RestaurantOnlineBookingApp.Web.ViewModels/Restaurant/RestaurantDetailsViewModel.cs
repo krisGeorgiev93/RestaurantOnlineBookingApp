@@ -15,5 +15,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         public string City {  get; set; } = null!;
         public OwnerInfoOnRestaurantViewModel OwnerInfo { get; set; } = null!;
 
+        public double Rating {  get; set; }
+
     }
 }

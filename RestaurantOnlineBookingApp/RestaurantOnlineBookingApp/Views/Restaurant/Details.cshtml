@@ -24,6 +24,7 @@
             <p>Description: <b>@Model.Description</b></p>
             <p>Opening Time: <b>@Model.OpeningTime.ToString(@"hh\:mm")</b></p> @* formated TimeSpan *@
             <p>Closing Time: <b>@Model.ClosingTime.ToString(@"hh\:mm")</b></p>
+            <p>Rating: <b>@Model.Rating</b></p>
 
             <p>Category: <b>@Model.Category</b></p>          
             <div class="form-inline">
@@ -56,8 +57,7 @@
                     <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
                     <p class="card-text">Email: @Model.OwnerInfo.Email</p>
                 </div>
-            </div>
-            <!-- Add Review Button -->
+            </div>          
             <!-- Add Review Button -->
             <a class="ml-2 btn btn-secondary" asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id">Add Review</a>
 

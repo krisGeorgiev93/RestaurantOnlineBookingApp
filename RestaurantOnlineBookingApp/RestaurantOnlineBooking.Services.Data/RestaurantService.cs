@@ -209,13 +209,14 @@ namespace RestaurantOnlineBooking.Services.Data
             Restaurant? restaurant = await this.dBContext
                 .Restaurants
                 .Include(r => r.Category)
-                .Include(r=> r.City)
+                .Include(r => r.City)
                 .Include(r => r.Owner)
-                .ThenInclude(a => a.User)
+                .Include(r => r.Reviews) // Include reviews
+                .ThenInclude(r => r.Guest) // Include guest for each review
                 .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
-
+            double rating = restaurant.Reviews.Any() ? restaurant.Reviews.Average(r => r.ReviewRating) : 0;
             return new RestaurantDetailsViewModel()
             {
                 Id = restaurant.Id.ToString(),
@@ -231,7 +232,8 @@ namespace RestaurantOnlineBooking.Services.Data
                 OwnerInfo = new OwnerInfoOnRestaurantViewModel
                 {
                     PhoneNumber = restaurant.Owner.PhoneNumber
-                }
+                },
+                Rating = rating
             };
         }
 
