@@ -209,6 +209,7 @@ namespace RestaurantOnlineBooking.Services.Data
             Restaurant? restaurant = await this.dBContext
                 .Restaurants
                 .Include(r => r.Category)
+                .Include(r=> r.City)
                 .Include(r => r.Owner)
                 .ThenInclude(a => a.User)
                 .Where(r => r.IsActive)
@@ -223,9 +224,10 @@ namespace RestaurantOnlineBooking.Services.Data
                 Address = restaurant.Address,
                 ImageUrl = restaurant.ImageUrl,
                 Capacity = restaurant.Capacity,
+                City = restaurant.City.CityName,
                 Category = restaurant.Category.Name,
-                OpeningTime = restaurant.StartingTime.ToString(),
-                ClosingTime = restaurant.EndingTime.ToString(),
+                OpeningTime = restaurant.StartingTime,
+                ClosingTime = restaurant.EndingTime,
                 OwnerInfo = new OwnerInfoOnRestaurantViewModel
                 {
                     PhoneNumber = restaurant.Owner.PhoneNumber

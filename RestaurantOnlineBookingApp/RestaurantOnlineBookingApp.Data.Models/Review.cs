@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static RestaurantOnlineBookingApp.Common.ValidationConstants.Review;
 
 namespace RestaurantOnlineBookingApp.Data.Models
 {
@@ -16,8 +12,10 @@ namespace RestaurantOnlineBookingApp.Data.Models
         }
         public Guid Id { get; set; }
 
-        [Range(0,10)]
-        public int ReviewGrade { get; set; }
+        public int ReviewRating { get; set; }
+
+        [MaxLength(CommentMaxLength)]
+        public string Comment {  get; set; }
 
         public Guid GuestId { get; set; }
 

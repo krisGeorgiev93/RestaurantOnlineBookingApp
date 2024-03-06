@@ -3,14 +3,12 @@ namespace RestaurantOnlineBookingApp.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Infrastructure.ModelBinders;
-    using System.Globalization;
 
     public class Program
     {
@@ -49,7 +47,6 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddScoped<IMealService, MealService>();
             builder.Services.AddScoped<IBookingService,BookingService>();
             builder.Services.AddScoped<ICapacityService, CapacityService>();
-
 
             WebApplication app = builder.Build();
 

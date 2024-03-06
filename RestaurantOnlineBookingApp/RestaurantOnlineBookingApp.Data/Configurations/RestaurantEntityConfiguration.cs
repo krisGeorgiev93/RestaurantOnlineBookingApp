@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestaurantOnlineBookingApp.Data.Models;
-
 namespace RestaurantOnlineBookingApp.Data.Configurations
 {
     public class RestaurantEntityConfiguration : IEntityTypeConfiguration<Restaurant>
     {
         private readonly RestaurantBookingDbContext _context;
+
         public RestaurantEntityConfiguration(RestaurantBookingDbContext context)
         {
             _context = context;
         }
-
+       
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
            builder.HasData(this.UploadRestaurants());
@@ -44,9 +44,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             //  .WithOne(m => m.Restaurant)
             //  .HasForeignKey(m => m.RestaurantId)
             //  .OnDelete(DeleteBehavior.Cascade);
-
-           
-
+         
         }
         private Restaurant[] UploadRestaurants()
         {
@@ -116,7 +114,24 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
 
             restaurants.Add(restaurant);
 
+            //restaurant = new Restaurant()
+            //{
+            //    Name = "Mehana Chevermeto",
+            //    Address = "Kaloyan Dimitrov 16",
+            //    Description = "Traditional food from Bulgarian Kitchen",
+            //    StartingTime = new TimeSpan(12, 0, 0),
+            //    EndingTime = new TimeSpan(23, 45, 0),
+            //    ImageUrl = "https://www.interhotelsandanski.bg/media/k2/items/cache/3749aaa8ee129d7e919bddcc7e09cd36_3_XL.jpg",
+            //    Capacity = 120,
+            //    CityId = 3,
+            //    CategoryId = 1,
+            //    OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
+            //};
+
+            //restaurants.Add(restaurant);
+
             return restaurants.ToArray();
         }
+       
     }
 }

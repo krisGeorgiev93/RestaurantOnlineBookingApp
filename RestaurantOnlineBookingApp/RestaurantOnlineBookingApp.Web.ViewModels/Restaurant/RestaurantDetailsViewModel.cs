@@ -10,9 +10,9 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
     public class RestaurantDetailsViewModel : RestaurantAllViewModel
     {
         public string Category { get; set; } = null!;
-
-        public string OpeningTime { get; set; } = null!;
-        public string ClosingTime {  get; set; } = null!;
+        public TimeSpan OpeningTime { get; set; } 
+        public TimeSpan ClosingTime {  get; set; } 
+        public string City {  get; set; } = null!;
         public OwnerInfoOnRestaurantViewModel OwnerInfo { get; set; } = null!;
 
     }

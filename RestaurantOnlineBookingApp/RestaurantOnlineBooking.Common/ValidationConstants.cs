@@ -34,7 +34,8 @@ namespace RestaurantOnlineBookingApp.Common
 
         public static class City
         {
-
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 100;
         }
 
         public static class ApplicationUser
@@ -44,6 +45,10 @@ namespace RestaurantOnlineBookingApp.Common
 
         public static class Meal
         {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 50;
+            public const int DescriptionMinLength = 5;
+            public const int DescriptionMaxLength = 500;
             public const string PriceMinValue = "0";
             public const string PriceMaxValue = "6000";
         }
@@ -52,9 +57,22 @@ namespace RestaurantOnlineBookingApp.Common
         {
             public const int PhoneNumberMinLength = 6;
             public const int PhoneNumberMaxLength = 14;
+        }
 
+        public static class Review
+        {
+            public const int CommentMinLength = 2;
+            public const int CommentMaxLength = 500;
+            public const int ReviewRatingMinValue = 1;
+            public const int ReviewRatingMaxValue = 10;
+        }
 
-
+        public static class Event
+        {
+            public const int TitleMinLength = 2;
+            public const int TitleMaxLength = 100;
+            public const int DescriptionMinLength = 5;
+            public const int DescriptionMaxLength = 500;
         }
 
     }

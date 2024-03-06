@@ -19,8 +19,12 @@
         </div>
         <div class="card col-8 border-0">
             <p style="font-size:25px;"><u>@Model.Name</u></p>
-            <p>Located in: <b>@Model.Address</b></p>           
-            <p>@Model.Description</p>
+            <p>City: <b>@Model.City</b></p>
+            <p>Address: <b>@Model.Address</b></p>  
+            <p>Description: <b>@Model.Description</b></p>
+            <p>Opening Time: <b>@Model.OpeningTime.ToString(@"hh\:mm")</b></p> @* formated TimeSpan *@
+            <p>Closing Time: <b>@Model.ClosingTime.ToString(@"hh\:mm")</b></p>
+
             <p>Category: <b>@Model.Category</b></p>          
             <div class="form-inline">
                 @if (this.User.Identity.IsAuthenticated)
