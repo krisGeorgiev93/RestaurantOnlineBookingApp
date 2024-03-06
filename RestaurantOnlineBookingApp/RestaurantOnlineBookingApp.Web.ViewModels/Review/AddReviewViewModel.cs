@@ -18,12 +18,9 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
         [MaxLength(CommentMaxLength)]
         [Required]
         public string Comment { get; set; } = null!;
-
-        [Required]
-        public Guid GuestId { get; set; }
-
-        [Required]
         public Guid RestaurantId { get; set; }
+
+        public Guid GuestId {  get; set; }
 
     }
 }
