@@ -1,0 +1,32 @@
+﻿@model IEnumerable<RestaurantOnlineBookingApp.Web.ViewModels.Review.ReviewAllViewModel>
+
+@{
+    ViewData["Title"] = "Restaurant Reviews";
+}
+
+<h2 style="color: white;">@ViewData["Title"]</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="color: white;">Rating</th>
+                <th style="color: white;">Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td style="color: white;">@review.ReviewRating</td>
+                    <td style="color: white;">@review.Comment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p style="color: white;">No reviews available.</p>
+}

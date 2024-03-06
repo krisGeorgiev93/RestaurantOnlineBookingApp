@@ -27,7 +27,7 @@ namespace RestaurantOnlineBooking.Services.Data
 
             await this._dbContext.Reviews.AddAsync(review);
             await this._dbContext.SaveChangesAsync();
-        }
+        }       
 
         public async Task<IEnumerable<ReviewDetailsViewModel>> GetReviewsByUserIdAsync(string userId)
         {
@@ -41,6 +41,22 @@ namespace RestaurantOnlineBooking.Services.Data
                    RestaurantName = r.Restaurant.Name 
                })
                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ReviewAllViewModel>> GetReviewsForRestaurantAsync(Guid restaurantId)
+        {
+            var reviews = _dbContext.Reviews
+                 .Where(r => r.RestaurantId == restaurantId)
+                 .Select(r => new ReviewAllViewModel
+                 {
+                     Id = r.Id,
+                     ReviewRating = r.ReviewRating,
+                     Comment = r.Comment,
+                     GuestId = r.GuestId,
+                     RestaurantId = r.RestaurantId
+                 });
+
+            return await reviews.ToListAsync();
         }
     }
 }

@@ -75,6 +75,12 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View(reviews);
         }
 
+        public async Task<IActionResult> All(Guid restaurantId)
+        {
+            var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
+            return View(reviews);
+        }
+
         private string GetUserId()
            => User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
