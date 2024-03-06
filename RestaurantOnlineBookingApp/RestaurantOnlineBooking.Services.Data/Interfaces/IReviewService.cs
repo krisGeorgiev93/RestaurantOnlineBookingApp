@@ -10,5 +10,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     public interface IReviewService
     {
         Task AddReviewAsync(AddReviewViewModel model);
+
+        Task<IEnumerable<ReviewDetailsViewModel>> GetReviewsByUserIdAsync(string userId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using RestaurantOnlineBooking.Services.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Review;
@@ -26,6 +27,20 @@ namespace RestaurantOnlineBooking.Services.Data
 
             await this._dbContext.Reviews.AddAsync(review);
             await this._dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ReviewDetailsViewModel>> GetReviewsByUserIdAsync(string userId)
+        {
+            return await this._dbContext.Reviews
+               .Where(r => r.GuestId.ToString() == userId)
+               .Select(r => new ReviewDetailsViewModel
+               {
+                   ReviewRating = r.ReviewRating,
+                   Comment = r.Comment,
+                   RestaurantId = r.RestaurantId,
+                   RestaurantName = r.Restaurant.Name 
+               })
+               .ToListAsync();
         }
     }
 }
