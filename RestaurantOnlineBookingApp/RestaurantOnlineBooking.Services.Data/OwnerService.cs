@@ -29,6 +29,14 @@ namespace RestaurantOnlineBooking.Services.Data
 
         }
 
+        public async Task<List<Restaurant>> GetOwnedRestaurantsAsync(Guid ownerId)
+        {
+            return await this.dBContext.Owners
+               .Where(o => o.Id == ownerId)
+               .SelectMany(o => o.OwnedRestaurants)
+               .ToListAsync();
+        }
+
         public async Task<bool> HasRestaurantWithIdAsync(string? userId, string restaurantId)
         {
             Owner? owner = await this.dBContext

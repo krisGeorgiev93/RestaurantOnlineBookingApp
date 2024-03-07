@@ -1,4 +1,5 @@
-﻿using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
+﻿using RestaurantOnlineBookingApp.Data.Models;
+using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
 
 namespace RestaurantOnlineBooking.Services.Data.Interfaces
 {
@@ -13,5 +14,6 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task<string?> OwnerIdByUserIdAsync(string userId);
 
         Task Create(string userId, JoinOwnerFormModel model);
+        Task<List<Restaurant>> GetOwnedRestaurantsAsync(Guid ownerId);
     }
 }

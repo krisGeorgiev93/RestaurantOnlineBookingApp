@@ -73,6 +73,8 @@ namespace RestaurantOnlineBookingApp.Common
             public const int TitleMaxLength = 100;
             public const int DescriptionMinLength = 5;
             public const int DescriptionMaxLength = 500;
+            public const string MinPriceValue = "1";
+            public const string MaxPriceValue = "1000";
         }
 
     }

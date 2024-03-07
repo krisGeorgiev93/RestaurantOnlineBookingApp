@@ -25,12 +25,8 @@
                        class="btn btn-warning">Edit</a>
                     <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id"
                        class="btn btn-danger">Delete</a>
-                    <p></p>
-                    @*  <form asp-controller="Restaurant" asp-action="Leave"
-            asp-route-id="@Model.Id" method="post">
-            <input class="btn btn-primary" type="submit" value="Leave" />
-            </form> *@
-
+                    <!-- Button to Add Event -->
+                    <a class="ml-2 btn btn-primary" asp-controller="Event" asp-action="Create" asp-route-restaurantId="@Model.Id">Add Event</a>
                     <!-- Button to Add Meal -->
                     <a asp-controller="Meal" asp-action="AddMeal" asp-route-restaurantId="@Model.Id"
                        class="btn btn-info">Add Meal</a>

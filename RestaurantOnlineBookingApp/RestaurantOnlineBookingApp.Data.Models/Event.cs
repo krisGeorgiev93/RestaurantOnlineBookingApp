@@ -9,6 +9,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         {
             this.Id = Guid.NewGuid();
             this.Bookings = new List<Booking>();
+            this.Meals = new List<Meal>();
         }
         public Guid Id { get; set; }
         [Required]
@@ -19,11 +20,15 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
-        public int MealId { get; set; }
+        public decimal Price {  get; set; }
+        public string ImageUrl {  get; set; }
+        public Guid RestaurantId { get; set; }
 
-        [ForeignKey(nameof(MealId))]
+        [ForeignKey(nameof(RestaurantId))]
         [Required]
-        public Meal Meal { get; set; }
+        public Restaurant Restaurant { get; set; }
+
+        public ICollection<Meal> Meals { get; set; } 
         public ICollection<Booking> Bookings { get; set; } = null!;
     }
 }

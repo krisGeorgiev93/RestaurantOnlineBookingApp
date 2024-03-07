@@ -62,7 +62,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             var viewModel = new MealFormViewModel
             {
-                // Initialize other properties as needed
                 RestaurantId = restaurantGuid // Set the RestaurantId in the view model
             };
 
