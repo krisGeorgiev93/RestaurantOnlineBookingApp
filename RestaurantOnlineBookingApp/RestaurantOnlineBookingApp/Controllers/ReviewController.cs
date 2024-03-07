@@ -1,36 +1,46 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Review;
 using System.Security.Claims;
+using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
+        private readonly IBookingService _bookingService;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewService reviewService, IBookingService bookingService)
         {
             _reviewService = reviewService;
+            _bookingService = bookingService;
         }
 
         [HttpGet]
-        public IActionResult AddReview(Guid restaurantId)
+        public async Task<IActionResult> AddReview(Guid restaurantId)
         {
             // Предполагайки, че имате потребителска идентификация, извличате ID на потребителя от текущият потребителски клейм, за да го използвате като GuestId в модела за добавяне на ревюто.
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Проверявате дали е възможно да извлечете валидно идентификатора на потребителя.
+            // Проверявате дали е възможно да извлечете валидно id на потребителя.
             if (!Guid.TryParse(userId, out Guid guestId))
             {
-                // Ако не е възможно, да се хвърли изключение или да се върне подходящ резултат, който показва, че не можете да идентифицирате потребителя.
-                // Пример: throw new ApplicationException("Unable to identify the user.");
-                return BadRequest("Unable to identify the user.");
+                return this.Error();
             }
 
-            // Създавате модела за добавяне на ревюто, като задавате идентификатора на потребителя като GuestId и идентификатора на ресторанта.
+            // Проверка за наличие на валидна резервация с минала дата
+            bool hasValidReservation = await _bookingService.HasValidReservationAsync(restaurantId, guestId);
+
+            // Проверка дали гостът има валидна резервация с минала дата
+            if (!hasValidReservation)
+            {
+                // Ако няма валидна резервация с минала дата, върнете грешка
+                this.TempData[ErrorMessage] = "You must have a valid reservation with a past date to leave a review.";
+                return RedirectToAction("Mine", "Booking");
+            }
+
+            // Създавате модела за добавяне на ревюто, като задавате id на потребителя като GuestId и id на ресторанта.
             var model = new AddReviewViewModel
             {
                 GuestId = guestId,
@@ -83,5 +93,11 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
         private string GetUserId()
            => User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        private IActionResult Error()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error";
+            return this.RedirectToAction("Index", "Home");
+        }
     }
 }

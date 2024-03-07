@@ -22,5 +22,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         List<string> GetReservedTimes(TimeSpan startingTime, TimeSpan endingTime, TimeSpan interval);
 
+        Task<bool> HasValidReservationAsync(Guid restaurantId, Guid guestId);
+
     }
 }

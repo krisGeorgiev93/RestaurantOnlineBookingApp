@@ -9,7 +9,6 @@ namespace RestaurantOnlineBooking.Services.Data
     public class ReviewService : IReviewService
     {
         private RestaurantBookingDbContext _dbContext;
-
         public ReviewService(RestaurantBookingDbContext dbContext)
         {
             _dbContext = dbContext;

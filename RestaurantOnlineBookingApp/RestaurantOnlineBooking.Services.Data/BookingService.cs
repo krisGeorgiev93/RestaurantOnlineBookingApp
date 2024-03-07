@@ -158,5 +158,30 @@ namespace RestaurantOnlineBooking.Services.Data
 
             return reservedTimes;
         }
+
+        public async Task<bool> HasValidReservationAsync(Guid restaurantId, Guid guestId)
+        {
+            // Извличане на текущата дата и час
+            DateTime currentDate = DateTime.Now;
+
+            // Проверка за наличие на резервация за дадения ресторант и гост
+            var reservation = await this.dBContext.Bookings
+                .FirstOrDefaultAsync(r => r.RestaurantId == restaurantId &&
+                                          r.GuestId == guestId);
+
+            // Ако няма резервация, връщаме false
+            if (reservation == null)
+            {
+                return false;
+            }
+
+            // Проверка дали резервацията е с минала дата
+            if (reservation.BookingDate < currentDate)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
