@@ -1,0 +1,23 @@
+﻿@model IEnumerable<RestaurantOnlineBookingApp.Web.ViewModels.Event.EventViewModel>
+
+<h2>All Events</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@item.ImageUrl" class="card-img-top" alt="Event Image">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <p class="card-text">@item.Description</p>
+                    <p class="card-text">Date: @item.Date.ToShortDateString()</p>
+                    <p class="card-text">Price: @item.Price</p>
+                    <form asp-controller="Event" asp-action="DeleteEvent" asp-route-eventId="@item.Id.ToString()" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this meal?')">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>
