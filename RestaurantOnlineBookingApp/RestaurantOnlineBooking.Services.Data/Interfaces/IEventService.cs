@@ -6,9 +6,5 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     {
         Task CreateEventAsync(EventFormModel model, string restaurantId);
 
-
-
-
-
     }
 }

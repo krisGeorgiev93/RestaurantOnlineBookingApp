@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RestaurantOnlineBooking.Services.Data;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Web.ViewModels.Event;
@@ -77,7 +78,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
             }
         }
-
+       
         private IActionResult Error()
         {
             this.TempData[ErrorMessage] = "Unexpected error";
