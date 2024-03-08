@@ -17,6 +17,10 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public string Title { get; set; }
         [Required]
         public DateTime Date { get; set; }
+
+        [Required]  
+        public TimeSpan Time { get; set; }
+
         [Required]
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }

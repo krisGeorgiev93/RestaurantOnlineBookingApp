@@ -127,7 +127,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             if (eventForEdit == null)
             {
                 return NotFound("Event not found");
-            }           
+            }
 
             try
             {
@@ -137,6 +137,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                     Id = eventForEdit.Id,
                     Title = eventForEdit.Title,
                     Date = eventForEdit.Date,
+                    Time = eventForEdit.Time,
                     Description = eventForEdit.Description,
                     Price = eventForEdit.Price,
                     ImageUrl = eventForEdit.ImageUrl
@@ -148,7 +149,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 this.TempData[ErrorMessage] = "Unexpected error";
                 return this.RedirectToAction("Index", "Home");
             }
-            
+
         }
 
         [HttpPost]
@@ -219,6 +220,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 Id = e.Id.ToString(),
                 Title = e.Title,
                 Date = e.Date,
+                Time = e.Time,
                 Description = e.Description,
                 Price = e.Price,
                 ImageUrl = e.ImageUrl

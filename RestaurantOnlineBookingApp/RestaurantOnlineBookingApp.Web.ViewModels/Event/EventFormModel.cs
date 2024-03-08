@@ -13,8 +13,10 @@
 
         [Required(ErrorMessage = "Event date is required")]
         [Display(Name = "Event Date")]
-        [DataType(DataType.DateTime)]
-        public DateTime Date { get; set; }       
+        public DateTime Date { get; set; }
+
+        [Required]
+        public TimeSpan Time { get; set; }
 
         [Required]
         [MinLength(DescriptionMinLength)]

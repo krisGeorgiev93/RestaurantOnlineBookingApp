@@ -14,6 +14,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Booking
         [Display(Name = "Booking Date")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public string BookingDate { get; set; }
+
         public string ReservedTime { get; set; }
         public int NumberOfGuests { get; set; }
         public string RestaurantName { get; set; }

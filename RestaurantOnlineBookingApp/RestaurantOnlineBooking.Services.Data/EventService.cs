@@ -25,12 +25,14 @@ namespace RestaurantOnlineBooking.Services.Data
             {
                 throw new ArgumentException("Restaurant not found or user is not the owner.");
             }
+
            
             var @event = new RestaurantOnlineBookingApp.Data.Models.Event
             {
                 RestaurantId = model.RestaurantId,
                 Title = model.Title,
                 Date = model.Date,
+                Time = model.Time,
                 Description = model.Description,
                 Price = model.Price,
                 ImageUrl = model.ImageUrl
@@ -67,6 +69,7 @@ namespace RestaurantOnlineBooking.Services.Data
             // Update event properties
             existingEvent.Title = model.Title;
             existingEvent.Date = model.Date;
+            existingEvent.Time = model.Time;
             existingEvent.Description = model.Description;
             existingEvent.Price = model.Price;
             existingEvent.ImageUrl = model.ImageUrl;
@@ -106,6 +109,8 @@ namespace RestaurantOnlineBooking.Services.Data
                 Title = @event.Title,
                 Description = @event.Description,
                 ImageUrl = @event.ImageUrl,
+                Date = @event.Date,
+                Time = @event.Time,
                 Price = @event.Price,
                 RestaurantId = (Guid)@event.RestaurantId
             };
