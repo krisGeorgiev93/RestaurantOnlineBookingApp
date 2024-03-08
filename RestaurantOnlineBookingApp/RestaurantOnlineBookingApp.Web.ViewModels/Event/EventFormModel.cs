@@ -11,9 +11,10 @@
         [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
+        [Required(ErrorMessage = "Event date is required")]
+        [Display(Name = "Event Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime Date { get; set; }       
 
         [Required]
         [MinLength(DescriptionMinLength)]

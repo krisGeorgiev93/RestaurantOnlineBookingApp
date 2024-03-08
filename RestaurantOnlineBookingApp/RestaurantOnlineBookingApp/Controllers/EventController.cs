@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RestaurantOnlineBooking.Services.Data;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Web.ViewModels.Event;
+using System.Globalization;
 using System.Security.Claims;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
@@ -82,23 +84,71 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var @event = await this.eventService.GetEventByIdAsync(id);
-            if (@event == null)
+            bool eventExists = await this.eventService.EventExistsByIdAsync(id);
+
+            if (!eventExists)
             {
-                return NotFound("Event not found");
+                TempData[ErrorMessage] = "Event with the provided id does not exist!";
+
+                return RedirectToAction("Index", "Home");
             }
 
-            var eventFormModel = new EventFormModel
-            {
-                Id = @event.Id,
-                Title = @event.Title,
-                Date = @event.Date,
-                Description = @event.Description,
-                Price = @event.Price,
-                ImageUrl = @event.ImageUrl
-            };
+            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            return View(eventFormModel);
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "Only owners can delete the restaurant events!";
+            }
+
+            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+
+            var @event = await this.eventService.GetEventByIdAsync(id);
+
+            if (@event == null)
+            {
+                TempData[ErrorMessage] = "Event with the provided id does not exist!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string eventRestaurantId = @event.RestaurantId.ToString();
+
+            bool isOwnerOwnedRestaurant = await this.restaurantService
+               .IsOwnerWithIdOwnedRestaurantWithIdAsync(eventRestaurantId, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the events"!;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            var eventForEdit = await this.eventService.GetEventByIdAsync(id);
+            if (eventForEdit == null)
+            {
+                return NotFound("Event not found");
+            }           
+
+            try
+            {
+
+                var eventFormModel = new EventFormModel
+                {
+                    Id = eventForEdit.Id,
+                    Title = eventForEdit.Title,
+                    Date = eventForEdit.Date,
+                    Description = eventForEdit.Description,
+                    Price = eventForEdit.Price,
+                    ImageUrl = eventForEdit.ImageUrl
+                };
+                return View(eventFormModel);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error";
+                return this.RedirectToAction("Index", "Home");
+            }
+            
         }
 
         [HttpPost]
@@ -109,10 +159,50 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
             }
 
+            bool eventExists = await this.eventService.EventExistsByIdAsync(model.Id.ToString());
+
+            if (!eventExists)
+            {
+                TempData[ErrorMessage] = "Event with the provided id does not exist!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "Only owners can delete the restaurant events!";
+            }
+
+            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+
+            var @event = await this.eventService.GetEventByIdAsync(model.Id.ToString());
+
+            if (@event == null)
+            {
+                TempData[ErrorMessage] = "Event with the provided id does not exist!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            string eventRestaurantId = @event.RestaurantId.ToString();
+
+            bool isOwnerOwnedRestaurant = await this.restaurantService
+               .IsOwnerWithIdOwnedRestaurantWithIdAsync(eventRestaurantId, ownerId!);
+
+            if (!isOwnerOwnedRestaurant)
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the events"!;
+
+                return RedirectToAction("Index", "Home");
+            }
             try
             {
                 await this.eventService.EditEventAsync(model);
-                return RedirectToAction(nameof(Index));
+                this.TempData[SuccessMessage] = "Event was edited successfully!";
+                return RedirectToAction("AllByRestaurant", "Event", new { restaurantId = eventRestaurantId });
+
             }
             catch (ArgumentException ex)
             {

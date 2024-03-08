@@ -3,10 +3,15 @@
 
 <h2>Edit Event</h2>
 
-<form asp-action="Edit">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
+@if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["ErrorMessage"]
+    </div>
+}
 
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="Title" class="control-label"></label>
         <input asp-for="Title" class="form-control" />
@@ -14,8 +19,8 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Date" class="control-label"></label>
-        <input asp-for="Date" class="form-control" />
+        <label asp-for="Date" class="control-label">Date and Time</label>
+        <input type="datetime-local" asp-for="Date" value="@Model.Date.ToString("dd-MM-yyyy HH:mm")" class="form-control" />
         <span asp-validation-for="Date" class="text-danger"></span>
     </div>
 
@@ -37,11 +42,9 @@
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

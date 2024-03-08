@@ -4,6 +4,7 @@ using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Event;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+using System.Globalization;
 using static RestaurantOnlineBookingApp.Common.ValidationConstants;
 
 namespace RestaurantOnlineBooking.Services.Data
@@ -24,6 +25,7 @@ namespace RestaurantOnlineBooking.Services.Data
             {
                 throw new ArgumentException("Restaurant not found or user is not the owner.");
             }
+           
             var @event = new RestaurantOnlineBookingApp.Data.Models.Event
             {
                 RestaurantId = model.RestaurantId,
@@ -61,7 +63,7 @@ namespace RestaurantOnlineBooking.Services.Data
             {
                 throw new ArgumentException("Event not found.");
             }
-
+           
             // Update event properties
             existingEvent.Title = model.Title;
             existingEvent.Date = model.Date;
