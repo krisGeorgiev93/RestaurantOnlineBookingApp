@@ -17,12 +17,7 @@
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-
-   @*  <div class="form-group">
-        <label asp-for="Date" class="control-label">Date and Time</label>
-        <input type="datetime-local" asp-for="Date" class="form-control" />
-        <span asp-validation-for="Date" class="text-danger"></span>
-    </div> *@
+       
     <div class="form-group">
         <label asp-for="Date" class="control-label">Date</label>
         <input type="date" asp-for="Date" class="form-control" />
@@ -31,9 +26,12 @@
 
     <div class="form-group">
         <label asp-for="Time" class="control-label">Time</label>
-        <input type="time" asp-for="Time" class="form-control" />
+        <!-- Convert TimeSpan to DateTime by adding to a fixed date -->
+        <input type="time" asp-for="Time" class="form-control" value="@DateTime.Today.Add(Model.Time).ToString("HH:mm")" />
         <span asp-validation-for="Time" class="text-danger"></span>
     </div>
+
+
 
     <div class="form-group">
         <label asp-for="Description" class="control-label"></label>

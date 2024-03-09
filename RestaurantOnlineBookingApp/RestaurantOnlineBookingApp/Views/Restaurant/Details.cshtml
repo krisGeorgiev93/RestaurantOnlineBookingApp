@@ -39,14 +39,7 @@
 
                     }  
                     else
-                    {
-                        @if (Model.Capacity > 1)
-                        {
-                            <form class="ml-2" asp-controller="Booking"
-                                  asp-action="BookTable" asp-route-id="@Model.Id" method="post">
-                                <input class="btn btn-primary" type="submit" value="Book Table" />
-                            </form>
-                        }
+                    {                     
                         <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
                     }                                 
                 }
