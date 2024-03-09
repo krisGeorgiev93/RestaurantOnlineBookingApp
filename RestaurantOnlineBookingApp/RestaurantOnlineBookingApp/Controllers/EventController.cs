@@ -212,6 +212,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> AllByRestaurant(string restaurantId)
         {
             var events = await this.eventService.GetAllEventsByRestaurantIdAsync(restaurantId);

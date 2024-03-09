@@ -51,7 +51,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> AddReview(AddReviewViewModel model)
         {
@@ -85,6 +84,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View(reviews);
         }
 
+        [HttpGet]
         public async Task<IActionResult> All(Guid restaurantId)
         {
             var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);

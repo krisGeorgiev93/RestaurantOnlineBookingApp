@@ -32,6 +32,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return this.View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> Join(JoinOwnerFormModel model)
         {
             string? userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -12,8 +12,8 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    [Migration("20240307174128_UpdateEventTable2")]
-    partial class UpdateEventTable2
+    [Migration("20240309161954_updateEventTable2.1")]
+    partial class updateEventTable21
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -244,9 +244,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -272,8 +269,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.HasIndex("GuestId");
 
@@ -438,6 +433,9 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Property<Guid>("RestaurantId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -463,9 +461,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -482,8 +477,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.HasIndex("RestaurantId");
 
@@ -698,10 +691,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Booking", b =>
                 {
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Event", null)
-                        .WithMany("Bookings")
-                        .HasForeignKey("EventId");
-
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
                         .WithMany()
                         .HasForeignKey("GuestId")
@@ -743,10 +732,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Meal", b =>
                 {
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Event", null)
-                        .WithMany("Meals")
-                        .HasForeignKey("EventId");
-
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Meals")
                         .HasForeignKey("RestaurantId")
@@ -839,13 +824,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.City", b =>
                 {
                     b.Navigation("Restaurants");
-                });
-
-            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Event", b =>
-                {
-                    b.Navigation("Bookings");
-
-                    b.Navigation("Meals");
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Owner", b =>

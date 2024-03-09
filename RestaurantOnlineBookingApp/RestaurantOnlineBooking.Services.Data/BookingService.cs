@@ -176,7 +176,7 @@ namespace RestaurantOnlineBooking.Services.Data
             }
 
             // Проверка дали резервацията е с минала дата
-            if (reservation.BookingDate < currentDate)
+            if (reservation.BookingDate < currentDate && reservation.ReservedTime < currentDate.TimeOfDay)
             {
                 return true;
             }

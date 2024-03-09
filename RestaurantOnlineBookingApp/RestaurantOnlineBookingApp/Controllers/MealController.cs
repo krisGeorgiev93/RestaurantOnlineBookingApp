@@ -264,10 +264,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }      
 
 
-
-
-
-        // Get currently logged-in user's Id
         private string GetUserId()
            => User.FindFirstValue(ClaimTypes.NameIdentifier);
 

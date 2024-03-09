@@ -7,10 +7,9 @@ namespace RestaurantOnlineBookingApp.Data.Models
     {
         public Event()
         {
-            this.Id = Guid.NewGuid();
-            this.Bookings = new List<Booking>();
-            this.Meals = new List<Meal>();
+            this.Id = Guid.NewGuid();           
         }
+
         public Guid Id { get; set; }
         [Required]
         [MaxLength(TitleMaxLength)]
@@ -32,8 +31,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         public Restaurant Restaurant { get; set; }
 
-        public ICollection<Meal> Meals { get; set; } 
-        public ICollection<Booking> Bookings { get; set; } = null!;
     }
 }
 
