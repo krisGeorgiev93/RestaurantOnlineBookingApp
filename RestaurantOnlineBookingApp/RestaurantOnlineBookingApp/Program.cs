@@ -32,6 +32,11 @@ namespace RestaurantOnlineBookingApp.Web
              .AddRoles<IdentityRole<Guid>>()
              .AddEntityFrameworkStores<RestaurantBookingDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LoginPath = "/User/Login";
+                cfg.AccessDeniedPath = "/Home/Error/401";
+            });
 
             builder.Services.AddControllersWithViews()
                 .AddMvcOptions(options =>
