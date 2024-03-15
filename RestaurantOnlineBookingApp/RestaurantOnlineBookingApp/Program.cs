@@ -7,8 +7,9 @@ namespace RestaurantOnlineBookingApp.Web
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Infrastructure.ModelBinders;
-
+    using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
     public class Program
     {
         public static void Main(string[] args)
@@ -75,6 +76,8 @@ namespace RestaurantOnlineBookingApp.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(AdminEmail);
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
