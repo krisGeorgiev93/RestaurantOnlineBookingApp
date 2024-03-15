@@ -48,6 +48,10 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Owner Info</h5>
+                    @if(Model.OwnerInfo.FullName != null)
+                    {
+                    <p class ="card-text">Full Name: @Model.OwnerInfo.FullName</p>                        
+                    }
                     <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
                     <p class="card-text">Email: @Model.OwnerInfo.Email</p>
                 </div>

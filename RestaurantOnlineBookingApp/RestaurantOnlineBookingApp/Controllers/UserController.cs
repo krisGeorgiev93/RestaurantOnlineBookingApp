@@ -11,7 +11,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
-        private readonly IUserStore<AppUser> userStore;
 
         public UserController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {

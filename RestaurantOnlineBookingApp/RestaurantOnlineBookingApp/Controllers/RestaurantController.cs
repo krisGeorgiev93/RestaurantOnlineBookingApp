@@ -19,11 +19,13 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly IRestaurantService _restaurantService;
         private readonly ICityService _cityService;
         private readonly IMealService _mealService;
+        private readonly IUserService _userService;
         private readonly ICapacityService _capacityService;
         private readonly RestaurantBookingDbContext _dbContext;
 
         public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
-            RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService, ICapacityService capacityService)
+            RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService, ICapacityService capacityService
+            ,IUserService userService)
         {
             _ownerService = ownerService;
             _categoryService = categoryService;
@@ -32,6 +34,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             _dbContext = dbContext;
             _mealService = mealService;
             _capacityService = capacityService;
+            _userService = userService;
 
         }
 
@@ -138,6 +141,9 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 RestaurantDetailsViewModel model = await this._restaurantService
                 .GetDetailsByIdAsync(id);
+
+                model.OwnerInfo.FullName =
+                    await this._userService.GetFullNameByEmailAsync(model.OwnerInfo.Email);
 
                 return View(model);
             }

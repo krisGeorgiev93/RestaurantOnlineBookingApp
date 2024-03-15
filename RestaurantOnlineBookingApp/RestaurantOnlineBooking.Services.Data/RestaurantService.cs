@@ -14,10 +14,12 @@ namespace RestaurantOnlineBooking.Services.Data
     public class RestaurantService : IRestaurantService
     {
         private readonly RestaurantBookingDbContext dBContext;
-
-        public RestaurantService(RestaurantBookingDbContext dBContext)
+        private readonly IUserService userService;
+        public RestaurantService(RestaurantBookingDbContext dBContext, IUserService userService)
         {
             this.dBContext = dBContext;
+            this.userService = userService;
+
         }
 
         public async Task<AllRestaurantsFilteredServiceModel> AllAsync(AllRestaurantsQueryModel model)
@@ -210,9 +212,9 @@ namespace RestaurantOnlineBooking.Services.Data
                 .Restaurants
                 .Include(r => r.Category)
                 .Include(r => r.City)
-                .Include(r => r.Owner)
-                .Include(r => r.Reviews) // Include reviews
-                .ThenInclude(r => r.Guest) // Include guest for each review
+                .Include(r => r.Reviews) 
+                .Include(r => r.Owner)                 
+                .ThenInclude(r => r.User)               
                 .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
@@ -231,7 +233,9 @@ namespace RestaurantOnlineBooking.Services.Data
                 ClosingTime = restaurant.EndingTime,
                 OwnerInfo = new OwnerInfoOnRestaurantViewModel
                 {
-                    PhoneNumber = restaurant.Owner.PhoneNumber
+                    //FullName = this.userService.GetFullNameByIdAsync(restaurant.Owner.UserId.ToString()).ToString(),
+                    PhoneNumber = restaurant.Owner.PhoneNumber,
+                    Email = restaurant.Owner.User.Email                    
                 },
                 Rating = rating
             };

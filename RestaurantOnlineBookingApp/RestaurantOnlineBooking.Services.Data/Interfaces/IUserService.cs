@@ -10,5 +10,6 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
     {
         Task<string> GetFullNameByEmailAsync(string email);
 
+        Task<string> GetFullNameByIdAsync(string userId);
     }
 }

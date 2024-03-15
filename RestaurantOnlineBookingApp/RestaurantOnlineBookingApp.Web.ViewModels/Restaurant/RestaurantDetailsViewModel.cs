@@ -14,7 +14,6 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         public TimeSpan ClosingTime {  get; set; } 
         public string City {  get; set; } = null!;
         public OwnerInfoOnRestaurantViewModel OwnerInfo { get; set; } = null!;
-
         public double Rating {  get; set; }
 
     }

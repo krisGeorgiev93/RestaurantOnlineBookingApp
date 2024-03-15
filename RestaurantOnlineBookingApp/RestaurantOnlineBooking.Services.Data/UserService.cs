@@ -26,5 +26,24 @@ namespace RestaurantOnlineBooking.Services.Data
 
             return $"{user.FirstName} {user.LastName}";
         }
+
+        public async Task<string> GetFullNameByIdAsync(string userId)
+        {
+            var user = await this.dbContext.Users.FindAsync(userId);
+            if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
+            {
+                return null;
+            }
+            return user.FirstName + " " + user.LastName;
+            //AppUser? user = await this.dbContext
+            //   .Users
+            //   .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+            //if (user == null)
+            //{
+            //    return string.Empty;
+            //}
+
+            //return $"{user.FirstName} {user.LastName}";
+        }
     }
 }
