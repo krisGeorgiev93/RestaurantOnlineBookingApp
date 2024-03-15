@@ -1,4 +1,3 @@
-
 namespace RestaurantOnlineBookingApp.Web
 {
     using Microsoft.AspNetCore.Identity;
@@ -54,6 +53,7 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddScoped<ICapacityService, CapacityService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IEventService, EventService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             WebApplication app = builder.Build();
 

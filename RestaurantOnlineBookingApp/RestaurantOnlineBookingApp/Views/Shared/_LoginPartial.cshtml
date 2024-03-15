@@ -2,17 +2,21 @@
 @using RestaurantOnlineBooking.Services.Data.Interfaces
 @using RestaurantOnlineBookingApp.Data.Models
 @using System.Security.Claims
+@using RestaurantOnlineBookingApp.Infrastructure.Extensions
+
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 @inject IOwnerService OwnerService
+@inject IUserService UserService
 @{
-    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.GetId()!);
+    string userFullName = await UserService.GetFullNameByEmailAsync(User.Identity?.Name!);
 }
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @userFullName</a>
         </li>
         if (!isUserOwner)
         {
