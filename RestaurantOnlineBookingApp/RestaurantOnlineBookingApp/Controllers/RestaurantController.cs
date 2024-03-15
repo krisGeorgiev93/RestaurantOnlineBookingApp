@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RestaurantOnlineBooking.Services.Data;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBooking.Services.Data.Models;
 using RestaurantOnlineBookingApp.Data;
+using RestaurantOnlineBookingApp.Infrastructure.Extensions;
 using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
 using System.Security.Claims;
@@ -197,7 +197,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isUserOwner = await this._ownerService
                 .OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
 
@@ -209,7 +209,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
 
@@ -253,7 +253,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isUserOwner = await this._ownerService
                 .OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
 
@@ -265,7 +265,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
 
@@ -302,7 +302,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isUserOwner = await this._ownerService
                 .OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
 
@@ -314,7 +314,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
 
@@ -347,7 +347,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isUserOwner = await this._ownerService
                 .OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
 
@@ -359,7 +359,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
 

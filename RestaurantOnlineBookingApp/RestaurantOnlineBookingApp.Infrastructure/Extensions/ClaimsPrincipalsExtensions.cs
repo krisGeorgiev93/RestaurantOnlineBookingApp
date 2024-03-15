@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
+
 namespace RestaurantOnlineBookingApp.Infrastructure.Extensions
 {
     public static class ClaimsPrincipalsExtensions
@@ -7,5 +9,11 @@ namespace RestaurantOnlineBookingApp.Infrastructure.Extensions
         {
             return user.FindFirstValue(ClaimTypes.NameIdentifier);
         }
+
+        public static bool IsAdmin(this ClaimsPrincipal user)
+        {
+            return user.IsInRole(AdminRoleName);
+        }
+
     }
 }

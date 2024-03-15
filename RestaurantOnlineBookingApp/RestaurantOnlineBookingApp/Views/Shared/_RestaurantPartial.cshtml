@@ -1,4 +1,5 @@
 ﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using static RestaurantOnlineBookingApp.Infrastructure.Extensions.ClaimsPrincipalsExtensions     
 @using System.Security.Claims
 @model RestaurantAllViewModel
 
@@ -19,7 +20,7 @@
                class="btn btn-success">Details</a>
             @if (this.User.Identity?.IsAuthenticated ?? false)
             {
-                @if (isUserOwner && isUserOwnerOfTheRestaurant)
+                @if ((isUserOwner && isUserOwnerOfTheRestaurant) || this.User.IsAdmin())
                 {
                     <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
