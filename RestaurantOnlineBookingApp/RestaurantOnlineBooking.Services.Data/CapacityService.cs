@@ -1,5 +1,4 @@
 ﻿
-
 namespace RestaurantOnlineBooking.Services.Data
 {
     using Microsoft.EntityFrameworkCore;
