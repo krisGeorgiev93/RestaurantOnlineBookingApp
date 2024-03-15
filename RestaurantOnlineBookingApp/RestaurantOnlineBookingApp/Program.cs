@@ -58,6 +58,17 @@ namespace RestaurantOnlineBookingApp.Web
 
             WebApplication app = builder.Build();
 
+            // Call SeedAdmin method after building the application
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var dbContext = services.GetRequiredService<RestaurantBookingDbContext>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+                dbContext.Database.Migrate(); // Ensure database migrations are applied
+                dbContext.SeedAdmin(userManager, roleManager); // Call SeedAdmin method
+            }
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
