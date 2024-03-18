@@ -13,7 +13,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Meal
         [Required]
         public string Description { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = "Please select an image.")]
         public IFormFile Image { get; set; } = null!;
 
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]

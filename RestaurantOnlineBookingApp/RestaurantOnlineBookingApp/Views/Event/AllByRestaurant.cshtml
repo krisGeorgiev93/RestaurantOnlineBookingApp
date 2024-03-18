@@ -7,7 +7,10 @@
     {
         <div class="col-md-4 mb-4">
             <div class="card">
-                <img src="@item.ImageUrl" class="card-img-top" alt="Event Image">
+                <!-- Wrap the image inside an anchor tag -->
+                <a href="@item.ImageUrl" target="_blank">
+                    <img src="@item.ImageUrl" class="card-img-top" alt="Event Image">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text">@item.Description</p>

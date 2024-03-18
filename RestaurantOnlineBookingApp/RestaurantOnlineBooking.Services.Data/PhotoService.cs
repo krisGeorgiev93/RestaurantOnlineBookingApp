@@ -21,6 +21,7 @@ namespace RestaurantOnlineBooking.Services.Data
         }
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
         {
+            string imageUrl = null;
             var uploadResult  = new ImageUploadResult();
             if (file.Length > 0)
             {
@@ -31,6 +32,7 @@ namespace RestaurantOnlineBooking.Services.Data
                     Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
                 };
                 uploadResult = await cloudinary.UploadAsync(uploadParams);
+                imageUrl = uploadResult.SecureUrl.ToString();
             }
             return uploadResult;
         }

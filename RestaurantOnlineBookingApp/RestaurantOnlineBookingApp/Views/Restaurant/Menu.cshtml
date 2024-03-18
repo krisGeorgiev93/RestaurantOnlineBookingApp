@@ -21,8 +21,11 @@
                 <tr>
                     <td style="color: white;">@meal.Name</td>
                     <td style="color: white;">@meal.Description</td>
-                    <td>
-                        <img src="@meal.ImageUrl" alt="Meal Image" style="width: 100px; height: 100px;" /> <!-- Set fixed width and height -->                  
+                    <!-- Wrap the image inside an anchor tag -->
+                    <td style="color: white;">
+                        <a href="@meal.ImageUrl" target="_blank">
+                            <img src="@meal.ImageUrl" class="meal-image" alt="Meal Image">
+                        </a>
                     </td>
                     <td style="color: white;">@meal.Price.ToString("0.00", CultureInfo.InvariantCulture)</td>
                     <td>
@@ -41,3 +44,11 @@ else
 {
     <p style="color: white;">No meals found in the menu.</p>
 }
+
+<style>
+    /* Define custom CSS styles for the image */
+    .meal-image {
+        max-width: 100px; /* Set the maximum width of the image */
+        max-height: 100px; /* Set the maximum height of the image */
+    }
+</style>

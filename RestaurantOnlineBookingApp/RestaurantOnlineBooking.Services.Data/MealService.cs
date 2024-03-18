@@ -135,7 +135,6 @@ namespace RestaurantOnlineBooking.Services.Data
                 Id = meal.Id,
                 Name = meal.Name,
                 Description = meal.Description,
-                // ImageUrl = meal.ImageUrl,
                 Price = meal.Price,
                 RestaurantId = (Guid)meal.RestaurantId
             };
