@@ -10,7 +10,7 @@
         </div>
 }
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="RestaurantId" /> <!--include a hidden field for the RestaurantId because of Redirection to the menu of this Restaurant-->
     <div class="form-group">
@@ -24,9 +24,9 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        <label asp-for="Image"></label>
+        <input asp-for="Image" type="file" class="form-control" />
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Price"></label>

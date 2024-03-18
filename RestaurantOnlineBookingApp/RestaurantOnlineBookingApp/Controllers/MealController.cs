@@ -199,7 +199,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                     Id = meal.Id,
                     Name = meal.Name,
                     Description = meal.Description,
-                    ImageUrl = meal.ImageUrl,
+                    Image = meal.Image,
                     Price = meal.Price,
                     RestaurantId = meal.RestaurantId
                 };

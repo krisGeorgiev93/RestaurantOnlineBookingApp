@@ -15,14 +15,12 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly IEventService eventService;
         private readonly IOwnerService ownerService;
         private readonly IRestaurantService restaurantService;
-        private readonly IPhotoService photoService;
         public EventController(IEventService eventService, IOwnerService ownerService, 
-            IRestaurantService restaurantService, IPhotoService photoService)
+            IRestaurantService restaurantService)
         {
             this.eventService = eventService;
             this.ownerService = ownerService;
             this.restaurantService = restaurantService;
-            this.photoService = photoService;
         }
 
         [HttpGet]

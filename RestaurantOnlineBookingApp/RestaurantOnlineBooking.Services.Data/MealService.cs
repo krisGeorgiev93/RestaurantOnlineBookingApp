@@ -9,10 +9,13 @@ namespace RestaurantOnlineBooking.Services.Data
     public class MealService : IMealService
     {
         private readonly RestaurantBookingDbContext dBContext;
+        private readonly IPhotoService photoService;
 
-        public MealService(RestaurantBookingDbContext dBContext)
+        public MealService(RestaurantBookingDbContext dBContext, IPhotoService photoService)
         {
             this.dBContext = dBContext;
+            this.photoService = photoService;
+
         }
 
         public async Task AddMealToRestaurantAsync(string restaurantId, MealFormViewModel mealViewModel)
@@ -28,13 +31,13 @@ namespace RestaurantOnlineBooking.Services.Data
             {
                 throw new InvalidOperationException("Restaurant not found.");
             }
-
+            var photo = await this.photoService.AddPhotoAsync(mealViewModel.Image);
             var meal = new Meal
             {
                 Name = mealViewModel.Name,
                 Description = mealViewModel.Description,
                 Price = mealViewModel.Price,
-                ImageUrl = mealViewModel.ImageUrl,
+                ImageUrl = photo.Url.ToString(),
                 RestaurantId = restaurantGuid // Associate the meal with the restaurant
             };
 
@@ -45,12 +48,13 @@ namespace RestaurantOnlineBooking.Services.Data
 
         public async Task CreateAsync(MealFormViewModel mealFormViewModel)
         {
+            var photo = await this.photoService.AddPhotoAsync(mealFormViewModel.Image);
             Meal meal = new Meal()
             {
                 Name = mealFormViewModel.Name,
                 Description = mealFormViewModel.Description,
                 Price = mealFormViewModel.Price,
-                ImageUrl = mealFormViewModel.ImageUrl
+                ImageUrl = photo.Url.ToString(),
             };
 
             await this.dBContext.Meals.AddAsync(meal);
@@ -81,10 +85,12 @@ namespace RestaurantOnlineBooking.Services.Data
                 throw new InvalidOperationException("Meal not found.");
             }
 
+            var photo = await this.photoService.AddPhotoAsync(model.Image);
+
             meal.Name = model.Name;
             meal.Description = model.Description;
             meal.Price = model.Price;
-            meal.ImageUrl = model.ImageUrl;
+            meal.ImageUrl = photo.Url.ToString();
             meal.RestaurantId = model.RestaurantId;
 
             await this.dBContext.SaveChangesAsync();
@@ -129,7 +135,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 Id = meal.Id,
                 Name = meal.Name,
                 Description = meal.Description,
-                ImageUrl = meal.ImageUrl,
+                // ImageUrl = meal.ImageUrl,
                 Price = meal.Price,
                 RestaurantId = (Guid)meal.RestaurantId
             };

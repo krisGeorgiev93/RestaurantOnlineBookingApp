@@ -20,12 +20,11 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly ICityService _cityService;
         private readonly IMealService _mealService;
         private readonly IUserService _userService;
-        private readonly IPhotoService _photoService;
         private readonly RestaurantBookingDbContext _dbContext;
 
         public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
             RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService, ICapacityService capacityService
-            ,IUserService userService, IPhotoService photoService)
+            ,IUserService userService)
         {
             _ownerService = ownerService;
             _categoryService = categoryService;
@@ -33,7 +32,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             _cityService = cityService;
             _dbContext = dbContext;
             _mealService = mealService;
-            _photoService = photoService;
             _userService = userService;
 
         }

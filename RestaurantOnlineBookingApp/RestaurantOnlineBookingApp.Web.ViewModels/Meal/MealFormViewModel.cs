@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using static RestaurantOnlineBookingApp.Common.ValidationConstants.Meal;
 namespace RestaurantOnlineBookingApp.Web.ViewModels.Meal
 {
@@ -13,7 +14,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Meal
         public string Description { get; set; } = null!;
 
         [Required]
-        public string ImageUrl { get; set; } = null!;
+        public IFormFile Image { get; set; } = null!;
 
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         [Display(Name = "Meal Price")]
