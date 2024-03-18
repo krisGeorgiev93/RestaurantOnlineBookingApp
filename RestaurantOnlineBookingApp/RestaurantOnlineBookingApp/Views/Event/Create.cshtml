@@ -6,7 +6,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Title"></label>
         <input asp-for="Title" class="form-control" />
@@ -36,9 +36,9 @@
         <span asp-validation-for="Price" class="small text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="imageUrl">Image URL:</label>
-        <input type="text" class="form-control" id="imageUrl" name="ImageUrl" required>
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        <label asp-for="Image"></label>
+        <input asp-for="Image" type="file" class="form-control" placeholder="ImageUrl">
+        <span asp-validation-for="Image" class="small text-danger"></span>
     </div>
 
     <input type="hidden" asp-for="RestaurantId" value="@Model.RestaurantId" />

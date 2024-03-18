@@ -15,11 +15,13 @@ namespace RestaurantOnlineBooking.Services.Data
     {
         private readonly RestaurantBookingDbContext dBContext;
         private readonly IUserService userService;
-        public RestaurantService(RestaurantBookingDbContext dBContext, IUserService userService)
+        private readonly IPhotoService photoService;
+        public RestaurantService(RestaurantBookingDbContext dBContext, IUserService userService
+            ,IPhotoService photoService)
         {
             this.dBContext = dBContext;
             this.userService = userService;
-
+            this.photoService = photoService;
         }
 
         public async Task<AllRestaurantsFilteredServiceModel> AllAsync(AllRestaurantsQueryModel model)
@@ -109,13 +111,13 @@ namespace RestaurantOnlineBooking.Services.Data
 
         public async Task<string> CreateAndReturnRestaurantIdAsync(RestaurantFormModel model, string ownerId)
         {
-
+            var photo = await this.photoService.AddPhotoAsync(model.Image);
             Restaurant restaurant = new Restaurant()
             {
                 Name = model.Name,
                 Description = model.Description,
                 Address = model.Address,
-                ImageUrl = model.ImageUrl,
+                ImageUrl = photo.Url.ToString(),
                 StartingTime = model.StartingTime,
                 EndingTime = model.EndingTime,
                 Capacity = model.Capacity,
@@ -163,10 +165,12 @@ namespace RestaurantOnlineBooking.Services.Data
                 .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
+            var photo = await this.photoService.AddPhotoAsync(model.Image);
+
             restaurant.Name = model.Name;
             restaurant.Capacity = model.Capacity;
             restaurant.Address = model.Address;
-            restaurant.ImageUrl = model.ImageUrl;
+            restaurant.ImageUrl = photo.Url.ToString();
             restaurant.CategoryId = model.CategoryId;
             restaurant.CityId = model.CityId;
             restaurant.StartingTime = model.StartingTime;
@@ -277,7 +281,6 @@ namespace RestaurantOnlineBooking.Services.Data
                 Name = restaurant.Name,
                 Description = restaurant.Description,
                 Address = restaurant.Address,
-                ImageUrl = restaurant.ImageUrl,
                 Capacity = restaurant.Capacity,
                 StartingTime = restaurant.StartingTime,
                 EndingTime = restaurant.EndingTime,

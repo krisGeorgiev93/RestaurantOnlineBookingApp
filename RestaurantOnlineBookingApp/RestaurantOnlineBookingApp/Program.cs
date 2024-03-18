@@ -6,6 +6,7 @@ namespace RestaurantOnlineBookingApp.Web
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Configurations;
     using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Infrastructure.ModelBinders;
@@ -55,6 +56,9 @@ namespace RestaurantOnlineBookingApp.Web
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IEventService, EventService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
+
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
             WebApplication app = builder.Build();
 

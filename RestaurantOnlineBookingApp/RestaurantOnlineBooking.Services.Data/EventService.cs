@@ -12,9 +12,11 @@ namespace RestaurantOnlineBooking.Services.Data
     public class EventService : IEventService
     {
         private readonly RestaurantBookingDbContext _dbContext;
-        public EventService(RestaurantBookingDbContext dbContext, IOwnerService ownerService)
+        private readonly IPhotoService _photoService;
+        public EventService(RestaurantBookingDbContext dbContext, IOwnerService ownerService, IPhotoService photoService)
         {
             _dbContext = dbContext;
+            _photoService = photoService;
         }      
 
         public async Task CreateEventAsync(EventFormModel model, string restaurantId)
@@ -26,7 +28,8 @@ namespace RestaurantOnlineBooking.Services.Data
                 throw new ArgumentException("Restaurant not found or user is not the owner.");
             }
 
-           
+            var photo = await this._photoService.AddPhotoAsync(model.Image);
+
             var @event = new RestaurantOnlineBookingApp.Data.Models.Event
             {
                 RestaurantId = model.RestaurantId,
@@ -35,7 +38,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 Time = model.Time,
                 Description = model.Description,
                 Price = model.Price,
-                ImageUrl = model.ImageUrl
+                ImageUrl = photo.Url.ToString()
             };
 
             await _dbContext.Events.AddAsync(@event);
@@ -65,14 +68,16 @@ namespace RestaurantOnlineBooking.Services.Data
             {
                 throw new ArgumentException("Event not found.");
             }
-           
+
+            var photo = await this._photoService.AddPhotoAsync(model.Image);
+
             // Update event properties
             existingEvent.Title = model.Title;
             existingEvent.Date = model.Date;
             existingEvent.Time = model.Time;
             existingEvent.Description = model.Description;
             existingEvent.Price = model.Price;
-            existingEvent.ImageUrl = model.ImageUrl;
+            existingEvent.ImageUrl = photo.Url.ToString();
 
             await _dbContext.SaveChangesAsync();
 
@@ -108,7 +113,7 @@ namespace RestaurantOnlineBooking.Services.Data
                 Id = @event.Id,
                 Title = @event.Title,
                 Description = @event.Description,
-                ImageUrl = @event.ImageUrl,
+               // Image = @event.ImageUrl.ToString(),
                 Date = @event.Date,
                 Time = @event.Time,
                 Price = @event.Price,

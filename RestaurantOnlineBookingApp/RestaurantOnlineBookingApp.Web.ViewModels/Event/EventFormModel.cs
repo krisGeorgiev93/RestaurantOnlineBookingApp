@@ -1,5 +1,6 @@
 ﻿namespace RestaurantOnlineBookingApp.Web.ViewModels.Event
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
     using static RestaurantOnlineBookingApp.Common.ValidationConstants.Event;
     public class EventFormModel
@@ -26,7 +27,9 @@
         [Required]
         [Range(typeof(decimal),MinPriceValue,MaxPriceValue)]
         public decimal Price { get; set; }
-        public string ImageUrl { get; set; } = null!;
+
+        [Required]  
+        public IFormFile Image { get; set; } = null!;
        
         public Guid RestaurantId { get; set; }
     }

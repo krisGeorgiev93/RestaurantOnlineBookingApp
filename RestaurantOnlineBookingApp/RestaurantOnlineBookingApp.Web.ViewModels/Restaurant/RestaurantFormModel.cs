@@ -1,9 +1,11 @@
 ﻿
 namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 {
+    using Microsoft.AspNetCore.Http;
     using RestaurantOnlineBookingApp.Web.ViewModels.Category;
     using RestaurantOnlineBookingApp.Web.ViewModels.City;
     using System.ComponentModel.DataAnnotations;
+    
 
     using static RestaurantOnlineBookingApp.Common.ValidationConstants.Restaurant;
     public class RestaurantFormModel
@@ -27,10 +29,8 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         [MinLength(DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
-        [Required]
-        [MaxLength(ImageUrlMaxLength)]
-        [Display(Name = "Image link")]
-        public string ImageUrl { get; set; } = null!;       
+        [Required]       
+        public IFormFile Image { get; set; } = null!;       
 
         [Required]
         [Range(1, 300)]

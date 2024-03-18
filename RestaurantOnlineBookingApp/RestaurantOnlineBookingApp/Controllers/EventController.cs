@@ -15,11 +15,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly IEventService eventService;
         private readonly IOwnerService ownerService;
         private readonly IRestaurantService restaurantService;
-        public EventController(IEventService eventService, IOwnerService ownerService, IRestaurantService restaurantService)
+        private readonly IPhotoService photoService;
+        public EventController(IEventService eventService, IOwnerService ownerService, 
+            IRestaurantService restaurantService, IPhotoService photoService)
         {
             this.eventService = eventService;
             this.ownerService = ownerService;
             this.restaurantService = restaurantService;
+            this.photoService = photoService;
         }
 
         [HttpGet]
@@ -131,6 +134,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             try
             {
+                //var photo = await this.photoService.AddPhotoAsync(eventForEdit.Image);
 
                 var eventFormModel = new EventFormModel
                 {
@@ -140,7 +144,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                     Time = eventForEdit.Time,
                     Description = eventForEdit.Description,
                     Price = eventForEdit.Price,
-                    ImageUrl = eventForEdit.ImageUrl
+                    Image = eventForEdit.Image
                 };
                 return View(eventFormModel);
             }
