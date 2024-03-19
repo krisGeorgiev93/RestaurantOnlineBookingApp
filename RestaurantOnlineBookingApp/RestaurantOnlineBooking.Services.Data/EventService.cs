@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Data.Models;
-using RestaurantOnlineBookingApp.Web.ViewModels.Event;
-using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
-using System.Globalization;
-using static RestaurantOnlineBookingApp.Common.ValidationConstants;
-
-namespace RestaurantOnlineBooking.Services.Data
+﻿namespace RestaurantOnlineBooking.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Event;
     public class EventService : IEventService
     {
         private readonly RestaurantBookingDbContext _dbContext;

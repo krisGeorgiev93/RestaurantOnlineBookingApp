@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Data.Models;
-using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
-using System.Globalization;
-
-namespace RestaurantOnlineBooking.Services.Data
+﻿namespace RestaurantOnlineBooking.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
+    using System.Globalization;
+
     public class BookingService : IBookingService
     {
         private readonly RestaurantBookingDbContext dBContext;

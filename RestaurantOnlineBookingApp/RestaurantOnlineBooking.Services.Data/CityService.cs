@@ -1,15 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Web.ViewModels.City;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RestaurantOnlineBooking.Services.Data
+﻿namespace RestaurantOnlineBooking.Services.Data
 {
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Web.ViewModels.City;
     public class CityService : ICityService
     {
         private readonly RestaurantBookingDbContext dBContext;

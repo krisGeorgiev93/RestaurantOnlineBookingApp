@@ -1,5 +1,4 @@
-﻿
-namespace RestaurantOnlineBooking.Services.Data
+﻿namespace RestaurantOnlineBooking.Services.Data
 {
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
