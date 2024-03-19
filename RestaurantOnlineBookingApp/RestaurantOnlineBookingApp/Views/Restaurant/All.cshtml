@@ -26,7 +26,13 @@
                             <option value="@city">@city</option>
                         }
                     </select>
-                </div>           
+                </div>
+            <!-- Sort by Rating button -->
+            <div class="form-group col-md-3">
+                <input type="hidden" name="sortBy" value="Rating" />
+                <button type="submit" class="btn btn-primary">Sort by Rating</button>
+            </div>
+        </div>
         </div>
         <div class="form-group">
             <label asp-for="RestaurantsPerPage"></label>

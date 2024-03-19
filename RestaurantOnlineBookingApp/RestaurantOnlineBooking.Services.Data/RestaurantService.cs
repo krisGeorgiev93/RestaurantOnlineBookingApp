@@ -28,8 +28,9 @@ namespace RestaurantOnlineBooking.Services.Data
         {
             //we can build expression tree
             //only with 1 query
-            IQueryable<RestaurantOnlineBookingApp.Data.Models.Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
+            IQueryable<Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
 
+            
             if (!string.IsNullOrWhiteSpace(model.Category))
             {
                 restaurantQuery = restaurantQuery.Where(r => r.Category.Name == model.Category);
@@ -50,6 +51,17 @@ namespace RestaurantOnlineBooking.Services.Data
                     EF.Functions.Like(r.Address, wildCard));
             }
 
+
+            // Default sorting or no sorting
+            restaurantQuery = restaurantQuery.OrderBy(r => r.Id);
+
+            // Check if sorting by rating is requested
+            if (model.SortBy == "Rating")
+            {
+                // Sort the restaurants by rating
+                restaurantQuery = restaurantQuery.OrderByDescending(r => r.Reviews.Average(review => review.ReviewRating));
+            }
+
             IEnumerable<RestaurantAllViewModel> allRestaurants = await restaurantQuery
                 .Where(r => r.IsActive)
                 .Skip((model.CurrentPage - 1) * model.RestaurantsPerPage)
@@ -62,8 +74,9 @@ namespace RestaurantOnlineBooking.Services.Data
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
                     Capacity = r.Capacity,
+                    Rating = r.Reviews.Any() ? r.Reviews.Average(review => review.ReviewRating) : 0 // Calculate average rating                
                 })
-                .ToArrayAsync();
+                .ToListAsync();
 
             int totalRestaurants = restaurantQuery.Count();
 

@@ -20,6 +20,6 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 
         public int Capacity { get; set; }
 
-
+        public double Rating { get; set; }
     }
 }
