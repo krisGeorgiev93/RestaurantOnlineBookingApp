@@ -1,10 +1,14 @@
-﻿@model IEnumerable<MealAllViewModel>
+﻿@model (IEnumerable<MealAllViewModel> Meals, bool IsOwner)
+@using RestaurantOnlineBooking.Services.Data.Interfaces
 @using RestaurantOnlineBookingApp.Web.ViewModels.Meal
+@using static RestaurantOnlineBookingApp.Infrastructure.Extensions.ClaimsPrincipalsExtensions
+@using System.Security.Claims
 @using System.Globalization
+
 
 <h1 style="color: white;">Restaurant Menu</h1>
 
-@if (Model.Any())
+@if (Model.Meals.Any())
 {
     <table class="table">
         <thead>
@@ -16,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var meal in Model)
+            @foreach (var meal in Model.Meals)
             {
                 <tr>
                     <td style="color: white;">@meal.Name</td>
@@ -28,13 +32,18 @@
                         </a>
                     </td>
                     <td style="color: white;">@meal.Price.ToString("0.00", CultureInfo.InvariantCulture)</td>
-                    <td>
-                        <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-warning">Edit</a>
-                    <td style="margin-bottom: 10px;"> <!-- Add margin below the buttons -->
-                        <form asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" method="post" style="display: inline;">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this meal?')">Delete</button>
-                        </form>
-                    </td>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        if (Model.IsOwner || this.User.IsAdmin())
+                        {
+                            <td>
+                                <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-warning">Edit</a>
+                                <form asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this meal?')">Delete</button>
+                                </form>
+                            </td>
+                        }
+                    }
                 </tr>
             }
         </tbody>

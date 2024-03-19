@@ -1,12 +1,8 @@
-﻿
-
-namespace RestaurantOnlineBookingApp.Web.Controllers
+﻿namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
-    using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
-    using System.Globalization;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
     public class MealController : Controller
@@ -106,7 +102,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             if (!isUserOwner)
             {
-                TempData[ErrorMessage] = "Only owners can delete the restaurant menu!";
+                TempData[ErrorMessage] = "Only owners can delete the restaurant menu items!";
             }
 
             string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
@@ -127,7 +123,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             if (!isOwnerOwnedRestaurant)
             {
-                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the menu"!;
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the menu items"!;
 
                 return this.RedirectToAction("Mine", "Restaurant");
             }

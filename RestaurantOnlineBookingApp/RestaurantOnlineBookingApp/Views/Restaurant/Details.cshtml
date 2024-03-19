@@ -7,8 +7,8 @@
 }
 @inject IOwnerService OwnerService
 @{
-    bool isUserOwnerOfTheRestaurant = await OwnerService.HasRestaurantWithIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), Model.Id);
-    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    bool isUserOwnerOfTheRestaurant = await OwnerService.HasRestaurantWithIdAsync(User.GetId(), Model.Id);
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.GetId());
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />

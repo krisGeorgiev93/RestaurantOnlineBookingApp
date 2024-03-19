@@ -404,16 +404,18 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             try
             {
                 var meals = await _mealService.GetAllMealsForRestaurantByIdAsync(restaurantId);
+                // Check if the current user is the owner of the restaurant
+                bool isOwner = await _ownerService.HasRestaurantWithIdAsync(User.GetId(), restaurantId);
                 var mealViewModels = meals.Select(m => new MealAllViewModel
                 {
                     Id = m.Id.ToString(),
                     Name = m.Name,
                     Description = m.Description,
                     ImageUrl = m.ImageUrl,
-                    Price = m.Price
+                    Price = m.Price,                   
                 });
 
-                return View(mealViewModels);
+                return View((mealViewModels, isOwner));
             }
             catch (Exception)
             {
