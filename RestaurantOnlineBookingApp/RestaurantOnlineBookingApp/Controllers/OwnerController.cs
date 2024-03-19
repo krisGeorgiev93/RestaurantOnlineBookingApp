@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
-using System.Security.Claims;
-
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
-
+﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
+    using System.Security.Claims;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
     [Authorize]
     public class OwnerController : Controller
     {

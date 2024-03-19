@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using RestaurantOnlineBookingApp.Data.Models;
-using RestaurantOnlineBookingApp.Web.ViewModels.User;
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
-
+﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Web.ViewModels.User;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
     public class UserController : Controller
     {
         private readonly SignInManager<AppUser> signInManager;

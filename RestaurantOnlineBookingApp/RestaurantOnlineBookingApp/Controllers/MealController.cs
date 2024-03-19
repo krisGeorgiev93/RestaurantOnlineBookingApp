@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Data.Models;
-using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
-using System.Globalization;
-using System.Security.Claims;
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+﻿
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+    using System.Globalization;
+    using System.Security.Claims;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
     public class MealController : Controller
     {
         private readonly IMealService _mealService;

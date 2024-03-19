@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
-using System.Security.Claims;
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+﻿
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
+    using System.Security.Claims;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;

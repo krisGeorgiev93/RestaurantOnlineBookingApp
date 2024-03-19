@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBooking.Services.Data.Models;
-using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Infrastructure.Extensions;
-using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
-using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
-using System.Security.Claims;
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
-
+﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBooking.Services.Data.Models;
+    using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
+    using System.Security.Claims;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
     [Authorize]
     public class RestaurantController : Controller
     {

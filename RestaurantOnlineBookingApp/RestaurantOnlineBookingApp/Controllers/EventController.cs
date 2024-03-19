@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using RestaurantOnlineBooking.Services.Data;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Web.ViewModels.Event;
-using System.Globalization;
-using System.Security.Claims;
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
-
+﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Event;
+    using System.Security.Claims;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
     public class EventController : Controller
     {
         private readonly IEventService eventService;

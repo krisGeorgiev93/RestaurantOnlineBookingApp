@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
-using RestaurantOnlineBookingApp.Web.ViewModels.Review;
-using System.Security.Claims;
-using static RestaurantOnlineBookingApp.Common.NotificationMessages;
-
+﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Review;
+    using System.Security.Claims;
+    using static RestaurantOnlineBookingApp.Common.NotificationMessages;
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
