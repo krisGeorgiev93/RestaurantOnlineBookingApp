@@ -29,6 +29,8 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 
         [Display(Name = "Restaurants On Page")]
         public int RestaurantsPerPage { get; set; }
+
+        public SortOption SortBy { get; set; }
         public double? Rating { get; set; }
         public int CurrentPage { get; set; }
 

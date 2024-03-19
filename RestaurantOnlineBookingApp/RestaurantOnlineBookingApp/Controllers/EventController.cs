@@ -98,7 +98,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             if (!isUserOwner)
             {
-                TempData[ErrorMessage] = "Only owners can delete the restaurant events!";
+                TempData[ErrorMessage] = "Only owners can edit the restaurant events!";
             }
 
             string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
@@ -119,7 +119,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             if (!isOwnerOwnedRestaurant)
             {
-                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the events"!;
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to edit the events"!;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -175,7 +175,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             if (!isUserOwner)
             {
-                TempData[ErrorMessage] = "Only owners can delete the restaurant events!";
+                TempData[ErrorMessage] = "Only owners can edit the restaurant events!";
             }
 
             string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
@@ -196,7 +196,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             if (!isOwnerOwnedRestaurant)
             {
-                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the events"!;
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant to edit the events"!;
 
                 return RedirectToAction("Index", "Home");
             }

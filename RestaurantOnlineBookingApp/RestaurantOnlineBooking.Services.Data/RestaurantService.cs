@@ -26,8 +26,8 @@ namespace RestaurantOnlineBooking.Services.Data
 
         public async Task<AllRestaurantsFilteredServiceModel> AllAsync(AllRestaurantsQueryModel model)
         {
-            //we can build expression tree
-            //only with 1 query
+            // build expression tree only with 1 query
+
             IQueryable<Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
 
             
@@ -55,12 +55,25 @@ namespace RestaurantOnlineBooking.Services.Data
             // Default sorting
             restaurantQuery = restaurantQuery.OrderBy(r => r.Id);
 
-            // Check if sorting by rating is requested
-            if (model.SortByRating)
+            // Check if sorting is requested
+            switch (model.SortBy)
             {
-                // Sort the restaurants by rating
-                restaurantQuery = restaurantQuery.OrderByDescending(r => r.Reviews.Average(review => review.ReviewRating));
-            }
+                case SortOption.PriceAscending:
+                    restaurantQuery = restaurantQuery.OrderBy(r => r.Meals.Average(m => m.Price));
+                    break;
+                case SortOption.PriceDescending:
+                    restaurantQuery = restaurantQuery.OrderByDescending(r => r.Meals.Average(m => m.Price));
+                    break;
+                case SortOption.RatingAscending:
+                    restaurantQuery = restaurantQuery.OrderBy(r => r.Reviews.Average(review => review.ReviewRating));
+                    break;
+                case SortOption.RatingDescending:
+                    restaurantQuery = restaurantQuery.OrderByDescending(r => r.Reviews.Average(review => review.ReviewRating));
+                    break;
+                default:
+                    // No sorting
+                    break;
+            }           
 
             IEnumerable<RestaurantAllViewModel> allRestaurants = await restaurantQuery
                 .Where(r => r.IsActive)
@@ -73,8 +86,7 @@ namespace RestaurantOnlineBooking.Services.Data
                     Address = r.Address,
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
-                    Capacity = r.Capacity,
-                    Rating = r.Reviews.Any() ? r.Reviews.Average(review => review.ReviewRating) : 0 // Calculate average rating                
+                    Capacity = r.Capacity,                              
                 })
                 .ToListAsync();
 

@@ -9,6 +9,16 @@
     bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 
+@* fixed sizes for all images*@
+<style>
+    .card-img-top {
+        width: 100%; 
+        height: 200px; 
+        object-fit: cover;
+        object-position: center;
+    }
+</style>
+
 <div class="col-md-4">
     <div class="card mb-3"> 
         <a href="@Url.Action("Details", "Restaurant", new { id = Model.Id })">

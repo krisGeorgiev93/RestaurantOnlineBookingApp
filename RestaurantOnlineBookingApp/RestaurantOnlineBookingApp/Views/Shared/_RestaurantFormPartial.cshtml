@@ -21,7 +21,7 @@
                 <label asp-for="Image"></label>
                 <!-- Wrap the image inside an anchor tag -->
                 <a href="@Model.Image" target="_blank">
-                    <img src="@Model.Image" class="form-control" alt="Restaurant Image">
+                    <img src="@Model.Image" class="form-control" alt="Restaurant Image" style="max-width: 100px; max-height: 100px;>
                 </a>
                 <input asp-for="Image" type="file" class="form-control" placeholder="ImageUrl">
                 <span asp-validation-for="Image" class="small text-danger"></span>

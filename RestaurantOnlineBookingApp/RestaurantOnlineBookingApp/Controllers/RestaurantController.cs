@@ -41,7 +41,20 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         public async Task<IActionResult> All([FromQuery] AllRestaurantsQueryModel queryModel)
         {
             AllRestaurantsFilteredServiceModel serviceModel =
-                await this._restaurantService.AllAsync(queryModel);                       
+                await this._restaurantService.AllAsync(queryModel);
+
+            // Sorting the restaurants by average menu prices and average rating
+            switch (queryModel.SortBy)
+            {
+                case SortOption.PriceAscending:
+                case SortOption.PriceDescending:
+                case SortOption.RatingAscending:
+                case SortOption.RatingDescending:
+                    serviceModel = await this._restaurantService.AllAsync(queryModel);
+                    break;
+                default:
+                    break;
+            }
 
             queryModel.Restaurants = serviceModel.Restaurants;
             queryModel.Cities = await _cityService.AllCitiesNamesAsync();
