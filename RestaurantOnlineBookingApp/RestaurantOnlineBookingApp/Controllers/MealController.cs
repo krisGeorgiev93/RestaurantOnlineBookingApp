@@ -1,5 +1,6 @@
 ﻿namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
@@ -86,7 +87,7 @@
             }
         }
 
-        [HttpPost]
+        [HttpPost]        
         public async Task<IActionResult> Delete(string id)
         {
             bool mealExists = await this._mealService.MealExistsByIdAsync(id);
@@ -100,13 +101,16 @@
 
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            // Check if the current user is an admin
+            bool isAdmin = User.IsInRole("Administrator");
+            // Check if the current user is neither an owner nor an admin
+            if (!isUserOwner && !isAdmin)
             {
-                TempData[ErrorMessage] = "Only owners can delete the restaurant menu items!";
-            }
-
+                TempData[ErrorMessage] = "Only owners or administrators can delete restaurant menu items!";
+                return RedirectToAction("Mine", "Restaurant");
+            }           
+            
             string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
-
 
             var meal = await this._mealService.GetMealByIdAsync(id);
 
@@ -121,7 +125,7 @@
             bool isOwnerOwnedRestaurant = await this._restaurantService
                .IsOwnerWithIdOwnedRestaurantWithIdAsync(mealRestaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !isAdmin)
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the menu items"!;
 
@@ -162,10 +166,14 @@
 
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            // Check if the current user is an admin
+            bool isAdmin = User.IsInRole("Administrator");
+            // Check if the current user is neither an owner nor an admin
+            if (!isUserOwner && !isAdmin)
             {
-                TempData[ErrorMessage] = "Only owners can edit the restaurant menu information!";
-            }
+                TempData[ErrorMessage] = "Only owners or administrators can edit restaurant menu!";
+                return RedirectToAction("Mine", "Restaurant");
+            }           
 
             string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
                         
@@ -183,9 +191,9 @@
             bool isOwnerOwnedRestaurant = await this._restaurantService
                .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !isAdmin)
             {
-                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+                this.TempData[ErrorMessage] = "Only owners or administrators can edit restaurant menu!"!;
 
                 return this.RedirectToAction("Mine", "Restaurant");
             }
@@ -225,9 +233,13 @@
 
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            // Check if the current user is an admin
+            bool isAdmin = User.IsInRole("Administrator");
+            // Check if the current user is neither an owner nor an admin
+            if (!isUserOwner && !isAdmin)
             {
-                TempData[ErrorMessage] = "Only owners can edit the restaurant menu information!";
+                TempData[ErrorMessage] = "Only owners or administrators can edit restaurant menu!";
+                return RedirectToAction("Mine", "Restaurant");
             }
 
             string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
@@ -236,9 +248,9 @@
             bool isOwnerOwnedRestaurant = await this._restaurantService
                .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !isAdmin)
             {
-                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to edit"!;
+                this.TempData[ErrorMessage] = "Only owners or administrators can edit restaurant menu!"!;
 
                 return this.RedirectToAction("Mine", "Restaurant");
             }
