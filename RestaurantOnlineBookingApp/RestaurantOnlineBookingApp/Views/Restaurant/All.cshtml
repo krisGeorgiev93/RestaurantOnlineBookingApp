@@ -29,9 +29,16 @@
                 </div>
             <!-- Sort by Rating button -->
             <div class="form-group col-md-3">
-                <input type="hidden" name="sortBy" value="Rating" />
-                <button type="submit" class="btn btn-primary">Sort by Rating</button>
+                <label asp-for="SortByRating" class="form-check-label">Sort by Rating</label>
+                <input asp-for="SortByRating" type="checkbox" class="form-check-input" id="sortByRatingCheckbox" />
             </div>
+            <div class="col-md-3">
+                <div class="form-group mt-4 p-2">
+                    <button type="submit" class="btn btn-primary" id="sortButton">Sort</button>
+                </div>
+            </div>
+
+
         </div>
         </div>
         <div class="form-group">

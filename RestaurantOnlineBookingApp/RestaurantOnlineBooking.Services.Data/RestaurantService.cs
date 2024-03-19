@@ -52,11 +52,11 @@ namespace RestaurantOnlineBooking.Services.Data
             }
 
 
-            // Default sorting or no sorting
+            // Default sorting
             restaurantQuery = restaurantQuery.OrderBy(r => r.Id);
 
             // Check if sorting by rating is requested
-            if (model.SortBy == "Rating")
+            if (model.SortByRating)
             {
                 // Sort the restaurants by rating
                 restaurantQuery = restaurantQuery.OrderByDescending(r => r.Reviews.Average(review => review.ReviewRating));

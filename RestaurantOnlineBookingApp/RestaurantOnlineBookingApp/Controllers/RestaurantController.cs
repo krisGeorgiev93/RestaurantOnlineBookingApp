@@ -41,19 +41,12 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         public async Task<IActionResult> All([FromQuery] AllRestaurantsQueryModel queryModel)
         {
             AllRestaurantsFilteredServiceModel serviceModel =
-                await this._restaurantService.AllAsync(queryModel);
-
-            //if (queryModel.SortBy == "Rating")
-            //{
-            //    serviceModel.Restaurants = serviceModel.Restaurants.OrderByDescending(r => r.Rating);
-            //}
+                await this._restaurantService.AllAsync(queryModel);                       
 
             queryModel.Restaurants = serviceModel.Restaurants;
             queryModel.Cities = await _cityService.AllCitiesNamesAsync();
             queryModel.Categories = await _categoryService.AllCategoryNamesAsync();
-            queryModel.TotalRestaurants = serviceModel.TotalRestaurantsCount;
-
-           
+            queryModel.TotalRestaurants = serviceModel.TotalRestaurantsCount;           
 
             return View(queryModel);
         }
