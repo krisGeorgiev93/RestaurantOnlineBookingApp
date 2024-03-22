@@ -40,8 +40,7 @@
                     <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
                     <p class="card-text">Email: @Model.OwnerInfo.Email</p>
                 </div>
-            </div>
-            <div class="form-inline">
+            </div>           
                 @if (this.User.Identity.IsAuthenticated)
                 {
                     if ((isUserOwner && isUserOwnerOfTheRestaurant) || this.User.IsAdmin())
@@ -49,20 +48,21 @@
                         <a class="btn btn-warning" asp-controller="Restaurant" asp-action="Edit"
                            asp-route-id="@Model.Id">Edit</a>
                         <a class="ml-2 btn btn-danger" asp-controller="Restaurant" asp-action="Delete"
-                           asp-route-id="@Model.Id">Delete</a>
+                           asp-route-id="@Model.Id">Delete</a>                     
+
                     }
                     else
-                    {                       
-                        <a asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id" class="btn btn-primary">Add Review</a>                        
-                    }
+                    {
+                    <a asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Add Review</a>
                 }
-                <!-- Show View Menu button -->
-                <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
-                <!-- Show all reviews button -->
-                <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View All Reviews</a>
-                <!-- Show all events button -->
-                <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View All Restaurant Events</a>
-            </div>           
+                }             
+           
+            <!-- Show View Menu button -->
+            <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
+            <!-- Show all reviews button -->
+            <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Reviews</a>
+            <!-- Show all events button -->
+            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>
         </div>
     </div>
 </div>

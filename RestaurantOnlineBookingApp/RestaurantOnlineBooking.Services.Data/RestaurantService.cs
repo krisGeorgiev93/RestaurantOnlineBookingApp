@@ -83,9 +83,11 @@
                     Id = r.Id.ToString(),
                     Name = r.Name,
                     Address = r.Address,
+                    City = r.City.CityName,
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
-                    Capacity = r.Capacity,                              
+                    Capacity = r.Capacity,
+                    Rating = r.Reviews.Any() ? r.Reviews.Average(review => review.ReviewRating) : 0
                 })
                 .ToListAsync();
 

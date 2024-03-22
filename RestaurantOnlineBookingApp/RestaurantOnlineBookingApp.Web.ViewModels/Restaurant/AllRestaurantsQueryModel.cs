@@ -8,7 +8,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         public AllRestaurantsQueryModel()
         {
             CurrentPage = 1;
-            RestaurantsPerPage = 5;
+            RestaurantsPerPage = 6;
             this.Categories = new HashSet<string>();
             this.Restaurants = new HashSet<RestaurantAllViewModel>();
             this.Cities = new HashSet<string>();
@@ -33,7 +33,6 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         public SortOption SortBy { get; set; }
         public double? Rating { get; set; }
         public int CurrentPage { get; set; }
-
         public bool SortByRating { get; set; }
 
         public IEnumerable<string> Categories { get; set; }
