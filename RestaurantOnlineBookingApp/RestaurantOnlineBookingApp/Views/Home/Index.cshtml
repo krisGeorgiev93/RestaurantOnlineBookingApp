@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<AllRestaurantsViewModel>
 @{
     ViewData["Title"] = "Home Page";
-    var restaurants = Model.ToList();
+    var restaurants = Model.OrderByDescending(r => r.Rating).ToList(); // sort by rating
 }
 
 <div class="mb-5"></div>
+<h2 class="text-center">THE BEST RESTAURANTS IN OUR WEB-SITE</h2>
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         @for (int i = 0; i < restaurants.Count(); i++)

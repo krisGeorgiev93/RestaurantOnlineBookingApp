@@ -223,6 +223,7 @@
         {
             return await dBContext
                 .Restaurants
+                 .Include(r => r.Reviews)
                 .Select(r => new AllRestaurantsViewModel()
                 {
                     Id = r.Id,
@@ -231,7 +232,8 @@
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
                     Capacity = r.Capacity,
-                    City = r.City.CityName
+                    City = r.City.CityName,
+                    Rating = r.Reviews.Any() ? r.Reviews.Average(review => review.ReviewRating) : 0
                 })
                 .ToListAsync();
         }
