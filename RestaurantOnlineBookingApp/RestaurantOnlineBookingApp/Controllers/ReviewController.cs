@@ -1,9 +1,11 @@
 ﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.Review;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -12,13 +14,15 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly IReviewService _reviewService;
         private readonly IBookingService _bookingService;
         private readonly IOwnerService _ownerService;
+        private readonly UserManager<AppUser> _userManager;
 
         public ReviewController(IReviewService reviewService, IBookingService bookingService,
-            IOwnerService ownerService)
+            IOwnerService ownerService, UserManager<AppUser> userManager)
         {
             _reviewService = reviewService;
             _bookingService = bookingService;
             _ownerService = ownerService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -51,13 +55,18 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 // Ако няма валидна резервация с минала дата, върнете грешка
                 this.TempData[ErrorMessage] = "You must have a valid reservation with a past date to leave a review.";
                 return RedirectToAction("Mine", "Booking");
-            }           
+            }
 
-            // Създавате модела за добавяне на ревюто, като задавате id на потребителя като GuestId и id на ресторанта.
+
+            // Извличане на потребителския имейл от аутентикационния сервиз
+            var userEmail = User.Identity.Name;
+
+            // Създаване на модела
             var model = new AddReviewViewModel
             {
                 GuestId = guestId,
-                RestaurantId = restaurantId
+                RestaurantId = restaurantId,
+                GuestEmail = userEmail // Задаване на имейла на госта
             };
 
             // Връщате изгледа, който показва формата за добавяне на ревюто, като предоставяте модела като данни за изгледа.

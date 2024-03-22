@@ -176,7 +176,7 @@
             }
 
             // Проверка дали резервацията е с минала дата
-            if (reservation.BookingDate < currentDate && reservation.ReservedTime < currentDate.TimeOfDay)
+            if (reservation.BookingDate < currentDate)
             {
                 return true;
             }

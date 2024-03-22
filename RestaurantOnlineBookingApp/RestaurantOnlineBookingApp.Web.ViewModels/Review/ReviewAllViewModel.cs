@@ -12,7 +12,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
         public int ReviewRating { get; set; }
         public string Comment { get; set; }
         public Guid GuestId { get; set; }
-        //public string GuestName { get; set; }   
+        public string GuestEmail { get; set; }   
         public Guid RestaurantId { get; set; }
 
     }

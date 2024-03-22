@@ -5,9 +5,10 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-
+<form asp-controller="Review" asp-action="AddReview" method="post">
+    <input type="hidden" asp-for="RestaurantId" />
+    <input type="hidden" asp-for="GuestId" />
+    <input type="hidden" asp-for="GuestEmail" />
     <div class="form-group">
         <label asp-for="Rating"></label>
         <input asp-for="Rating" class="form-control" />
@@ -18,9 +19,6 @@
         <label asp-for="Comment"></label>
         <textarea asp-for="Comment" class="form-control"></textarea>
         <span asp-validation-for="Comment" class="text-danger"></span>
-    </div>
-
-    <input type="hidden" asp-for="RestaurantId" />
-
+    </div>   
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

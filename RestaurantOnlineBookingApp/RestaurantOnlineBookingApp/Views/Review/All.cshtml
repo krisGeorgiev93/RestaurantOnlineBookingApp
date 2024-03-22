@@ -4,15 +4,16 @@
     ViewData["Title"] = "Restaurant Reviews";
 }
 
-<h2 style="color: white;">@ViewData["Title"]</h2>
 
 @if (Model.Any())
 {
+    <h2 style="color: white;">@ViewData["Title"]</h2>
     <table class="table">
         <thead>
             <tr>
                 <th style="color: white;">Rating</th>
                 <th style="color: white;">Comment</th>
+                <th style="color: white;">Guest Email</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
                 <tr>
                     <td style="color: white;">@review.ReviewRating</td>
                     <td style="color: white;">@review.Comment</td>
+                    <td style="color: white;">@review.GuestEmail</td>
                 </tr>
             }
         </tbody>
@@ -28,5 +30,5 @@
 }
 else
 {
-    <p style="color: white;">No reviews available.</p>
+    <h2>No reviews available.</h2>
 }

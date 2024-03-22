@@ -13,13 +13,11 @@
     public class RestaurantService : IRestaurantService
     {
         private readonly RestaurantBookingDbContext dBContext;
-        private readonly IUserService userService;
         private readonly IPhotoService photoService;
-        public RestaurantService(RestaurantBookingDbContext dBContext, IUserService userService
+        public RestaurantService(RestaurantBookingDbContext dBContext
             ,IPhotoService photoService)
         {
             this.dBContext = dBContext;
-            this.userService = userService;
             this.photoService = photoService;
         }
 
