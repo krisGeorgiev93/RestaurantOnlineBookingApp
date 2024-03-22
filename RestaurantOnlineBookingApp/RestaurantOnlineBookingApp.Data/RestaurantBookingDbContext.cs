@@ -6,6 +6,7 @@ namespace RestaurantOnlineBookingApp.Data
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBookingApp.Data.Models;
     using System.Reflection;
+    using System.Reflection.Emit;
 
     public class RestaurantBookingDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
@@ -23,12 +24,16 @@ namespace RestaurantOnlineBookingApp.Data
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<CapacityPerDate> CapacitiesParDate { get; set; }
+        public DbSet<UserFavoritesRestaurants> UserFavoriteRestaurants { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<RestaurantGuest>()
                 .HasKey(rg => new { rg.RestaurantId, rg.GuestId });
+
+            builder.Entity<UserFavoritesRestaurants>()
+       .HasKey(uf => new { uf.UserId, uf.RestaurantId });
 
             Assembly assembly = Assembly.GetAssembly(typeof(RestaurantBookingDbContext))
                 ?? Assembly.GetExecutingAssembly();

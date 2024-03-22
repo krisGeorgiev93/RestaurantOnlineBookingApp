@@ -15,7 +15,7 @@
         private readonly RestaurantBookingDbContext dBContext;
         private readonly IPhotoService photoService;
         public RestaurantService(RestaurantBookingDbContext dBContext
-            ,IPhotoService photoService)
+            , IPhotoService photoService)
         {
             this.dBContext = dBContext;
             this.photoService = photoService;
@@ -27,7 +27,7 @@
 
             IQueryable<Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
 
-            
+
             if (!string.IsNullOrWhiteSpace(model.Category))
             {
                 restaurantQuery = restaurantQuery.Where(r => r.Category.Name == model.Category);
@@ -70,7 +70,7 @@
                 default:
                     // No sorting
                     break;
-            }           
+            }
 
             IEnumerable<RestaurantAllViewModel> allRestaurants = await restaurantQuery
                 .Where(r => r.IsActive)
@@ -243,9 +243,9 @@
                 .Restaurants
                 .Include(r => r.Category)
                 .Include(r => r.City)
-                .Include(r => r.Reviews) 
-                .Include(r => r.Owner)                 
-                .ThenInclude(r => r.User)               
+                .Include(r => r.Reviews)
+                .Include(r => r.Owner)
+                .ThenInclude(r => r.User)
                 .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
@@ -266,7 +266,7 @@
                 {
                     //FullName = this.userService.GetFullNameByIdAsync(restaurant.Owner.UserId.ToString()).ToString(),
                     PhoneNumber = restaurant.Owner.PhoneNumber,
-                    Email = restaurant.Owner.User.Email                    
+                    Email = restaurant.Owner.User.Email
                 },
                 Rating = rating
             };
@@ -367,26 +367,28 @@
 
         public async Task AddRestaurantToFavoriteAsync(string userId, Guid restaurantId)
         {
-            var user = await this.dBContext.Users
-                .Include(u => u.FavoriteRestaurants)
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-            var restaurantToAdd = await this.dBContext.Restaurants.FindAsync(restaurantId);
-
-            if (user != null && restaurantToAdd != null)
+            var userFavorite = new UserFavoritesRestaurants
             {
-                user.FavoriteRestaurants.Add(restaurantToAdd);
-                await this.dBContext.SaveChangesAsync();
-            }
+                UserId = new Guid(userId),
+                RestaurantId = restaurantId
+            };
+
+            await dBContext.UserFavoriteRestaurants.AddAsync(userFavorite);
+            await dBContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId)
         {
-            var user = await this.dBContext.Users
-                .Include(u => u.FavoriteRestaurants)
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+            var favoriteRestaurantIds = await dBContext.UserFavoriteRestaurants
+                .Where(uf => uf.UserId == new Guid(userId))
+                .Select(uf => uf.RestaurantId)
+                .ToListAsync();
 
-            return user?.FavoriteRestaurants.ToList();
+            var favoriteRestaurants = await dBContext.Restaurants
+                .Where(r => favoriteRestaurantIds.Contains(r.Id))
+                .ToListAsync();
+
+            return favoriteRestaurants;
         }
     }
 

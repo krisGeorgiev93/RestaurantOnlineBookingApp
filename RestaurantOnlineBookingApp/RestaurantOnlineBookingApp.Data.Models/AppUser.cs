@@ -3,7 +3,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
 {
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using static RestaurantOnlineBookingApp.Common.ValidationConstants.AppUser;
 
     public class AppUser : IdentityUser<Guid>
