@@ -113,6 +113,7 @@
                      Description = r.Description,
                      ImageUrl = r.ImageUrl,
                      Capacity = r.Capacity,
+                     City = r.City.CityName
                  }).ToListAsync();
 
             return ownerRestaurants;

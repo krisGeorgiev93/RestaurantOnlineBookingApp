@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<AllRestaurantsViewModel>
+@using static RestaurantOnlineBookingApp.Infrastructure.Extensions.ClaimsPrincipalsExtensions
 @{
     ViewData["Title"] = "Home Page";
     var restaurants = Model.OrderByDescending(r => r.Rating).ToList(); // sort by rating
 }
 
 <div class="mb-5"></div>
-<h2 class="text-center">THE BEST RESTAURANTS IN OUR WEB-SITE</h2>
+<h2 class="text-center" style="font-weight: bold;">TOP RATED RESTAURANTS</h2>
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         @for (int i = 0; i < restaurants.Count(); i++)
@@ -34,19 +35,23 @@
 </div>
 
 <div class="mb-5"></div>
-
-<div class="row">
-    <div class="col-12 text-center">
-        <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
-    </div>
-</div>
-
-<div class="mt-4 p-5 bg-light d-none" id="statistics_box">
+@if (this.User.IsAdmin())
+{
     <div class="row">
-        <h2 class="col-md-6 text-center" id="total_restaurants"></h2>
-        <h2 class="col-md-6 text-center" id="total_bookings"></h2>
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
+        </div>
     </div>
-</div>
+    <div class="mt-4 p-5 bg-light d-none" id="statistics_box">
+        <div class="row">
+            <h2 class="col-md-6 text-center" id="total_restaurants"></h2>
+            <h2 class="col-md-6 text-center" id="total_bookings"></h2>
+        </div>
+    </div>
+}
+
+
+
 
 @section Scripts
 {
