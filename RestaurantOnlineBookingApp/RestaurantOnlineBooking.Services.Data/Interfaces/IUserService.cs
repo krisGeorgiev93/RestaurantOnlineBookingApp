@@ -13,8 +13,6 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<string> GetFullNameByIdAsync(string userId);
 
-        Task AddRestaurantToFavoriteAsync(string userId, Guid restaurantId);
-
-        Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId);
+       
     }
 }

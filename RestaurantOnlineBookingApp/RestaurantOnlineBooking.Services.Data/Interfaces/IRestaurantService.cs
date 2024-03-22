@@ -38,5 +38,9 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task<(TimeSpan startTime, TimeSpan endTime)> GetRestaurantOperatingHoursAsync(Guid restaurantId);
         List<string> GenerateTimeSlots(TimeSpan startTime, TimeSpan endTime);
 
+        Task AddRestaurantToFavoriteAsync(string userId, Guid restaurantId);
+
+        Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId);
+
     }
 }

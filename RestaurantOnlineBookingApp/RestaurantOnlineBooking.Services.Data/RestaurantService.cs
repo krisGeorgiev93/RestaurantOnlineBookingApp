@@ -364,6 +364,30 @@
 
             return IsExists;
         }
+
+        public async Task AddRestaurantToFavoriteAsync(string userId, Guid restaurantId)
+        {
+            var user = await this.dBContext.Users
+                .Include(u => u.FavoriteRestaurants)
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            var restaurantToAdd = await this.dBContext.Restaurants.FindAsync(restaurantId);
+
+            if (user != null && restaurantToAdd != null)
+            {
+                user.FavoriteRestaurants.Add(restaurantToAdd);
+                await this.dBContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId)
+        {
+            var user = await this.dBContext.Users
+                .Include(u => u.FavoriteRestaurants)
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            return user?.FavoriteRestaurants.ToList();
+        }
     }
 
 }

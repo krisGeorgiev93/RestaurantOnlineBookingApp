@@ -438,7 +438,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 }
 
                 // Извикване на сървисния метод за добавяне на ресторант към списъка с любими
-                await this._userService.AddRestaurantToFavoriteAsync(userId, restaurantId);
+                await this._restaurantService.AddRestaurantToFavoriteAsync(userId, restaurantId);
 
                 return RedirectToAction("Favorites", "Restaurant");
             }
@@ -452,7 +452,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         public async Task<IActionResult> Favorites()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var favoriteRestaurantsHashSet = await this._userService.GetFavoriteRestaurantsAsync(userId);
+            var favoriteRestaurantsHashSet = await this._restaurantService.GetFavoriteRestaurantsAsync(userId);
 
             var favoriteRestaurantsList = favoriteRestaurantsHashSet.ToList();
             var favoriteRestaurantsViewModels = favoriteRestaurantsList.Select(r => new RestaurantAllViewModel
