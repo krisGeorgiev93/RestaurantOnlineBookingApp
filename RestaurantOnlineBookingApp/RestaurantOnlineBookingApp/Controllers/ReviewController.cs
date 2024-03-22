@@ -2,6 +2,7 @@
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Web.ViewModels.Review;
     using System.Security.Claims;
@@ -10,11 +11,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     {
         private readonly IReviewService _reviewService;
         private readonly IBookingService _bookingService;
+        private readonly IOwnerService _ownerService;
 
-        public ReviewController(IReviewService reviewService, IBookingService bookingService)
+        public ReviewController(IReviewService reviewService, IBookingService bookingService,
+            IOwnerService ownerService)
         {
             _reviewService = reviewService;
             _bookingService = bookingService;
+            _ownerService = ownerService;
         }
 
         [HttpGet]
@@ -38,6 +42,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 // Ако няма валидна резервация с минала дата, върнете грешка
                 this.TempData[ErrorMessage] = "You must have a valid reservation with a past date to leave a review.";
                 return RedirectToAction("Mine", "Booking");
+            }
+            // Проверка дали потребителят е собственик на ресторанта
+            bool isOwner = await this._ownerService.HasRestaurantWithIdAsync(userId, restaurantId.ToString());
+
+            if (isOwner)
+            {
+                this.TempData[ErrorMessage] = "Owners are not allowed to leave reviews for their own restaurants.";
+                return RedirectToAction("Mine", "Restaurant"); 
             }
 
             // Създавате модела за добавяне на ревюто, като задавате id на потребителя като GuestId и id на ресторанта.
