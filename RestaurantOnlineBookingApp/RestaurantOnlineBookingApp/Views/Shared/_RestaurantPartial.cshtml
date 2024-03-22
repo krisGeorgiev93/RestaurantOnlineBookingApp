@@ -53,6 +53,10 @@
                 else
                 {                  
                     <a asp-controller="Booking" asp-action="BookTable" asp-route-restaurantId="@Model.Id" class="btn btn-primary">Book Table</a>
+                    <form asp-controller="Restaurant" asp-action="AddRestaurantToFavorites" method="post">
+                        <input type="hidden" name="restaurantId" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                    </form>
                 }
             }            
         </div>

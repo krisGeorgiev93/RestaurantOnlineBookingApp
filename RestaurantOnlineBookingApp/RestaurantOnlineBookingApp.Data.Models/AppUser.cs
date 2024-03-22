@@ -10,9 +10,8 @@ namespace RestaurantOnlineBookingApp.Data.Models
     {
         public AppUser()
         {
-            this.Id = Guid.NewGuid();
-            this.BookedRestaurants = new List<Restaurant>();
-            this.FavoriteRestaurants = new List<Restaurant>();
+            this.Id = Guid.NewGuid();            
+            this.FavoriteRestaurants = new HashSet<Restaurant>();
         }
 
         [Required]
@@ -23,10 +22,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
-        [NotMapped]
-        public  ICollection<Restaurant> BookedRestaurants { get; set; }
-
-        [NotMapped]
+        // Колекция, която ще съхранява любимите ресторанти на потребителя
         public ICollection<Restaurant> FavoriteRestaurants { get; set; }
     }
 }

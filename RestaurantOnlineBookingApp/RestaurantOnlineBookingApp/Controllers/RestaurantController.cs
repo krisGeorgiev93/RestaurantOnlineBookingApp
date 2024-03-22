@@ -3,6 +3,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBooking.Services.Data.Models;
     using RestaurantOnlineBookingApp.Data;
@@ -25,7 +26,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
         public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
             RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService, ICapacityService capacityService
-            ,IUserService userService)
+            , IUserService userService)
         {
             _ownerService = ownerService;
             _categoryService = categoryService;
@@ -60,7 +61,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             queryModel.Restaurants = serviceModel.Restaurants;
             queryModel.Cities = await _cityService.AllCitiesNamesAsync();
             queryModel.Categories = await _categoryService.AllCategoryNamesAsync();
-            queryModel.TotalRestaurants = serviceModel.TotalRestaurantsCount;           
+            queryModel.TotalRestaurants = serviceModel.TotalRestaurantsCount;
 
             return View(queryModel);
         }
@@ -89,7 +90,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             catch (Exception)
             {
                 return this.Error();
-            }            
+            }
         }
 
         [HttpPost]
@@ -120,10 +121,10 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             try
             {
-                string? ownerId = 
+                string? ownerId =
                     await _ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-              string restaurantId =
-                    await this._restaurantService.CreateAndReturnRestaurantIdAsync(model, ownerId!);
+                string restaurantId =
+                      await this._restaurantService.CreateAndReturnRestaurantIdAsync(model, ownerId!);
 
                 this.TempData[SuccessMessage] = "Restaurant was added successfully!";
                 return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
@@ -164,7 +165,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 return this.Error();
             }
-            
+
         }
 
         [HttpGet]
@@ -243,7 +244,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 this.TempData[ErrorMessage] = "Unexpected error";
                 return this.RedirectToAction("Index", "Home");
-            }           
+            }
 
         }
 
@@ -299,7 +300,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
 
             this.TempData[SuccessMessage] = "Restaurant was edited successfully!";
-            return this.RedirectToAction("Details", "Restaurant", new {id = id});
+            return this.RedirectToAction("Details", "Restaurant", new { id = id });
         }
 
         [HttpGet]
@@ -336,7 +337,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             try
             {
-                RestaurantDeleteDetailsViewModel model = 
+                RestaurantDeleteDetailsViewModel model =
                     await this._restaurantService.GetRestaurantForDeleteByIdAsync(id);
 
                 return this.View(model);
@@ -348,7 +349,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(RestaurantDeleteDetailsViewModel model,string id)
+        public async Task<IActionResult> Delete(RestaurantDeleteDetailsViewModel model, string id)
         {
             bool restaurantExists = await this._restaurantService.RestaurantExistsByIdAsync(id);
             if (!restaurantExists)
@@ -412,7 +413,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                     Name = m.Name,
                     Description = m.Description,
                     ImageUrl = m.ImageUrl,
-                    Price = m.Price,                   
+                    Price = m.Price,
                 });
 
                 return View((mealViewModels, isOwner));
@@ -421,7 +422,48 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 return this.Error();
             }
-            
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRestaurantToFavorites(Guid restaurantId)
+        {
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (!Guid.TryParse(userId, out Guid parsedUserId))
+                {
+                    return BadRequest("Invalid user ID format.");
+                }
+
+                // Извикване на сървисния метод за добавяне на ресторант към списъка с любими
+                await this._userService.AddRestaurantToFavoriteAsync(userId, restaurantId);
+
+                return RedirectToAction("Favorites", "Restaurant");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while adding restaurant to favorites: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Favorites()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var favoriteRestaurantsHashSet = await this._userService.GetFavoriteRestaurantsAsync(userId);
+
+            var favoriteRestaurantsList = favoriteRestaurantsHashSet.ToList();
+            var favoriteRestaurantsViewModels = favoriteRestaurantsList.Select(r => new RestaurantAllViewModel
+            {
+                Id = r.Id.ToString(),
+                Name = r.Name,
+                Description = r.Description,
+                ImageUrl = r.ImageUrl,               
+            });
+
+            return View(favoriteRestaurantsViewModels);
         }
 
 

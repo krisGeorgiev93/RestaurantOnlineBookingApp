@@ -3,7 +3,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.Review;

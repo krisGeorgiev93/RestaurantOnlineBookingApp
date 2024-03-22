@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantOnlineBookingApp.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,9 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task<string> GetFullNameByEmailAsync(string email);
 
         Task<string> GetFullNameByIdAsync(string userId);
+
+        Task AddRestaurantToFavoriteAsync(string userId, Guid restaurantId);
+
+        Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId);
     }
 }

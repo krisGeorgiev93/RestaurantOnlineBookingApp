@@ -4,16 +4,17 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.User;
+    using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
     public class UserController : Controller
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
-
-        public UserController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public UserController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager )
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
@@ -95,5 +96,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
+       
     }
 }
