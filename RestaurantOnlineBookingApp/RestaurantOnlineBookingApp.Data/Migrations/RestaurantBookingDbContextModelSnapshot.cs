@@ -280,7 +280,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.CapacityPerDate", b =>
@@ -304,7 +304,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("CapacitiesParDate");
+                    b.ToTable("CapacitiesParDate", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Category", b =>
@@ -322,7 +322,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -386,7 +386,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
 
                     b.HasData(
                         new
@@ -451,7 +451,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Meal", b =>
@@ -486,7 +486,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Meals");
+                    b.ToTable("Meals", (string)null);
 
                     b.HasData(
                         new
@@ -536,7 +536,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Owners");
+                    b.ToTable("Owners", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Restaurant", b =>
@@ -602,7 +602,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Restaurants");
+                    b.ToTable("Restaurants", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.RestaurantGuest", b =>
@@ -617,7 +617,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("GuestId");
 
-                    b.ToTable("RestaurantGuest");
+                    b.ToTable("RestaurantGuest", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Review", b =>
@@ -646,7 +646,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.UserFavoritesRestaurants", b =>
@@ -661,7 +661,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("UserFavoriteRestaurants");
+                    b.ToTable("UserFavoriteRestaurants", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
