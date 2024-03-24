@@ -13,7 +13,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
         }
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
-          builder.HasData(this.UploadRestaurants());
+            builder.HasData(this.UploadRestaurants());
 
             builder.Property(r => r.IsActive)
                 .HasDefaultValue(true);
@@ -36,8 +36,25 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                .HasForeignKey(r => r.CityId)
                .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+             .HasMany(r => r.Meals)
+             .WithOne(m => m.Restaurant)
+             .HasForeignKey(m => m.RestaurantId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(r => r.Bookings)  
+            .WithOne(b => b.Restaurant)
+            .HasForeignKey(b => b.RestaurantId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(r => r.Reviews)
+            .WithOne(b => b.Restaurant)
+            .HasForeignKey(b => b.RestaurantId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+
             // Seed capacities after seeding restaurants
-            SeedCapacities();         
+            SeedCapacities();
 
         }
         private void SeedCapacities()
@@ -78,7 +95,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 CategoryId = 1,
                 OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
             };
-            restaurants.Add(restaurant);           
+            restaurants.Add(restaurant);
 
             //restaurant = new Restaurant()
             //{
@@ -127,6 +144,6 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
 
             return restaurants.ToArray();
         }
-       
+
     }
 }
