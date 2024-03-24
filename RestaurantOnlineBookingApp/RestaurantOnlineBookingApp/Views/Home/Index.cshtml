@@ -2,7 +2,7 @@
 @using static RestaurantOnlineBookingApp.Infrastructure.Extensions.ClaimsPrincipalsExtensions
 @{
     ViewData["Title"] = "Home Page";
-    var restaurants = Model.OrderByDescending(r => r.Rating).ToList(); // sort by rating
+    var restaurants = Model.OrderByDescending(r => r.Rating).ToList();
 }
 
 <div class="mb-5"></div>

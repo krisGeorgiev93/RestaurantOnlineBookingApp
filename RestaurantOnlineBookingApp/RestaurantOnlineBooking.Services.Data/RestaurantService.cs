@@ -223,6 +223,7 @@
             return await dBContext
                 .Restaurants
                  .Include(r => r.Reviews)
+                 .Where(r=> r.IsActive == true)
                 .Select(r => new AllRestaurantsViewModel()
                 {
                     Id = r.Id,
@@ -230,7 +231,7 @@
                     Address = r.Address,
                     Description = r.Description,
                     ImageUrl = r.ImageUrl,
-                    Capacity = r.Capacity,
+                    Capacity = r.Capacity,                    
                     City = r.City.CityName,
                     Rating = r.Reviews.Any() ? r.Reviews.Average(review => review.ReviewRating) : 0
                 })
