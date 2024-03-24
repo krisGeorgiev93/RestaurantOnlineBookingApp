@@ -7,6 +7,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
+    using System.Globalization;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
     public class BookingController : Controller
@@ -60,7 +61,24 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             var startingTime = restaurant.StartingTime;
             var endingTime = restaurant.EndingTime;
 
-            var bookingTime = model.ReservedTime;           
+            DateTime reservedDate;
+            if (!DateTime.TryParseExact(model.BookingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out reservedDate))
+            {
+                throw new FormatException("Invalid format for BookingDate");
+            }
+            // var bookingTime = model.ReservedTime;
+            TimeSpan reservedTime;
+            if (!TimeSpan.TryParse(model.ReservedTime, out reservedTime))
+            {
+                throw new FormatException("Invalid format for ReservedTime");
+            }
+
+            // Check if the booking date is in the past
+            if (reservedDate.Date < DateTime.Now.Date || (reservedDate.Date == DateTime.Now.Date && reservedTime < DateTime.Now.TimeOfDay))
+            {
+                TempData[ErrorMessage] = "Cannot book for past dates or times.";
+                return View(model);
+            }
 
             // Check if the requested number of guests exceeds the restaurant's capacity
             if (model.NumberOfGuests > restaurant.Capacity)

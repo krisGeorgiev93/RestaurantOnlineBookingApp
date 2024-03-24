@@ -39,29 +39,28 @@
                 throw new ArgumentException("Invalid restaurant ID");
             }          
            
-            // Parse the string ReservedTime to a TimeSpan object
             TimeSpan reservedTime;
             if (!TimeSpan.TryParse(model.ReservedTime, out reservedTime))
             {
                 throw new FormatException("Invalid format for ReservedTime");
             }
 
-            // Parse the string BookingDate to a DateTime object
             DateTime bookingDate;
             if (!DateTime.TryParseExact(model.BookingDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out bookingDate))
             {
                 throw new FormatException("Invalid format for BookingDate");
             }
-           
+
+            // Check if the booking date is in the past
+            //if (bookingDate.Date < DateTime.Now.Date || (bookingDate.Date == DateTime.Now.Date && reservedTime < DateTime.Now.TimeOfDay))
+            //{
+            //    throw new InvalidOperationException("Cannot book for past dates or times.");
+            //}
+
             // Проверка за наличност на капацитета за конкретната дата
             var capacityForDate = await this.dBContext.CapacitiesParDate
                 .FirstOrDefaultAsync(c => c.RestaurantId == restaurantGuid && c.Date == bookingDate);
-
-            if (capacityForDate == null || capacityForDate.Capacity < model.NumberOfGuests)
-            {
-                throw new Exception("Няма достатъчно наличен капацитет за тази дата.");
-            }
-
+                       
             var booking = new Booking
             {                
                 FirstName = model.FirstName,
@@ -96,7 +95,14 @@
                 throw new InvalidOperationException("Booking not found.");
             }
             // Increase the restaurant's capacity by the number of guests from the deleted booking
-            booking.Restaurant.Capacity += booking.NumberOfGuests;
+            // booking.Restaurant.Capacity += booking.NumberOfGuests;
+            var capacityForDate = await this.dBContext.CapacitiesParDate
+                .FirstOrDefaultAsync(c => c.RestaurantId == booking.RestaurantId && c.Date == booking.BookingDate);
+            if (capacityForDate != null)
+            {
+                // Add the capacity back to the date
+                capacityForDate.Capacity += booking.NumberOfGuests;
+            }
 
             this.dBContext.Bookings.Remove(booking);
             await this.dBContext.SaveChangesAsync();

@@ -112,23 +112,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
             };
 
-            restaurants.Add(restaurant);
-
-            //restaurant = new Restaurant()
-            //{
-            //    Name = "Mehana Chevermeto",
-            //    Address = "Kaloyan Dimitrov 16",
-            //    Description = "Traditional food from Bulgarian Kitchen",
-            //    StartingTime = new TimeSpan(12, 0, 0),
-            //    EndingTime = new TimeSpan(23, 45, 0),
-            //    ImageUrl = "https://www.interhotelsandanski.bg/media/k2/items/cache/3749aaa8ee129d7e919bddcc7e09cd36_3_XL.jpg",
-            //    Capacity = 120,
-            //    CityId = 3,
-            //    CategoryId = 1,
-            //    OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
-            //};
-
-            //restaurants.Add(restaurant);
+            restaurants.Add(restaurant);           
 
             return restaurants.ToArray();
         }
