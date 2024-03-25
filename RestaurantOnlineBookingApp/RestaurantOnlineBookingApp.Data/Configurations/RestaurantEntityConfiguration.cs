@@ -68,12 +68,14 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
         {
             foreach (var restaurant in UploadRestaurants())
             {
+                int capacityIdCounter = 1;
                 // Generate capacities for the next 60 days for each restaurant
                 for (int i = 0; i < 60; i++)
                 {
                     var date = DateTime.Now.Date.AddDays(i);
                     var capacity = new CapacityPerDate
                     {
+                        Id = capacityIdCounter++,
                         RestaurantId = restaurant.Id,
                         Date = date,
                         Capacity = restaurant.Capacity
