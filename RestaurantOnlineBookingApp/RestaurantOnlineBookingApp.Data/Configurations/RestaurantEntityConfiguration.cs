@@ -19,6 +19,12 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             builder.Property(r => r.IsActive)
                 .HasDefaultValue(true);
 
+            builder
+                    .HasMany(r => r.CapacityPerDates)
+                    .WithOne(c => c.Restaurant)
+                    .HasForeignKey(c => c.RestaurantId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
             builder.
                 HasOne(r => r.Category)
                 .WithMany(c => c.Restaurants)
@@ -43,7 +49,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
              .HasForeignKey(m => m.RestaurantId)
              .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(r => r.Bookings)  
+            builder.HasMany(r => r.Bookings)
             .WithOne(b => b.Restaurant)
             .HasForeignKey(b => b.RestaurantId)
              .OnDelete(DeleteBehavior.Restrict);
@@ -53,7 +59,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             .HasForeignKey(b => b.RestaurantId)
              .OnDelete(DeleteBehavior.Restrict);
 
-           
+
             // Seed capacities after seeding restaurants
             SeedCapacities();
 
@@ -96,7 +102,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 CategoryId = 1,
                 OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
             };
-            restaurants.Add(restaurant);                        
+            restaurants.Add(restaurant);
 
             return restaurants.ToArray();
         }
