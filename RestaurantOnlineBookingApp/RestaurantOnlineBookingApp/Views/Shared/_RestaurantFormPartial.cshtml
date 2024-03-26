@@ -28,14 +28,14 @@
                 <span asp-validation-for="Capacity" class="small text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartingTime"></label>
-                <input asp-for="StartingTime" class="form-control" placeholder="Starting Time">
-                <span asp-validation-for="StartingTime" class="small text-danger"></span>
+                <label asp-for="StartingTime" class="control-label">Starting Time</label>
+                <input type="time" asp-for="StartingTime" class="form-control" asp-format="HH:mm" />
+                <span asp-validation-for="StartingTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndingTime"></label>
-                <input asp-for="EndingTime" class="form-control" placeholder="Ending Time">
-                <span asp-validation-for="EndingTime" class="small text-danger"></span>
+                <label asp-for="EndingTime" class="control-label">Ending Time</label>
+                <input type="time" asp-for="EndingTime" class="form-control" asp-format="HH:mm" />
+                <span asp-validation-for="EndingTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CityId"></label>

@@ -37,9 +37,12 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
         public int Capacity { get; set; }
 
         [Required]
+        [Display(Name = "Starting Time")]
         public TimeSpan StartingTime {  get; set; }
 
         [Required]
+        [Display(Name = "Ending Time")]
+
         public TimeSpan EndingTime { get; set; }  
 
         public Guid OwnerId { get; set; }

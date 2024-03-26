@@ -92,10 +92,11 @@ namespace RestaurantOnlineBookingApp.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.SeedAdministrator(AdminEmail);
-            }
+            //Uncomment when the email exists
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.SeedAdministrator(AdminEmail);
+            //}
 
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
