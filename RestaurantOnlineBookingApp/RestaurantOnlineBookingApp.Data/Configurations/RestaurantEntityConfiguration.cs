@@ -23,41 +23,41 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                     .HasMany(r => r.CapacityPerDates)
                     .WithOne(c => c.Restaurant)
                     .HasForeignKey(c => c.RestaurantId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.NoAction);
 
             builder.
                 HasOne(r => r.Category)
                 .WithMany(c => c.Restaurants)
                 .HasForeignKey(r => r.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(r => r.Owner)
                 .WithMany(o => o.OwnedRestaurants)
                 .HasForeignKey(r => r.OwnerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                .HasOne(r => r.City)
                .WithMany(o => o.Restaurants)
                .HasForeignKey(r => r.CityId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.NoAction);
 
             builder
              .HasMany(r => r.Meals)
              .WithOne(m => m.Restaurant)
              .HasForeignKey(m => m.RestaurantId)
-             .OnDelete(DeleteBehavior.Restrict);
+             .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(r => r.Bookings)
             .WithOne(b => b.Restaurant)
             .HasForeignKey(b => b.RestaurantId)
-             .OnDelete(DeleteBehavior.Restrict);
+             .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(r => r.Reviews)
             .WithOne(b => b.Restaurant)
             .HasForeignKey(b => b.RestaurantId)
-             .OnDelete(DeleteBehavior.Restrict);
+             .OnDelete(DeleteBehavior.NoAction);
 
 
             // Seed capacities after seeding restaurants

@@ -35,6 +35,37 @@ namespace RestaurantOnlineBookingApp.Data
             builder.Entity<UserFavoritesRestaurants>()
        .HasKey(uf => new { uf.UserId, uf.RestaurantId });
 
+            builder.Entity<Booking>()
+          .HasOne(b => b.Restaurant)
+          .WithMany(r => r.Bookings)
+          .HasForeignKey(b => b.RestaurantId)
+          .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<RestaurantGuest>()
+            .HasOne(rg => rg.Restaurant)
+            .WithMany(r => r.RestaurantGuests)
+            .HasForeignKey(rg => rg.RestaurantId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Review>()
+           .HasOne(r => r.Restaurant)
+           .WithMany(r => r.Reviews)
+           .HasForeignKey(r => r.RestaurantId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<UserFavoritesRestaurants>()
+           .HasOne(ufr => ufr.User)
+           .WithMany()
+           .HasForeignKey(ufr => ufr.UserId)
+           .OnDelete(DeleteBehavior.NoAction); 
+
+            builder.Entity<UserFavoritesRestaurants>()
+                .HasOne(ufr => ufr.Restaurant)
+                .WithMany()
+                .HasForeignKey(ufr => ufr.RestaurantId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             Assembly assembly = Assembly.GetAssembly(typeof(RestaurantBookingDbContext))
                 ?? Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(assembly);
