@@ -4,6 +4,15 @@
     ViewData["Title"] = "Home Page";
     var restaurants = Model.OrderByDescending(r => r.Rating).ToList();
 }
+@if (!restaurants.Any())
+{
+    <div class="text-center">
+        <h1>No restaurants available</h1>
+        <img src="https://res.cloudinary.com/daznmgjey/image/upload/v1711484722/ctemyck2xulzqopj4hjw.jpg" alt="No restaurants available" style="height: 700px;">
+    </div>
+}
+else
+{   
 
 <div class="mb-5"></div>
 <h2 class="text-center" style="font-weight: bold;">TOP RATED RESTAURANTS</h2>
@@ -33,7 +42,7 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-
+}
 <div class="mb-5"></div>
 @if (this.User.IsAdmin())
 {
