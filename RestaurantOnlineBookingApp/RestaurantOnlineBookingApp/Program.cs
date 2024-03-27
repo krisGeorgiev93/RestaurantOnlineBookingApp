@@ -93,10 +93,10 @@ namespace RestaurantOnlineBookingApp.Web
             app.UseAuthorization();
 
            // Uncomment when the email exists
-            if (app.Environment.IsDevelopment())
-            {
-                app.SeedAdministrator(AdminEmail);
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            //    app.SeedAdministrator(AdminEmail);
+            //}
 
             app.UseEndpoints(endpoints =>
             {

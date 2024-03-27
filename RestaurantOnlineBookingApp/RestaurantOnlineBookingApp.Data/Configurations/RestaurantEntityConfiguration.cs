@@ -1,7 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
 using RestaurantOnlineBookingApp.Data.Models;
-using System.Reflection.Emit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace RestaurantOnlineBookingApp.Data.Configurations
 {
     public class RestaurantEntityConfiguration : IEntityTypeConfiguration<Restaurant>
@@ -14,7 +19,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
         }
         public void Configure(EntityTypeBuilder<Restaurant> builder)
         {
-            builder.HasData(this.UploadRestaurants());
+            builder.HasData(this.SeedRestaurant());
 
             builder.Property(r => r.IsActive)
                 .HasDefaultValue(true);
@@ -66,7 +71,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
         }
         private void SeedCapacities()
         {
-            foreach (var restaurant in UploadRestaurants())
+            foreach (var restaurant in SeedRestaurant())
             {
                 int capacityIdCounter = 1;
                 // Generate capacities for the next 60 days for each restaurant
@@ -86,9 +91,9 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             }
             _context.SaveChanges();
         }
-        private Restaurant[] UploadRestaurants()
+        private List<Restaurant> SeedRestaurant()
         {
-            ICollection<Restaurant> restaurants = new HashSet<Restaurant>();
+            List<Restaurant> restaurants = new List<Restaurant>();
             Restaurant restaurant;
 
             restaurant = new Restaurant()
@@ -102,12 +107,13 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 Capacity = 100,
                 CityId = 2,
                 CategoryId = 1,
-                OwnerId = Guid.Parse("C4F8569C-1CDA-4B0B-94E4-16B44A4631CF")
+                OwnerId = Guid.Parse("44e7b2ef-dfa8-45ae-aca9-0b52b9a3df4d")
             };
             restaurants.Add(restaurant);
 
-            return restaurants.ToArray();
+            return restaurants.ToList();
         }
 
     }
 }
+
