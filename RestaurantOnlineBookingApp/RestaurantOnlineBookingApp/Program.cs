@@ -46,12 +46,12 @@ namespace RestaurantOnlineBookingApp.Web
                     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>(); //Secure the App against CSRF;
                 });
 
-            builder.Services.AddScoped<IRestaurantService,RestaurantService>();
+            builder.Services.AddScoped<IRestaurantService, RestaurantService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IOwnerService,OwnerService>();
-            builder.Services.AddScoped<ICityService,CityService>();
+            builder.Services.AddScoped<IOwnerService, OwnerService>();
+            builder.Services.AddScoped<ICityService, CityService>();
             builder.Services.AddScoped<IMealService, MealService>();
-            builder.Services.AddScoped<IBookingService,BookingService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<ICapacityService, CapacityService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IEventService, EventService>();
@@ -92,14 +92,21 @@ namespace RestaurantOnlineBookingApp.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //Uncomment when the email exists
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.SeedAdministrator(AdminEmail);
-            //}
+           // Uncomment when the email exists
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(AdminEmail);
+            }
 
-            app.MapDefaultControllerRoute();
-            app.MapRazorPages();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+             name: "areas",
+             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+           );
+                app.MapDefaultControllerRoute();
+                app.MapRazorPages();
+            });
 
             app.Run();
         }

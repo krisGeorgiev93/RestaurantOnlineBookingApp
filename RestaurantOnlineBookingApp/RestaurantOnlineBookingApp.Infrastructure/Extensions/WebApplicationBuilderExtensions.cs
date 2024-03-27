@@ -8,42 +8,42 @@ namespace RestaurantOnlineBookingApp.Infrastructure.Extensions
     using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
     public static class WebApplicationBuilderExtensions
     {
-      
+
         /// This method seeds admin role if it does not exist.
         /// Passed email should be valid email of existing user in the application.  
-         
-        //public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email)
-        //{
-        //    using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
-        //    IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder app, string email)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
 
-        //    UserManager<AppUser> userManager =
-        //        serviceProvider.GetRequiredService<UserManager<AppUser>>();
-        //    RoleManager<IdentityRole<Guid>> roleManager =
-        //        serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
 
-        //    Task.Run(async () =>
-        //    {
-        //        if (await roleManager.RoleExistsAsync(AdminRoleName))
-        //        {
-        //            return;
-        //        }
+            UserManager<AppUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            RoleManager<IdentityRole<Guid>> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
-        //        IdentityRole<Guid> role =
-        //            new IdentityRole<Guid>(AdminRoleName);
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                {
+                    return;
+                }
 
-        //        await roleManager.CreateAsync(role);
+                IdentityRole<Guid> role =
+                    new IdentityRole<Guid>(AdminRoleName);
 
-        //        AppUser adminUser =
-        //            await userManager.FindByEmailAsync(email);
+                await roleManager.CreateAsync(role);
 
-        //        await userManager.AddToRoleAsync(adminUser, AdminRoleName);
-        //    })
-        //    .GetAwaiter()
-        //    .GetResult();
+                AppUser adminUser =
+                    await userManager.FindByEmailAsync(email);
 
-        //    return app;
-        //}
+                await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+            })
+            .GetAwaiter()
+            .GetResult();
+
+            return app;
+        }
     }
 }
