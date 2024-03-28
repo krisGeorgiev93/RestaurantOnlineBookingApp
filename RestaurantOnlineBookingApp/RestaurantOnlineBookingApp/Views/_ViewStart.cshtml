@@ -1,3 +1,11 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
+@{
+    if (this.User.IsInRole(AdminRoleName))
+    {
+        Layout = "~/Areas/AdminArea/Views/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }
