@@ -70,7 +70,8 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             try
             {
                 await this.eventService.CreateEventAsync(model, restaurantId);
-                return RedirectToAction("Index", "Home");
+                this.TempData[SuccessMessage] = "Event was created successfully!";
+                return RedirectToAction("AllByRestaurant", "Event", new { restaurantId });                
             }
             catch (ArgumentException)
             {

@@ -29,6 +29,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="StartingTime" class="control-label">Starting Time</label>
+                <input type="time" asp-for="StartingTime" class="form-control" value="@DateTime.Today.Add(Model.StartingTime).ToString("HH:mm")" />
+                <span asp-validation-for="StartingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndingTime" class="control-label">Ending Time</label>
+                <input type="time" asp-for="EndingTime" class="form-control" value="@DateTime.Today.Add(Model.EndingTime).ToString("HH:mm")" />
+                <span asp-validation-for="EndingTime" class="text-danger"></span>
+            </div>
+           @*  <div class="form-group">
+                <label asp-for="StartingTime" class="control-label">Starting Time</label>
                 <input type="time" asp-for="StartingTime" class="form-control" asp-format="HH:mm" />
                 <span asp-validation-for="StartingTime" class="text-danger"></span>
             </div>
@@ -36,7 +46,7 @@
                 <label asp-for="EndingTime" class="control-label">Ending Time</label>
                 <input type="time" asp-for="EndingTime" class="form-control" asp-format="HH:mm" />
                 <span asp-validation-for="EndingTime" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group">
                 <label asp-for="CityId"></label>
                 <select asp-for="CityId" class="form-control">

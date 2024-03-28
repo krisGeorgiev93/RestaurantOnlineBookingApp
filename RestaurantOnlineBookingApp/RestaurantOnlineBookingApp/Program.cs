@@ -8,9 +8,7 @@ namespace RestaurantOnlineBookingApp.Web
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Configurations;
     using RestaurantOnlineBookingApp.Data.Models;
-    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Infrastructure.ModelBinders;
-    using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
     public class Program
     {
         public static void Main(string[] args)
