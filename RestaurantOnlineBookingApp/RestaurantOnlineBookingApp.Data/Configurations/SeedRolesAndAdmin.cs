@@ -1,17 +1,24 @@
 ﻿namespace RestaurantOnlineBookingApp.Data.Configurations
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
     using RestaurantOnlineBookingApp.Data.Models;
 
     public class SeedRolesAndAdmin
     {
-        public void SeedAdmin(UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+        public static void SeedAdmin(IServiceProvider serviceProvider)
         {
-            SeedRoles(roleManager);
-            SeedAdminUser(userManager);
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+                SeedRoles(roleManager);
+                SeedAdminUser(userManager);
+            }
         }
 
-        private void SeedRoles(RoleManager<IdentityRole<Guid>> roleManager)
+        private static void SeedRoles(RoleManager<IdentityRole<Guid>> roleManager)
         {
             // Check if Admin role exists, if not, create it
             if (!roleManager.RoleExistsAsync("Admin").Result)
@@ -21,7 +28,7 @@
             }
         }
 
-        private void SeedAdminUser(UserManager<AppUser> userManager)
+        private static void SeedAdminUser(UserManager<AppUser> userManager)
         {
             // Check if the admin user already exists
             if (userManager.FindByEmailAsync("admin@test.com").Result == null)

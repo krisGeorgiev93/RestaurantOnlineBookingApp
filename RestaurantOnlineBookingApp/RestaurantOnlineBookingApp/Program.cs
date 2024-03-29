@@ -61,15 +61,10 @@ namespace RestaurantOnlineBookingApp.Web
             WebApplication app = builder.Build();
 
             // Call SeedAdmin method after building the application
-            var seedRolesAndAdmin = new SeedRolesAndAdmin();
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var dbContext = services.GetRequiredService<RestaurantBookingDbContext>();
-                var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-                dbContext.Database.Migrate(); // Ensure database migrations are applied
-                seedRolesAndAdmin.SeedAdmin(userManager, roleManager); // Call SeedAdmin method
+                SeedRolesAndAdmin.SeedAdmin(services);
             }
 
             if (app.Environment.IsDevelopment())
@@ -91,7 +86,7 @@ namespace RestaurantOnlineBookingApp.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-           // Uncomment when the email exists
+            // Uncomment when the email exists
             //if (app.Environment.IsDevelopment())
             //{
             //    app.SeedAdministrator(AdminEmail);
