@@ -83,8 +83,16 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
             }
 
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // Log or display a message indicating that the user does not exist
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View(model);
+            }
+
             var result =
-                await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (!result.Succeeded)
             {

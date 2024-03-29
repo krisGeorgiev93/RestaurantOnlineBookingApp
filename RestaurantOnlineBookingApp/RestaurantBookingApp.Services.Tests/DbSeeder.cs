@@ -1,8 +1,7 @@
-﻿using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Data.Models;
-
-namespace RestaurantBookingApp.Services.Tests
+﻿namespace RestaurantBookingApp.Services.Tests
 {
+    using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Models;
     public class DbSeeder
     {
         public static Owner Owner;

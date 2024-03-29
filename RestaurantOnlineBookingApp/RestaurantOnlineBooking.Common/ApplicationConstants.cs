@@ -4,9 +4,9 @@
     {
         public const int ReleaseYear = 2024;
 
-        public const string AdminRoleName = "Administrator";
+        public const string AdminRoleName = "Admin";
 
-        public const string AdminEmail = "admin@mail.com";
+        public const string AdminEmail = "admintest@mail.com";
 
         public const string AdminAreaName = "AdminArea";
     }

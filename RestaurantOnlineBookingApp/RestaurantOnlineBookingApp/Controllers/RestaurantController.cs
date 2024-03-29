@@ -72,12 +72,13 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             //only owners can add restaurants 
             bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            if (!isOwner)
+            if (!isOwner && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become an owner to add new restaurants!";
 
                 return RedirectToAction("Join", "Owner");
             }
+            
             try
             {
                 RestaurantFormModel model = new RestaurantFormModel()
