@@ -4,6 +4,7 @@
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Web.ViewModels.User;
     using System;
     using System.Collections.Generic;
 
@@ -14,11 +15,40 @@
         public UserService(RestaurantBookingDbContext dbContext)
         {
             this.dbContext = dbContext;
-        }        
+        }
+
+        public async Task<IEnumerable<UserViewModel>> AllAsync()
+        {
+            List<UserViewModel> allUsers = await this.dbContext
+                .Users
+                .Select(u => new UserViewModel()
+                {
+                    Id = u.Id.ToString(),
+                    Email = u.Email,
+                    FullName = u.FirstName + " " + u.LastName
+                })
+                .ToListAsync();
+            foreach (UserViewModel user in allUsers)
+            {
+                Owner? owner = this.dbContext
+                    .Owners
+                    .FirstOrDefault(a => a.UserId.ToString() == user.Id);
+                if (owner != null)
+                {
+                    user.PhoneNumber = owner.PhoneNumber;
+                }
+                else
+                {
+                    user.PhoneNumber = string.Empty;
+                }
+            }
+
+            return allUsers;
+        }
 
         public async Task<string> GetFullNameByEmailAsync(string email)
         {
-            AppUser? user = await this.dbContext
+           AppUser? user = await this.dbContext
                .Users
                .FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
@@ -47,6 +77,8 @@
 
             //return $"{user.FirstName} {user.LastName}";
         }
+
+
 
 
     }

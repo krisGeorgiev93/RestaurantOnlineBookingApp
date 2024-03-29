@@ -6,7 +6,7 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
     using static Common.ApplicationConstants;
 
     [Area(AdminAreaName)]
-    [Authorize(Roles =AdminRoleName)]
+    [Authorize(Roles = AdminRoleName)]
     public class BaseAdminController : Controller
     {
        

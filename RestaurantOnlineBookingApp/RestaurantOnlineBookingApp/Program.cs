@@ -31,6 +31,8 @@ namespace RestaurantOnlineBookingApp.Web
              .AddRoles<IdentityRole<Guid>>()
              .AddEntityFrameworkStores<RestaurantBookingDbContext>();
 
+            builder.Services.AddMemoryCache();
+
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
@@ -84,13 +86,7 @@ namespace RestaurantOnlineBookingApp.Web
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseAuthorization();
-
-            // Uncomment when the email exists
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.SeedAdministrator(AdminEmail);
-            //}
+            app.UseAuthorization();           
 
             app.UseEndpoints(endpoints =>
             {

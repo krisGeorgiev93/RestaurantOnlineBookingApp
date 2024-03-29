@@ -1,4 +1,5 @@
 ﻿using RestaurantOnlineBookingApp.Data.Models;
+using RestaurantOnlineBookingApp.Web.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<string> GetFullNameByIdAsync(string userId);
 
-       
+        Task<IEnumerable<UserViewModel>> AllAsync();
+
+
     }
 }

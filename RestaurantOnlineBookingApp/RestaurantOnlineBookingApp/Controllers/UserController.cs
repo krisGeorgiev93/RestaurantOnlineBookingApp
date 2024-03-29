@@ -4,20 +4,23 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using Microsoft.Extensions.Caching.Memory;
     using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.User;
-    using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+    using static Common.ApplicationConstants;
 
     public class UserController : Controller
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
-        public UserController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager )
+        private readonly IMemoryCache memoryCache;
+        public UserController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager,
+            IMemoryCache memoryCache)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -57,6 +60,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
 
             await signInManager.SignInAsync(user, false);
+            this.memoryCache.Remove(UsersCacheKey);
 
             return RedirectToAction("Index", "Home");
         }
