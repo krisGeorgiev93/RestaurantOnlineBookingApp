@@ -184,9 +184,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("nvarchar(16)")
                         .HasDefaultValue("Name1");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -244,16 +241,15 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = new Guid("faf6dc41-ce01-44a9-b63c-0abd2df2d15f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1616d9ab-4e5e-4a1a-ae02-1b5060a7a699",
+                            ConcurrencyStamp = "eef6e744-34b9-4f90-9deb-93dc3336a623",
                             Email = "kiril@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Kiril",
-                            IsDeleted = false,
                             LastName = "Ivanov",
                             LockoutEnabled = false,
                             NormalizedEmail = "kiril@mail.com",
                             NormalizedUserName = "kiril@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGuksS+G8cNadYw70hX7ylzsx/9WvAwmjIEn1XcLPvKyAUpRJsF1ngwf8UJQNBvxmg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPjPxqMu8KBba64XtGoathn4PPn3xnWYcZ56sUOXkdgqj2twizjvJ6RyHMsyrczhXA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "kiril@mail.com"
@@ -262,16 +258,15 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = new Guid("8099b56d-7710-415d-9c06-4569082c6758"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9ec6d2d7-82be-4bc2-ae7c-40b5e4767970",
+                            ConcurrencyStamp = "3a074575-dbbf-470f-b7ba-5bc7d148206d",
                             Email = "ivan@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Ivan",
-                            IsDeleted = false,
                             LastName = "Georgiev",
                             LockoutEnabled = false,
                             NormalizedEmail = "ivan@mail.com",
                             NormalizedUserName = "ivan@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJmIbDOlQLffkX2MGlgdByLSD9ajvYOb0kG6FmWAZMP4kqx7XMp3iCDczVkd7ZtH4A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMSEHqsKtS01JBDPkiAQ93EQD3L15UZu6EEDCeVqv87dpIG4PNosdLRpEHnqp8odGg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "ivan@mail.com"
@@ -497,7 +492,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6f02c324-afe6-4ef3-9ef0-69d061baaeb0"),
+                            Id = new Guid("022956b1-db91-4a30-b8d8-2dc294624c42"),
                             Date = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Description for Special Event 1",
                             ImageUrl = "https://www.eventbookings.com/wp-content/uploads/2018/03/event-ideas-for-party-eventbookings.jpg",
@@ -612,9 +607,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasMaxLength(140)
                         .HasColumnType("nvarchar(140)");
 
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
@@ -656,11 +648,11 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("OwnerId");
 
@@ -841,10 +833,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Restaurant", b =>
                 {
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", null)
-                        .WithMany("FavoriteRestaurants")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Category", "Category")
                         .WithMany("Restaurants")
                         .HasForeignKey("CategoryId")
@@ -857,6 +845,10 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
+                        .WithMany("FavoriteRestaurants")
+                        .HasForeignKey("GuestId");
+
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Owner", "Owner")
                         .WithMany("OwnedRestaurants")
                         .HasForeignKey("OwnerId")
@@ -866,6 +858,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("City");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("Owner");
                 });

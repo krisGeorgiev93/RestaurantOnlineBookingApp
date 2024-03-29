@@ -33,8 +33,9 @@ namespace RestaurantOnlineBookingApp.Data
                 .HasKey(rg => new { rg.RestaurantId, rg.GuestId });
 
             builder.Entity<UserFavoritesRestaurants>()
-       .HasKey(uf => new { uf.UserId, uf.RestaurantId });
+       .HasKey(uf => new { uf.UserId, uf.RestaurantId });                      
 
+           
             builder.Entity<Booking>()
           .HasOne(b => b.Restaurant)
           .WithMany(r => r.Bookings)

@@ -40,36 +40,6 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             return View(users);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Delete(string userId)
-        {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return BadRequest("User ID is required.");
-            }
-
-            if (!Guid.TryParse(userId, out Guid id))
-            {
-                return BadRequest("Invalid user ID format.");
-            }
-
-            var user = await dbContext.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
-
-            try
-            {
-                user.IsDeleted = true;
-                await dbContext.SaveChangesAsync();
-                memoryCache.Remove(UsersCacheKey);
-                return RedirectToAction("All");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred while deleting the user: {ex.Message}");
-            }
-        }
+      
     }
 }

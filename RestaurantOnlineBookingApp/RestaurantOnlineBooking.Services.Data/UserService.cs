@@ -21,7 +21,6 @@
         {
             List<UserViewModel> allUsers = await this.dbContext
                 .Users
-                .Where(u => u.IsDeleted == false)
                 .Select(u => new UserViewModel()
                 {
                     Id = u.Id.ToString(),

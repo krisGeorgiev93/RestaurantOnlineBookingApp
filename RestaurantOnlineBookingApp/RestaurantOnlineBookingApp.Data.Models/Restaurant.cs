@@ -65,7 +65,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
         public Guid? GuestId { get; set; }
 
         [ForeignKey(nameof(GuestId))]
-        [NotMapped]
         public virtual AppUser? Guest { get; set; }
 
         public ICollection<Meal> Meals { get; set; }
@@ -78,8 +77,6 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         public ICollection<CapacityPerDate> CapacityPerDates { get; set; }
         public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewRating) / Reviews.Count : 0;
-
-       
 
     }
 }
