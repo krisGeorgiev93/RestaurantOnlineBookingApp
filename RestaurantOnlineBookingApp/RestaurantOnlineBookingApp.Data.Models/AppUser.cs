@@ -11,6 +11,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         {
             this.Id = Guid.NewGuid();            
             this.FavoriteRestaurants = new HashSet<Restaurant>();
+            this.IsDeleted = false;
         }
 
         [Required]
@@ -20,6 +21,8 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
 
         // Колекция, която ще съхранява любимите ресторанти на потребителя
         public ICollection<Restaurant> FavoriteRestaurants { get; set; }

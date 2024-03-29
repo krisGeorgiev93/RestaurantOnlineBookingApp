@@ -13,6 +13,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+
             builder
                 .Property(u => u.FirstName)
                 .HasDefaultValue("Name1");

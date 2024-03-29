@@ -40,7 +40,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             AppUser user = new AppUser()
             {
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
             };
 
             await userManager.SetEmailAsync(user, model.Email);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Emit;
 
 namespace RestaurantOnlineBookingApp.Data.Configurations
 {
@@ -63,7 +64,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             .WithOne(b => b.Restaurant)
             .HasForeignKey(b => b.RestaurantId)
              .OnDelete(DeleteBehavior.NoAction);
-
+                      
 
             // Seed capacities after seeding restaurants
             SeedCapacities();
