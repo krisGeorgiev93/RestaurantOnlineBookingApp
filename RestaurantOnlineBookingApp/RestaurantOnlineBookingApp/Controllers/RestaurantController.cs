@@ -477,7 +477,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             if (photoFiles == null || !photoFiles.Any())
             {
                 ModelState.AddModelError("photoFiles", "Please select at least one photo to upload.");
-                return View("Restaurant", restaurantId); // Върнете страницата на ресторанта с подадения идентификатор
+                return View("Restaurant", restaurantId); 
             }
 
             var restaurant = await _restaurantService.GetRestaurantByIdAsync(restaurantId);
@@ -492,8 +492,9 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 var photo = new Photo { Url = uploadResult.SecureUrl.ToString(), RestaurantId = Guid.Parse(restaurantId) };
                 await _restaurantService.AddPhotoToRestaurantAsync(restaurantId.ToString(), photo);
             }
+            this.TempData[SuccessMessage] = "Photos uploaded successfully!";
+            return RedirectToAction("AllPhotos", "Restaurant", new { restaurantId });
 
-            return RedirectToAction(nameof(RestaurantController.Details), new { id = restaurantId });
         }
         public async Task<IActionResult> AllPhotos(string restaurantId)
         {
