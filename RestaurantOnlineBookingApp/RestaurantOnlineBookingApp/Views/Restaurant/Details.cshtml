@@ -56,8 +56,10 @@
                 {
                     <a asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Add Review</a>
                 }
-            }             
-           
+            }
+            <!-- Show all photos button -->
+            <a asp-controller="Restaurant" asp-action="AllPhotos" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Photos</a>
+
             <!-- Show View Menu button -->
             <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
             <!-- Show all reviews button -->

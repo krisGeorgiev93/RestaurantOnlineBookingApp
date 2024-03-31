@@ -391,6 +391,31 @@
 
             return favoriteRestaurants;
         }
+
+        public async Task AddPhotoToRestaurantAsync(string restaurantId, Photo photo)
+        {
+            // Проверяваме дали ресторантът съществува
+            var restaurant = await dBContext.Restaurants.FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+            if (restaurant == null)
+            {
+                throw new InvalidOperationException("Restaurant does not exist.");
+            }
+
+            // Добавяме снимката към колекцията от снимки на ресторанта
+            restaurant.Photos ??= new List<Photo>();
+            restaurant.Photos.Add(photo);
+
+            // Запазваме промените в базата данни
+            await dBContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Photo>> GetRestaurantPhotosAsync(string restaurantId)
+        {
+            // Вземете снимките за ресторанта с предоставения идентификатор
+            return await dBContext.Photos
+                .Where(p => p.RestaurantId.ToString() == restaurantId)
+                .ToListAsync();
+        }
     }
 
 }

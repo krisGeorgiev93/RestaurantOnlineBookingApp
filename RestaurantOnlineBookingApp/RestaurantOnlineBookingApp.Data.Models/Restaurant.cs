@@ -75,6 +75,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         public ICollection<Booking> Bookings { get; set; }
 
+        public ICollection<Photo> Photos { get; set; }
         public ICollection<CapacityPerDate> CapacityPerDates { get; set; }
         public double Rating => Reviews.Count > 0 ? Reviews.Sum(r=> r.ReviewRating) / Reviews.Count : 0;
 

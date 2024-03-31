@@ -1,0 +1,39 @@
+﻿@using RestaurantOnlineBookingApp.Data.Models
+@model IEnumerable<Photo>
+
+<h2>Restaurant Photos</h2>
+
+@if (!Model.Any())
+{
+    <p>No photos available</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var photo in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="@photo.Url" target="_blank">
+                        <img src="@photo.Url" class="card-img-top" alt="Restaurant Photo" cursor: pointer;">>
+                    </a>
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- Add New Photo Button -->
+<div>
+    <h3>Upload New Photo</h3>
+    <form method="post" enctype="multipart/form-data" asp-controller="Restaurant" asp-action="UploadPhotos">
+        <input type="hidden" name="restaurantId" value="@ViewBag.RestaurantId" />  
+        <div class="mb-3">
+            <label for="photoFiles" class="form-label">Select Photo(s):</label>
+            <input type="file" class="form-control" id="photoFiles" name="photoFiles" accept="image/*" multiple required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Photos</button>
+    </form>
+</div>

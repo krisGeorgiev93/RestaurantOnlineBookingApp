@@ -4,11 +4,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBooking.Services.Data.Models;
     using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Photo;
     using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -22,11 +25,12 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly ICityService _cityService;
         private readonly IMealService _mealService;
         private readonly IUserService _userService;
+        private readonly IPhotoService _photoService;
         private readonly RestaurantBookingDbContext _dbContext;
 
         public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
             RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService, ICapacityService capacityService
-            , IUserService userService)
+            , IUserService userService, IPhotoService photoService)
         {
             _ownerService = ownerService;
             _categoryService = categoryService;
@@ -35,7 +39,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             _dbContext = dbContext;
             _mealService = mealService;
             _userService = userService;
-
+            _photoService = photoService;
         }
 
         [HttpGet]
@@ -467,7 +471,36 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View(favoriteRestaurantsViewModels);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadPhotos(List<IFormFile> photoFiles, string restaurantId)
+        {
+            if (photoFiles == null || !photoFiles.Any())
+            {
+                ModelState.AddModelError("photoFiles", "Please select at least one photo to upload.");
+                return View("Restaurant", restaurantId); // Върнете страницата на ресторанта с подадения идентификатор
+            }
 
+            var restaurant = await _restaurantService.GetRestaurantByIdAsync(restaurantId);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var photoFile in photoFiles)
+            {
+                var uploadResult = await _photoService.AddPhotoAsync(photoFile);
+                var photo = new Photo { Url = uploadResult.SecureUrl.ToString(), RestaurantId = Guid.Parse(restaurantId) };
+                await _restaurantService.AddPhotoToRestaurantAsync(restaurantId.ToString(), photo);
+            }
+
+            return RedirectToAction(nameof(RestaurantController.Details), new { id = restaurantId });
+        }
+        public async Task<IActionResult> AllPhotos(string restaurantId)
+        {
+            var photos = await _restaurantService.GetRestaurantPhotosAsync(restaurantId);
+            ViewBag.RestaurantId = restaurantId; // Предаваме restaurantId през ViewBag
+            return View(photos);
+        }
         private IActionResult Error()
         {
             this.TempData[ErrorMessage] = "Unexpected error";

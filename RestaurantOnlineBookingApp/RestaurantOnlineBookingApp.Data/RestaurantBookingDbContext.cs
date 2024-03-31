@@ -23,6 +23,8 @@ namespace RestaurantOnlineBookingApp.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Event> Events { get; set; }
+
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<CapacityPerDate> CapacitiesParDate { get; set; }
         public DbSet<UserFavoritesRestaurants> UserFavoriteRestaurants { get; set; }
 
