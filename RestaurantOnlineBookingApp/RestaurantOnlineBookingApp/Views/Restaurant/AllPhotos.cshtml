@@ -15,9 +15,14 @@ else
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <a href="@photo.Url" target="_blank">
-                        <img src="@photo.Url" class="card-img-top" alt="Restaurant Photo" cursor: pointer;">>
+                        <img src="@photo.Url" class="card-img-top" alt="Restaurant Photo" style="cursor: pointer;" />
                     </a>
                     <div class="card-body">
+                        <form method="post" asp-controller="Restaurant" asp-action="DeletePhoto">
+                            <input type="hidden" name="photoId" value="@photo.Id" />
+                            <input type="hidden" name="restaurantId" value="@photo.RestaurantId" /> <!-- Добавете скрито поле за restaurantId -->
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>

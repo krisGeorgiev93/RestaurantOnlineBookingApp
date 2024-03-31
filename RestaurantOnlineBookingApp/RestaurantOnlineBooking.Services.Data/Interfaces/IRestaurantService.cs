@@ -46,5 +46,7 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<IEnumerable<Photo>> GetRestaurantPhotosAsync(string restaurantId);
 
+        Task DeletePhotoAsync(string photoId);
+
     }
 }

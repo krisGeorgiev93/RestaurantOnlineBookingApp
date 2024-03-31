@@ -82,7 +82,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
                 return RedirectToAction("Join", "Owner");
             }
-            
+
             try
             {
                 RestaurantFormModel model = new RestaurantFormModel()
@@ -465,7 +465,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 Id = r.Id.ToString(),
                 Name = r.Name,
                 Description = r.Description,
-                ImageUrl = r.ImageUrl,               
+                ImageUrl = r.ImageUrl,
             });
 
             return View(favoriteRestaurantsViewModels);
@@ -500,6 +500,24 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             var photos = await _restaurantService.GetRestaurantPhotosAsync(restaurantId);
             ViewBag.RestaurantId = restaurantId; // Предаваме restaurantId през ViewBag
             return View(photos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePhoto(string photoId, string restaurantId)
+        {
+            try
+            {
+                var deletionResult = await _photoService.DeletePhotoAsync(photoId);
+
+                await _restaurantService.DeletePhotoAsync(photoId);
+
+                TempData[SuccessMessage] = "Image was successfully deleted!";
+                return RedirectToAction("AllPhotos", "Restaurant", new { restaurantId });
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to delete photo.");
+            }
         }
         private IActionResult Error()
         {

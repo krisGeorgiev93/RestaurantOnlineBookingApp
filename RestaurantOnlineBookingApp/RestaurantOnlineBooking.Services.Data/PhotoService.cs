@@ -47,6 +47,7 @@
 
             var deleteParams = new DeletionParams(publicId);
             return await this.cloudinary.DestroyAsync(deleteParams);
+
         }
 
         public async Task<Photo> GetPhotoByIdAsync(string id)

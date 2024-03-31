@@ -416,6 +416,16 @@
                 .Where(p => p.RestaurantId.ToString() == restaurantId)
                 .ToListAsync();
         }
+
+        public async Task DeletePhotoAsync(string photoId)
+        {
+            var photoToDelete = await dBContext.Photos.FirstOrDefaultAsync(p => p.Id.ToString() == photoId);
+            if (photoToDelete != null)
+            {
+                dBContext.Photos.Remove(photoToDelete);
+                await dBContext.SaveChangesAsync();
+            }
+        }
     }
 
 }
