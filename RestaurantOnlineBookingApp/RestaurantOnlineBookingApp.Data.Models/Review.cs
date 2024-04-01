@@ -25,5 +25,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
 
         [ForeignKey(nameof(RestaurantId))]
         public Restaurant Restaurant { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

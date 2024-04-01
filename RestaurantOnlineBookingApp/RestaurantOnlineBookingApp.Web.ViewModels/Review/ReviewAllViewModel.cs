@@ -15,5 +15,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
         public string GuestEmail { get; set; }   
         public Guid RestaurantId { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
     }
 }

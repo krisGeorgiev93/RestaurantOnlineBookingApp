@@ -20,7 +20,8 @@
                 ReviewRating = model.Rating,
                 Comment = model.Comment,
                 GuestId = model.GuestId,
-                RestaurantId = model.RestaurantId
+                RestaurantId = model.RestaurantId,
+                CreatedAt = DateTime.Now
             };
 
             await this._dbContext.Reviews.AddAsync(review);
@@ -36,7 +37,7 @@
                    ReviewRating = r.ReviewRating,
                    Comment = r.Comment,
                    RestaurantId = r.RestaurantId,
-                   RestaurantName = r.Restaurant.Name 
+                   RestaurantName = r.Restaurant.Name                   
                })
                .ToListAsync();
         }
@@ -52,7 +53,8 @@
                      Comment = r.Comment,
                      GuestId = r.GuestId,
                      RestaurantId = r.RestaurantId,
-                     GuestEmail = r.Guest.Email
+                     GuestEmail = r.Guest.Email,
+                     CreatedAt = r.CreatedAt
                  });
 
             return await reviews.ToListAsync();
