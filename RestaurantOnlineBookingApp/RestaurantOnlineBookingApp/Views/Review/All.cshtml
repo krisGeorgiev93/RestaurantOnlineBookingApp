@@ -4,14 +4,15 @@
     ViewData["Title"] = "Restaurant Reviews";
 }
 
-<form method="get" asp-controller="Review" asp-action="Sort">
+<form id="sortForm" method="get" asp-controller="Review" asp-action="Sort">
     <input type="hidden" name="restaurantId" value="@Model.FirstOrDefault()?.RestaurantId" />
-    <select name="sortBy" onchange="this.form.submit()">
+    <select name="sortBy" onchange="submitForm()">
         <option value="ratingAsc">Sort by Rating (Ascending)</option>
         <option value="ratingDesc">Sort by Rating (Descending)</option>
         <option value="dateNewest">Sort by Date (Newest First)</option>
         <option value="dateOldest">Sort by Date (Oldest First)</option>
     </select>
+    <button type="submit" class="btn btn-primary">Sort</button>
 </form>
 
 

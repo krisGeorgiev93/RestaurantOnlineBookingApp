@@ -116,6 +116,12 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Sort(Guid restaurantId, string sortBy)
         {
+            // Проверяваме дали sortBy е null или празен и ако е така, избираме подразбиращата се сортировка
+            if (string.IsNullOrEmpty(sortBy))
+            {
+                sortBy = "ratingAsc";
+            }
+          
             var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
             switch (sortBy)
             {
@@ -137,37 +143,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View("All", reviews);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SortByRatingAscending(Guid restaurantId)
-        {
-            var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
-            var sortedReviews = reviews.OrderBy(r => r.ReviewRating);
-            return View("All", sortedReviews);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> SortByRatingDescending(Guid restaurantId)
-        {
-            var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
-            var sortedReviews = reviews.OrderByDescending(r => r.ReviewRating);
-            return View("All", sortedReviews);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> SortByDateNewest(Guid restaurantId)
-        {
-            var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
-            var sortedReviews = reviews.OrderByDescending(r => r.CreatedAt);
-            return View("All", sortedReviews);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> SortByDateOldest(Guid restaurantId)
-        {
-            var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
-            var sortedReviews = reviews.OrderBy(r => r.CreatedAt);
-            return View("All", sortedReviews);
-        }
         private string GetUserId()
            => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
