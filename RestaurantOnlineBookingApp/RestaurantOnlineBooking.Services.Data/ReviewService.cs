@@ -55,9 +55,10 @@
                      GuestId = r.GuestId,
                      RestaurantId = r.RestaurantId,
                      GuestEmail = r.Guest.Email,
+                     FirstName = r.Guest.FirstName,
+                     LastName = r.Guest.LastName,
                      CreatedAt = r.CreatedAt
                  });
-
 
             return await reviews.ToListAsync();
         }

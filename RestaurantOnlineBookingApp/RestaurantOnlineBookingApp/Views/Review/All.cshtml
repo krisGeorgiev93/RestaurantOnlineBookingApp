@@ -15,15 +15,22 @@
     </select>
 </div>
 
+<style>
+    .card-text, .card-title {
+        font-size: 25px; 
+    }
+</style>
+
 <div class="row">
     @foreach (var review in Model.Reviews)
     {
         <div class="col-md-12 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Rating: @review.ReviewRating</h5>
-                    <p class="card-text">@review.Comment</p>
-                    <p class="card-text">Guest Email: @review.GuestEmail</p>
+                    <p class="card-text"><strong>Guest Name:</strong> @($"{review.FirstName} {review.LastName}")</p>
+                    <h6 class="card-title"><strong>Rating:</strong> @review.ReviewRating</h6>
+                    <p class="card-text"><strong>Comment:</strong> @review.Comment</p>
+                    <p class="card-text"><strong>Date Added:</strong> @review.CreatedAt.ToString("dd/MM/yyyy")</p>
                 </div>
             </div>
         </div>

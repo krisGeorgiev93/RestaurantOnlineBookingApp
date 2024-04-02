@@ -55,12 +55,18 @@
             // Извличане на потребителския имейл от аутентикационния сервиз
             var userEmail = User.Identity.Name;
 
+            // Извличане на първото и последното име на потребителя от клеймовете
+            var userFirstName = User.FindFirstValue(ClaimTypes.GivenName);
+            var userLastName = User.FindFirstValue(ClaimTypes.Surname);
+
             // Създаване на модела
             var model = new AddReviewViewModel
             {
                 GuestId = guestId,
                 RestaurantId = restaurantId,
-                GuestEmail = userEmail // Задаване на имейла на госта
+                GuestEmail = userEmail,
+                FirstName = userFirstName, 
+                LastName = userLastName 
             };
 
             // Връщате изгледа, който показва формата за добавяне на ревюто, като предоставяте модела като данни за изгледа.

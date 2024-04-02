@@ -27,5 +27,9 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
 
         public string GuestEmail { get; set; }
 
+        public string FirstName {  get; set; }
+
+        public string LastName { get; set; }
+
     }
 }
