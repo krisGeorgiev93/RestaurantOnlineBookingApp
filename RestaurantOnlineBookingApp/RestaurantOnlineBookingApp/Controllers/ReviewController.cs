@@ -1,10 +1,7 @@
-﻿
-namespace RestaurantOnlineBookingApp.Web.Controllers
+﻿namespace RestaurantOnlineBookingApp.Web.Controllers
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
-    using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.Review;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -13,15 +10,13 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly IReviewService _reviewService;
         private readonly IBookingService _bookingService;
         private readonly IOwnerService _ownerService;
-        private readonly UserManager<AppUser> _userManager;
 
         public ReviewController(IReviewService reviewService, IBookingService bookingService,
-            IOwnerService ownerService, UserManager<AppUser> userManager)
+            IOwnerService ownerService)
         {
             _reviewService = reviewService;
             _bookingService = bookingService;
             _ownerService = ownerService;
-            _userManager = userManager;
         }
 
         [HttpGet]
@@ -105,44 +100,32 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View(reviews);
         }
 
-        [HttpGet]
+        [HttpGet]        
         public async Task<IActionResult> All(Guid restaurantId)
         {
             var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
+            var model = new ReviewViewModel
+            {
+                Reviews = reviews,
+                SortBy = SortOption.RatingDescending // Default sorting option
+            };
             ViewBag.RestaurantId = restaurantId;
-            return View(reviews);
+            return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Sort(Guid restaurantId, string sortBy)
+        [HttpGet]        
+        public async Task<IActionResult> SortReviews(Guid restaurantId, SortOption sortBy)
         {
-            // Проверяваме дали sortBy е null или празен и ако е така, избираме подразбиращата се сортировка
-            if (string.IsNullOrEmpty(sortBy))
+            var sortedReviews = await _reviewService.GetSortedReviewsAsync(restaurantId, sortBy);
+            var model = new ReviewViewModel
             {
-                sortBy = "ratingAsc";
-            }
-          
-            var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
-            switch (sortBy)
-            {
-                case "ratingAsc":
-                    reviews = reviews.OrderBy(r => r.ReviewRating);
-                    break;
-                case "ratingDesc":
-                    reviews = reviews.OrderByDescending(r => r.ReviewRating);
-                    break;
-                case "dateNewest":
-                    reviews = reviews.OrderByDescending(r => r.CreatedAt);
-                    break;
-                case "dateOldest":
-                    reviews = reviews.OrderBy(r => r.CreatedAt);
-                    break;
-                default:
-                    break;
-            }
-            return View("All", reviews);
+                Reviews = sortedReviews,
+                SortBy = sortBy
+            };
+            ViewBag.RestaurantId = restaurantId;
+            return View("All", model);
         }
-
+       
         private string GetUserId()
            => User.FindFirstValue(ClaimTypes.NameIdentifier);
 

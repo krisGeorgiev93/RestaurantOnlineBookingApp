@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
+﻿namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
 {
     public class ReviewAllViewModel
     {
@@ -13,9 +7,10 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Review
         public string Comment { get; set; }
         public Guid GuestId { get; set; }
         public string GuestEmail { get; set; }   
+       public SortOption SortBy { get; set; }
         public Guid RestaurantId { get; set; }
-
         public DateTime CreatedAt { get; set; }
+        
 
     }
 }

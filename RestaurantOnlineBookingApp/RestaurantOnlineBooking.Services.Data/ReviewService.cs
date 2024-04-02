@@ -46,6 +46,7 @@
         {
             var reviews = _dbContext.Reviews
                  .Where(r => r.RestaurantId == restaurantId)
+                  .OrderByDescending(r => r.ReviewRating) // default sorting
                  .Select(r => new ReviewAllViewModel
                  {
                      Id = r.Id,
@@ -57,7 +58,34 @@
                      CreatedAt = r.CreatedAt
                  });
 
+
             return await reviews.ToListAsync();
+        }
+
+        public async Task<IEnumerable<ReviewAllViewModel>> GetSortedReviewsAsync(Guid restaurantId, SortOption sortBy)
+        {
+            var reviews = await this.GetReviewsForRestaurantAsync(restaurantId);
+
+            switch (sortBy)
+            {
+                case SortOption.RatingAscending:
+                    reviews = reviews.OrderBy(r => r.ReviewRating);
+                    break;
+                case SortOption.RatingDescending:
+                    reviews = reviews.OrderByDescending(r => r.ReviewRating);
+                    break;
+                case SortOption.DateNewest:
+                    reviews = reviews.OrderByDescending(r => r.CreatedAt);
+                    break;
+                case SortOption.DateOldest:
+                    reviews = reviews.OrderBy(r => r.CreatedAt);
+                    break;
+                default:
+                    // No sorting
+                    break;
+            }
+
+            return reviews;
         }
     }
 }

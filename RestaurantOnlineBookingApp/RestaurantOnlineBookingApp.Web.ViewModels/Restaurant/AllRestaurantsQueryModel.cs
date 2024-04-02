@@ -22,10 +22,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 
         [Display(Name = "Sort restaurants by")]
 
-        public int TotalRestaurants { get; set; }
-
-        //[Display(Name = "Sort by")]
-        //public string SortBy { get; set; }
+        public int TotalRestaurants { get; set; }        
 
         [Display(Name = "Restaurants On Page")]
         public int RestaurantsPerPage { get; set; }

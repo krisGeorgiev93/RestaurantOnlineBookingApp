@@ -1,45 +1,44 @@
-﻿@model IEnumerable<RestaurantOnlineBookingApp.Web.ViewModels.Review.ReviewAllViewModel>
+﻿@using RestaurantOnlineBookingApp.Web.ViewModels.Review
+@model ReviewViewModel
 
 @{
     ViewData["Title"] = "Restaurant Reviews";
 }
 
-<form id="sortForm" method="get" asp-controller="Review" asp-action="Sort">
-    <input type="hidden" name="restaurantId" value="@Model.FirstOrDefault()?.RestaurantId" />
-    <select name="sortBy" onchange="submitForm()">
-        <option value="ratingAsc">Sort by Rating (Ascending)</option>
-        <option value="ratingDesc">Sort by Rating (Descending)</option>
-        <option value="dateNewest">Sort by Date (Newest First)</option>
-        <option value="dateOldest">Sort by Date (Oldest First)</option>
+<div class="form-group col-md-5">
+    <label asp-for="SortBy" class="form-check-label">Sort by:</label>
+    <select asp-for="SortBy" class="form-control" onchange="sortReviews()">
+        <option value="RatingAscending">Rating Ascending</option>
+        <option value="RatingDescending">Rating Descending</option>
+        <option value="DateNewest">Date Newest</option>
+        <option value="DateOldest">Date Oldest</option>
     </select>
-    <button type="submit" class="btn btn-primary">Sort</button>
-</form>
+</div>
 
+<div class="row">
+    @foreach (var review in Model.Reviews)
+    {
+        <div class="col-md-12 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rating: @review.ReviewRating</h5>
+                    <p class="card-text">@review.Comment</p>
+                    <p class="card-text">Guest Email: @review.GuestEmail</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-@if (Model.Any())
-{
-    <h2 style="color: white;">@ViewData["Title"]</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th style="color: white;">Rating</th>
-                <th style="color: white;">Comment</th>
-                <th style="color: white;">Guest Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var review in Model)
-            {
-                <tr>
-                    <td style="color: white;">@review.ReviewRating</td>
-                    <td style="color: white;">@review.Comment</td>
-                    <td style="color: white;">@review.GuestEmail</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
+@if (!Model.Reviews.Any())
 {
     <h2>No reviews available.</h2>
 }
+
+<script>
+    function sortReviews() {
+        var sortBy = document.getElementById("SortBy").value;
+        var restaurantId = "@ViewBag.RestaurantId";
+        window.location.href = "/Review/SortReviews?restaurantId=" + restaurantId + "&sortBy=" + sortBy;
+    }
+</script>

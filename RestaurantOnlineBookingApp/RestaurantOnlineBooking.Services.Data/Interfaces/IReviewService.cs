@@ -14,5 +14,9 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
         Task<IEnumerable<ReviewDetailsViewModel>> GetReviewsByUserIdAsync(string userId);
 
         Task<IEnumerable<ReviewAllViewModel>> GetReviewsForRestaurantAsync(Guid restaurantId);
+
+        Task<IEnumerable<ReviewAllViewModel>> GetSortedReviewsAsync(Guid restaurantId, SortOption sortBy);
+
+
     }
 }
