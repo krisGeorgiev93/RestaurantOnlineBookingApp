@@ -30,34 +30,7 @@
             <h6>Address: <b>@Model.Address</b></h6>                
             <br />
             <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
-            @if (this.User.Identity?.IsAuthenticated ?? false)
-            {
-                @if (this.User.IsAdmin())
-                {
-                    <a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id"
-                       class="btn btn-warning">Edit</a>
-                    <a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id"
-                       class="btn btn-danger">Delete</a>
-                    <!-- Button to Add Event -->
-                    <a class="ml-2 btn btn-primary" asp-controller="Event" asp-action="Create" asp-route-restaurantId="@Model.Id">Add Event</a>
-                    <!-- Button to Add Meal -->
-                    <a asp-controller="Meal" asp-action="AddMeal" asp-route-restaurantId="@Model.Id"
-                       class="btn btn-info">Add Meal</a>
-                    <!-- Button to See the Meals by Restaurant Id -->
-                    @*  <a asp-controller="Meal" asp-action="MealsByRestaurant" asp-route-restaurantId="@Model.Id"
-            class="btn btn-info">Restaurant Meals</a> *@
-                    <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary">View Menu</a>
-                }
-                else
-                {                  
-                    <a asp-controller="Booking" asp-action="BookTable" asp-route-restaurantId="@Model.Id" class="btn btn-primary">Book Table</a>
-                    <form asp-controller="Restaurant" asp-action="AddRestaurantToFavorites" method="post">
-                        <input type="hidden" name="restaurantId" value="@Model.Id" />
-                        <button type="submit" class="btn btn-primary">Add to Favorites</button>
-                    </form>
-                }
-            }            
+               class="btn btn-success">Manage your restaurant</a>           
         </div>
     </div>
 </div>

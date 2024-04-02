@@ -40,32 +40,30 @@
                     <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
                     <p class="card-text">Email: @Model.OwnerInfo.Email</p>
                 </div>
-            </div>           
-                @if (this.User.Identity.IsAuthenticated)
+            </div>         
+           
+            <a asp-controller="Restaurant" asp-action="AllPhotos" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Photos</a>
+            <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
+            <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Reviews</a>
+            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>
+            @if (this.User.Identity.IsAuthenticated)
             {
                 if ((isUserOwner && isUserOwnerOfTheRestaurant) || this.User.IsAdmin())
                 {
-                    <a class="btn btn-warning" asp-controller="Restaurant" asp-action="Edit"
-                    asp-route-id="@Model.Id">Edit</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Restaurant" asp-action="Delete"
-                    asp-route-id="@Model.Id">Delete</a>
-                    <a class="ml-2 btn btn-primary" asp-controller="Event" asp-action="Create"
+                    <a class="mt-2 btn btn-primary" asp-controller="Meal" asp-action="AddMeal"
+                       asp-route-restaurantId="@Model.Id">Add Meal to Menu</a>
+                    <a class="mt-2 btn btn-primary" asp-controller="Event" asp-action="Create"
                        asp-route-restaurantId="@Model.Id">Create Event</a>
+                    <a class="btn btn-warning mt-2" asp-controller="Restaurant" asp-action="Edit"
+                       asp-route-id="@Model.Id">Edit Restaurant Info</a>
+                    <a class="mt-2 btn btn-danger" asp-controller="Restaurant" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete Restaurant</a>
                 }
                 else
                 {
                     <a asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Add Review</a>
                 }
             }
-            <!-- Show all photos button -->
-            <a asp-controller="Restaurant" asp-action="AllPhotos" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Photos</a>
-
-            <!-- Show View Menu button -->
-            <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
-            <!-- Show all reviews button -->
-            <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Reviews</a>
-            <!-- Show all events button -->
-            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>
         </div>
     </div>
 </div>

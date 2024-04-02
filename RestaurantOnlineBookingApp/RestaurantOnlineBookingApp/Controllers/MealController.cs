@@ -1,6 +1,5 @@
 ﻿namespace RestaurantOnlineBookingApp.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
