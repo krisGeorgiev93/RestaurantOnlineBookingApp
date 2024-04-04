@@ -4,6 +4,8 @@ namespace RestaurantBookingApp.Services.Tests
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
     using static DbSeeder;
     public class OwnerServiceTests
     {
@@ -126,13 +128,62 @@ namespace RestaurantBookingApp.Services.Tests
         {
             // Arrange
             string userIdWithoutRestaurants = Owner2.Id.ToString();
-            string restaurantId = Restaurant.Id.ToString();
+            string restaurantId = DbSeeder.Restaurant.Id.ToString();
 
             // Act
             bool hasRestaurant = await this.ownerService.HasRestaurantWithIdAsync(userIdWithoutRestaurants, restaurantId);
 
             // Assert
             Assert.IsFalse(hasRestaurant);
+        }
+
+        [Test]
+        public async Task GetOwnedRestaurantsAsync_ShouldReturnOwnedRestaurants()
+        {
+            // Arrange
+            Guid ownerId = DbSeeder.Owner1.Id; // Вземаме ID на първия собственик, предполагайки, че той има ресторант
+
+            // Act
+            var ownedRestaurants = await ownerService.GetOwnedRestaurantsAsync(ownerId);
+
+            // Assert
+            Assert.IsNotNull(ownedRestaurants);
+            Assert.IsInstanceOf<List<Restaurant>>(ownedRestaurants);
+            Assert.Greater(ownedRestaurants.Count, 0); // Проверка дали върнатият списък с ресторантите не е празен
+        }
+
+        [Test]
+        public async Task GetOwnedRestaurantsAsync_ShouldReturnEmptyListIfOwnerHasNoRestaurants()
+        {
+            // Arrange
+            Guid ownerId = DbSeeder.Owner2.Id; // ID на втория собственик, предполагайки че той няма ресторанти
+
+            // Act
+            var ownedRestaurants = await ownerService.GetOwnedRestaurantsAsync(ownerId);
+
+            // Assert
+            Assert.IsNotNull(ownedRestaurants);
+            Assert.IsEmpty(ownedRestaurants); // Проверка дали върнатият списък с ресторантите е празен
+        }
+
+        [Test]
+        public async Task CreateMethodShouldCreateOwner()
+        {
+            // Arrange
+            string userId = Guid.NewGuid().ToString();
+            var model = new JoinOwnerFormModel
+            {
+                PhoneNumber = "+359888889999" // Произволен телефонен номер
+            };
+
+            // Act
+            await ownerService.Create(userId, model);
+
+            // Assert
+            // Проверка дали в базата данни е създаден нов собственик с правилните данни
+            var createdOwner = await dbContext.Owners.FirstOrDefaultAsync(o => o.UserId.ToString() == userId);
+            Assert.IsNotNull(createdOwner);
+            Assert.AreEqual(model.PhoneNumber, createdOwner.PhoneNumber);
         }
     }
 }
