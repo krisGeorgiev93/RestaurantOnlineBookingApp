@@ -38,6 +38,7 @@
 
         public async Task<bool> HasRestaurantWithIdAsync(string? userId, string restaurantId)
         {
+
             Owner? owner = await this.dBContext
                .Owners
                .Include(a => a.OwnedRestaurants)

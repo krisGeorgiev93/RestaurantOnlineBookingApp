@@ -4,13 +4,18 @@
     using RestaurantOnlineBookingApp.Data.Models;
     public class DbSeeder
     {
-        public static Owner Owner;
-        public static AppUser OwnerUser;
+        public static Owner Owner1;
+        public static Owner Owner2;
+
+        public static AppUser OwnerUser1;
+        public static AppUser OwnerUser2;
+
         public static AppUser GuestUser;
 
+        public static Restaurant Restaurant;
         public static void SeedDatabase(RestaurantBookingDbContext dbContext)
         {
-            OwnerUser = new AppUser()
+            OwnerUser1 = new AppUser()
             {
                 UserName = "Ivan",
                 NormalizedUserName = "IVAN",
@@ -22,6 +27,20 @@
                 TwoFactorEnabled = false,
                 FirstName = "Ivan",
                 LastName = "Ivanov"
+            };
+
+            OwnerUser2 = new AppUser()
+            {
+                UserName = "Hristo",
+                NormalizedUserName = "Hristov",
+                Email = "hristo@mail.com",
+                NormalizedEmail = "HRISTO@MAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                SecurityStamp = "9403b0fd-c20a-4eb3-9307-fb8289a49676",
+                TwoFactorEnabled = false,
+                FirstName = "Hristo",
+                LastName = "Hristov"
             };
 
             GuestUser = new AppUser()
@@ -38,16 +57,45 @@
                 LastName = "Petkov"
             };
 
-            Owner = new Owner()
+            Owner1 = new Owner()
             {
                 PhoneNumber = "+359767672654",
-                User = OwnerUser,
+                UserId = OwnerUser1.Id,
+                User = OwnerUser1,
+
             };
 
-            dbContext.Users.Add(OwnerUser);
-            dbContext.Users.Add(GuestUser);
-            dbContext.Owners.Add(Owner);
+            Owner2 = new Owner()
+            {
+                PhoneNumber = "+359765625455",
+                UserId = OwnerUser2.Id,
+                User = OwnerUser2,
+            };          
 
+            dbContext.Users.Add(OwnerUser1);
+            dbContext.Users.Add(OwnerUser2);
+            dbContext.Users.Add(GuestUser);
+
+            dbContext.Owners.Add(Owner1);
+            dbContext.Owners.Add(Owner2);         
+
+            Restaurant = new Restaurant()
+            {
+                Name = "Restaurant1",
+                Address = "Ivan Ivanov 22",
+                Description = "Family restaurant with italian food",
+                StartingTime = new TimeSpan(12, 0, 0),
+                EndingTime = new TimeSpan(23, 45, 0),
+                ImageUrl = "ImageUrl",
+                Capacity = 100,
+                CityId = 2,
+                CategoryId = 1,
+                Owner = Owner1,
+                OwnerId = Owner1.Id
+            };
+
+            dbContext.Restaurants.Add(Restaurant);           
+            
             dbContext.SaveChanges();
 
         }

@@ -22,10 +22,8 @@
         [HttpGet]
         public async Task<IActionResult> AddReview(Guid restaurantId)
         {
-            // Предполагайки, че имате потребителска идентификация, извличате ID на потребителя от текущият потребителски клейм, за да го използвате като GuestId в модела за добавяне на ревюто.
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Проверявате дали е възможно да извлечете валидно id на потребителя.
             if (!Guid.TryParse(userId, out Guid guestId))
             {
                 return this.Error();

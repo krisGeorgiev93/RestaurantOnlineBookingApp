@@ -35,7 +35,7 @@ namespace RestaurantBookingApp.Services.Tests
         public async Task OwnerExistsByUserIdAsyncShouldReturnTrueIfExists()
         {
             // Arrange
-            string existingOwnerUserId = OwnerUser.Id.ToString();
+            string existingOwnerUserId = OwnerUser1.Id.ToString();
 
             // Act
             bool result = await this.ownerService.OwnerExistByIdAsync(existingOwnerUserId);
@@ -61,7 +61,7 @@ namespace RestaurantBookingApp.Services.Tests
         public async Task OwnerExistsByPhoneNumberAsyncShouldReturnTrueIfExists()
         {
             // Arrange
-            string existingOwnerPhoneNumber = Owner.PhoneNumber.ToString();
+            string existingOwnerPhoneNumber = Owner1.PhoneNumber.ToString();
 
             // Act
             bool result = await this.ownerService.OwnerExistsByPhoneNumberAsync(existingOwnerPhoneNumber);
@@ -85,7 +85,7 @@ namespace RestaurantBookingApp.Services.Tests
         public async Task OwnerIdByUserIdAsyncShouldReturnOwnerIdIfExists()
         {
             // Arrange
-            string existingUserId = DbSeeder.OwnerUser.Id.ToString();
+            string existingUserId = OwnerUser1.Id.ToString();
 
             // Act
             string ownerId = await this.ownerService.OwnerIdByUserIdAsync(existingUserId);
@@ -105,6 +105,34 @@ namespace RestaurantBookingApp.Services.Tests
 
             // Assert
             Assert.IsNull(ownerId);
+        }
+
+        [Test]
+        public async Task HasRestaurantWithIdAsyncShouldReturnTrueIfOwnerHasRestaurant()
+        {
+            // Arrange
+            string ownerWithRestaurant = DbSeeder.Owner1.UserId.ToString();
+            string restaurantId = DbSeeder.Restaurant.Id.ToString();
+
+            // Act
+            bool hasRestaurant = await this.ownerService.HasRestaurantWithIdAsync(ownerWithRestaurant, restaurantId);
+
+            // Assert
+            Assert.IsTrue(hasRestaurant);
+        }
+
+        [Test]
+        public async Task HasRestaurantWithIdAsyncShouldReturnFalseIfOwnerHasNoRestaurants()
+        {
+            // Arrange
+            string userIdWithoutRestaurants = Owner2.Id.ToString();
+            string restaurantId = Restaurant.Id.ToString();
+
+            // Act
+            bool hasRestaurant = await this.ownerService.HasRestaurantWithIdAsync(userIdWithoutRestaurants, restaurantId);
+
+            // Assert
+            Assert.IsFalse(hasRestaurant);
         }
     }
 }
