@@ -20,7 +20,6 @@
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;       
 
-        // Колекция, която ще съхранява любимите ресторанти на потребителя
         public ICollection<Restaurant> FavoriteRestaurants { get; set; }
     }
 }

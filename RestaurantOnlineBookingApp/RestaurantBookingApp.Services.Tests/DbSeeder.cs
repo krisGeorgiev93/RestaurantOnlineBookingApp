@@ -37,6 +37,7 @@
                 FirstName = "Kiro",
                 LastName = "Petkov"
             };
+
             Owner = new Owner()
             {
                 PhoneNumber = "+359767672654",

@@ -34,21 +34,77 @@ namespace RestaurantBookingApp.Services.Tests
         [Test]
         public async Task OwnerExistsByUserIdAsyncShouldReturnTrueIfExists()
         {
+            // Arrange
             string existingOwnerUserId = OwnerUser.Id.ToString();
 
+            // Act
             bool result = await this.ownerService.OwnerExistByIdAsync(existingOwnerUserId);
 
+            //Assert
             Assert.IsTrue(result);
         }
 
         [Test]
-        public async Task OwnerExistsByUserIdAsyncShouldReturnTrueIfNotExists()
+        public async Task OwnerExistsByUserIdAsyncShouldReturnFalseIfNotExists()
         {
-            string existingAgentUserId = GuestUser.Id.ToString();
+            // Arrange
+            string existingOwnerUserId = GuestUser.Id.ToString();
 
-            bool result = await this.ownerService.OwnerExistByIdAsync(existingAgentUserId);
+            // Act
+            bool result = await this.ownerService.OwnerExistByIdAsync(existingOwnerUserId);
 
+            //Assert
             Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task OwnerExistsByPhoneNumberAsyncShouldReturnTrueIfExists()
+        {
+            // Arrange
+            string existingOwnerPhoneNumber = Owner.PhoneNumber.ToString();
+
+            // Act
+            bool result = await this.ownerService.OwnerExistsByPhoneNumberAsync(existingOwnerPhoneNumber);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task OwnerExistsByPhoneNumberAsyncShouldReturnFalseIfNotExists()
+        {
+            // Arrange
+            string nonExistingOwnerPhoneNumber = "1234567890";
+            // Act
+            bool result = await this.ownerService.OwnerExistsByPhoneNumberAsync(nonExistingOwnerPhoneNumber);
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task OwnerIdByUserIdAsyncShouldReturnOwnerIdIfExists()
+        {
+            // Arrange
+            string existingUserId = DbSeeder.OwnerUser.Id.ToString();
+
+            // Act
+            string ownerId = await this.ownerService.OwnerIdByUserIdAsync(existingUserId);
+
+            // Assert
+            Assert.IsNotNull(ownerId);
+        }
+
+        [Test]
+        public async Task OwnerIdByUserIdAsyncShouldReturnNullIfUserDoesNotExist()
+        {
+            // Arrange
+            string nonExistingUserId = "nonExistingUserId";
+
+            // Act
+            string ownerId = await this.ownerService.OwnerIdByUserIdAsync(nonExistingUserId);
+
+            // Assert
+            Assert.IsNull(ownerId);
         }
     }
 }
