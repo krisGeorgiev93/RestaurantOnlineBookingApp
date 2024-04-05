@@ -77,7 +77,7 @@
             dbContext.Users.Add(GuestUser);
 
             dbContext.Owners.Add(Owner1);
-            dbContext.Owners.Add(Owner2);         
+            dbContext.Owners.Add(Owner2);
 
             Restaurant = new Restaurant()
             {
@@ -88,6 +88,7 @@
                 EndingTime = new TimeSpan(23, 45, 0),
                 ImageUrl = "ImageUrl",
                 Capacity = 100,
+                IsActive = true,
                 CityId = 2,
                 CategoryId = 1,
                 Owner = Owner1,

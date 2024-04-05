@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantOnlineBooking.Web
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F5DA5B28-8CE8-491D-A7FC-ABE101FD188F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantBookingApp.Services.Tests", "RestaurantBookingApp.Services.Tests\RestaurantBookingApp.Services.Tests.csproj", "{1BE6BC12-5625-4836-A57A-55090A246D1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantBookingApp.Services.Tests", "RestaurantBookingApp.Services.Tests\RestaurantBookingApp.Services.Tests.csproj", "{1BE6BC12-5625-4836-A57A-55090A246D1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
