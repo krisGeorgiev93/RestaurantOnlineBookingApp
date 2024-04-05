@@ -284,7 +284,12 @@
             Restaurant restaurant = await this.dBContext
                   .Restaurants
                   .Where(r => r.IsActive)
-                  .FirstAsync(r => r.Id.ToString() == restaurantId);
+                  .FirstOrDefaultAsync(r => r.Id.ToString() == restaurantId);
+
+            if (restaurant == null)
+            {
+                return null;
+            }
 
             return new RestaurantDeleteDetailsViewModel()
             {
@@ -349,7 +354,7 @@
                 .Restaurants
                 .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
-
+           
             bool result = restaurant.OwnerId.ToString() == ownerId;
 
             return result;

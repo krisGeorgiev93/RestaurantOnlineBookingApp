@@ -37,7 +37,7 @@
         public void Setup()
         {
         }
-
+       
         [Test]
         public async Task AllByOwnerIdAsync_ReturnsCorrectCountOfRestaurants()
         {
@@ -78,7 +78,45 @@
             Assert.IsFalse(deletedRestaurant.IsActive);
         }
 
+        [Test]
+        public async Task GetRestaurantByIdAsync_WithValidId_ShouldReturnRestaurant()
+        {
+            // Arrange
+            var expectedRestaurant = DbSeeder.Restaurant;
+            var restaurantId = expectedRestaurant.Id.ToString();
 
-        
+            // Act
+            var result = await this.restaurantService.GetRestaurantByIdAsync(restaurantId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expectedRestaurant.Id, result.Id);
+            Assert.AreEqual(expectedRestaurant.Name, result.Name);
+            Assert.AreEqual(expectedRestaurant.Address, result.Address);
+            Assert.AreEqual(expectedRestaurant.Description, result.Description);
+            Assert.AreEqual(expectedRestaurant.StartingTime, result.StartingTime);
+            Assert.AreEqual(expectedRestaurant.EndingTime, result.EndingTime);
+            Assert.AreEqual(expectedRestaurant.ImageUrl, result.ImageUrl);
+            Assert.AreEqual(expectedRestaurant.Capacity, result.Capacity);
+            Assert.AreEqual(expectedRestaurant.IsActive, result.IsActive);
+            Assert.AreEqual(expectedRestaurant.CityId, result.CityId);
+            Assert.AreEqual(expectedRestaurant.CategoryId, result.CategoryId);
+            Assert.AreEqual(expectedRestaurant.OwnerId, result.OwnerId);
+        }
+
+        [Test]
+        public async Task GetRestaurantByIdAsync_WithInvalidId_ShouldReturnNull()
+        {
+            // Arrange
+            var invalidRestaurantId = "InvalidId";
+
+            // Act
+            var result = await this.restaurantService.GetRestaurantByIdAsync(invalidRestaurantId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+      
     }
 }
