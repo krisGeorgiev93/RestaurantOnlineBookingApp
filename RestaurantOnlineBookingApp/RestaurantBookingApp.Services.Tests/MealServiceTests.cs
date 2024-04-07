@@ -156,6 +156,68 @@ namespace RestaurantBookingApp.Services.Tests
                 }
             }
         }
+
+        [Test]
+        public async Task GetMealByIdAsyncReturnsCorrectMeal()
+        {
+            // Arrange
+            var mealId = 1;
+            var expectedMeal = new Meal
+            {
+                Id = mealId,
+                Name = "Test Meal",
+                Description = "Test description",
+                Price = 20.00m,
+                ImageUrl = "test-image-url",
+                RestaurantId = Guid.NewGuid()
+            };
+
+            var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new RestaurantBookingDbContext(options))
+            {
+                await dbContext.Meals.AddAsync(expectedMeal);
+                await dbContext.SaveChangesAsync();
+
+                var photoServiceMock = new Mock<IPhotoService>();
+                var mealService = new MealService(dbContext, photoServiceMock.Object);
+
+                // Act
+                var actualMealForm = await mealService.GetMealByIdAsync(mealId.ToString());
+
+                // Assert
+                Assert.IsNotNull(actualMealForm);
+                Assert.AreEqual(expectedMeal.Id, actualMealForm.Id);
+                Assert.AreEqual(expectedMeal.Name, actualMealForm.Name);
+                Assert.AreEqual(expectedMeal.Description, actualMealForm.Description);
+                Assert.AreEqual(expectedMeal.Price, actualMealForm.Price);
+                Assert.AreEqual(expectedMeal.RestaurantId, actualMealForm.RestaurantId);
+            }
+        }
+
+        [Test]
+        public async Task GetMealByIdAsyncReturnsErrorWhenMealNotFound()
+        {
+            // Arrange
+            var mealId = 999; 
+
+            var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new RestaurantBookingDbContext(options))
+            {
+                var photoServiceMock = new Mock<IPhotoService>();
+                var mealService = new MealService(dbContext, photoServiceMock.Object);
+
+                // Act & Assert
+                // Проверяваме дали методът хвърля изключение при опит за намиране на несъществуващо ястие
+                Assert.ThrowsAsync<InvalidOperationException>(() => mealService.GetMealByIdAsync(mealId.ToString()));
+            }
+        }
     }
 }
+
 
