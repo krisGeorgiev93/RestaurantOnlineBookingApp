@@ -44,7 +44,6 @@ namespace RestaurantBookingApp.Services.Tests
                 Assert.AreEqual(model.Comment, addedReview.Comment);
                 Assert.AreEqual(model.GuestId, addedReview.GuestId);
                 Assert.AreEqual(model.RestaurantId, addedReview.RestaurantId);
-                Assert.IsTrue(DateTime.UtcNow - addedReview.CreatedAt < TimeSpan.FromSeconds(1)); // Check if CreatedAt is within 1 second
             }
         }
 

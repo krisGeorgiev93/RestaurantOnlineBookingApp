@@ -14,6 +14,7 @@
 
         public static Restaurant Restaurant;
         public static Review Review;
+        public static Event Event;
         public static void SeedDatabase(RestaurantBookingDbContext dbContext)
         {
             OwnerUser1 = new AppUser()
@@ -105,6 +106,18 @@
                 CreatedAt = DateTime.Now 
             };
 
+            Event = new Event
+            {
+                RestaurantId = Restaurant.Id,
+                Title = "Test Event",
+                Date = DateTime.Today,
+                Time = new TimeSpan(18, 0, 0),
+                Description = "Test event description",
+                Price = 50.00m,
+                ImageUrl = "EventImageUrl"
+            };
+
+            dbContext.Events.Add(Event);
             dbContext.Reviews.Add(Review);
             dbContext.Restaurants.Add(Restaurant);           
             
