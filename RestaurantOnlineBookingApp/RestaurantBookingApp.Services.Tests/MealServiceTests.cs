@@ -1,21 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
-using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBooking.Services.Data;
-using RestaurantOnlineBookingApp.Data.Models;
+using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
-using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using RestaurantOnlineBookingApp.Data.Models;
 
 namespace RestaurantBookingApp.Services.Tests
 {
     public class MealServiceTests
     {
+        private DbContextOptions<RestaurantBookingDbContext> dbOptions;
+        private RestaurantBookingDbContext dbContext;
+        private MealService mealService;
+
+        [SetUp]
+        public void Setup()
+        {
+            this.dbOptions = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
+                .UseInMemoryDatabase("TestDatabase")
+                .Options;
+            this.dbContext = new RestaurantBookingDbContext(this.dbOptions);
+            this.mealService = new MealService(this.dbContext, new Mock<IPhotoService>().Object);
+        }
+
+
         [Test]
         public async Task DeleteMealAsyncMealExistsRemovesMeal()
         {
@@ -216,6 +224,44 @@ namespace RestaurantBookingApp.Services.Tests
                 // Проверяваме дали методът хвърля изключение при опит за намиране на несъществуващо ястие
                 Assert.ThrowsAsync<InvalidOperationException>(() => mealService.GetMealByIdAsync(mealId.ToString()));
             }
+        }
+
+        [Test]
+        public async Task MealExistsByIdAsyncReturnsTrueWhenMealExists()
+        {
+            // Arrange
+            var mealId = 1;
+            var meal = new Meal
+            {
+                Id = mealId,
+                Name = "Test Meal",
+                Description = "Test description",
+                Price = 20.00m,
+                ImageUrl = "test-image-url",
+                RestaurantId = Guid.NewGuid()
+            };
+
+            await dbContext.Meals.AddAsync(meal);
+            await dbContext.SaveChangesAsync();
+
+            // Act
+            var result = await mealService.MealExistsByIdAsync(mealId.ToString());
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task MealExistsByIdAsyncReturnsFalseWhenMealDoesNotExist()
+        {
+            // Arrange
+            var mealId = "999"; // meal with ID 999 doesn't exist
+
+            // Act
+            var mealExists = await this.mealService.MealExistsByIdAsync(mealId);
+
+            // Assert
+            Assert.IsFalse(mealExists);
         }
     }
 }

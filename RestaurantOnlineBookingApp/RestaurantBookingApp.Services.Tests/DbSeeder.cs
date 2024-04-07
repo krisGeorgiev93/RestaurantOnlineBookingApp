@@ -15,6 +15,7 @@
         public static Restaurant Restaurant;
         public static Review Review;
         public static Event Event;
+        public static Meal Meal1;
         public static void SeedDatabase(RestaurantBookingDbContext dbContext)
         {
             OwnerUser1 = new AppUser()
@@ -115,6 +116,16 @@
                 Description = "Test event description",
                 Price = 50.00m,
                 ImageUrl = "EventImageUrl"
+            };
+
+            Meal1 = new Meal
+            {
+                Id = 1,
+                Name = "Spaghetti Carbonara",
+                Description = "Pasta with egg, hard cheese, guanciale, and pepper.",
+                Price = 12.99m,
+                ImageUrl = "imageUrl",
+                RestaurantId = Guid.NewGuid()
             };
 
             dbContext.Events.Add(Event);
