@@ -33,8 +33,6 @@ namespace RestaurantOnlineBooking.WebAPI.Controllers
                 return this.BadRequest();
             }
 
-
-
         }
     }
 }

@@ -31,8 +31,6 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<RestaurantFormModel> GetRestaurantForEditByIdAsync(string restaurantId);
 
-        Task<StatisticsServiceModel> GetStatisticsAsync();
-
         Task EditRestaurantByIdAsync(string restaurantId, RestaurantFormModel model);
 
         Task<(TimeSpan startTime, TimeSpan endTime)> GetRestaurantOperatingHoursAsync(Guid restaurantId);

@@ -17,7 +17,7 @@ namespace RestaurantOnlineBooking.WebAPI
             options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IRestaurantService, RestaurantService>();
-
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

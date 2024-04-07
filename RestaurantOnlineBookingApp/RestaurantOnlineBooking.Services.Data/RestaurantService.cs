@@ -3,13 +3,11 @@
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBooking.Services.Data.Models;
-    using RestaurantOnlineBooking.Services.Data.Models.Statistics;
     using RestaurantOnlineBookingApp.Data;
     using RestaurantOnlineBookingApp.Data.Models;
     using RestaurantOnlineBookingApp.Web.ViewModels.Home;
     using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
     using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
-    using System.Globalization;
     public class RestaurantService : IRestaurantService
     {
         private readonly RestaurantBookingDbContext dBContext;
@@ -337,16 +335,7 @@
             var endTime = restaurant.EndingTime;
 
             return (startTime, endTime);
-        }
-
-        public async Task<StatisticsServiceModel> GetStatisticsAsync()
-        {
-            return new StatisticsServiceModel()
-            {
-                TotalRestaurants = await this.dBContext.Restaurants.CountAsync(),
-                TotalBookings = await this.dBContext.Restaurants.Where(r => r.GuestId.HasValue).CountAsync()
-            };
-        }
+        }              
 
         public async Task<bool> IsOwnerWithIdOwnedRestaurantWithIdAsync(string restaurantId, string ownerId)
         {
