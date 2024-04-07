@@ -1,9 +1,20 @@
-﻿@model IEnumerable<AllRestaurantsViewModel>
+﻿@using Microsoft.AspNetCore.Identity
+@using RestaurantOnlineBooking.Services.Data
+@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using RestaurantOnlineBookingApp.Data.Models
+@using System.Security.Claims
+@inject UserManager<AppUser> userManager
+@inject IOwnerService OwnerService
+@{
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+}
+@model IEnumerable<AllRestaurantsViewModel>
 @using static RestaurantOnlineBookingApp.Infrastructure.Extensions.ClaimsPrincipalsExtensions
 @{
     ViewData["Title"] = "Home Page";
     var restaurants = Model.OrderByDescending(r => r.Rating).ToList();
 }
+
 @if (!restaurants.Any())
 {
     <div class="text-center">
@@ -12,58 +23,68 @@
     </div>
 }
 else
-{   
-
-<div class="mb-5"></div>
-<h2 class="text-center" style="font-weight: bold;">TOP RATED RESTAURANTS</h2>
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        @for (int i = 0; i < restaurants.Count(); i++)
-        {
-            var restaurant = restaurants[i];
-                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
-                    <img class="d-block mx-auto" style="max-width: 600px; max-height: 600px;"
-                         src="@restaurant.ImageUrl" alt="@restaurant.Name">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>
-                            <a class="btn btn-primary" asp-controller="Restaurant" asp-action="Details"
-                               asp-route-id="@restaurant.Id"> @restaurant.Name</a>
-                        </h5>
-                    </div>
-                </div>
-
-        }
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-}
-<div class="mb-5"></div>
-@if (this.User.IsAdmin())
 {
-    <div class="row">
-        <div class="col-12 text-center">
-            <button class="btn btn-primary" id="statistics_btn">Show Statistics</button>
-        </div>
-    </div>
-    <div class="mt-4 p-5 bg-light d-none" id="statistics_box">
+    <div class="container">
         <div class="row">
-            <h2 class="col-md-6 text-center" id="total_restaurants"></h2>
-            <h2 class="col-md-6 text-center" id="total_bookings"></h2>
+            <div class="col-md-8">
+                <h2 class="mb-4">Top Rated Restaurants</h2>
+                <div id="restaurantCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @for (int i = 0; i < restaurants.Count(); i++)
+                        {
+                            var restaurant = restaurants[i];
+                            <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                                <img src="@restaurant.ImageUrl" class="d-block w-100" alt="@restaurant.Name">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 style="font-size: 2em;">@restaurant.Name</h5>
+                                    <p style="font-size: 1.5em;">@restaurant.Description</p>
+                                    <a href="@Url.Action("Details", "Restaurant", new { id = restaurant.Id })" class="btn btn-primary">View Details</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#restaurantCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#restaurantCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <div class="col-md-12">
+                        <h2 class="mb-4">Welcome to Restaurant Online Booking App!</h2>
+                        <p>We're delighted to have you here. Explore our top-rated restaurants and discover delicious dining options. Whether you're craving a cozy cafe, a fine dining experience, or something in between, we've got you covered. Start your culinary journey now!</p>
+                        <p>If you're a restaurant owner, you can showcase your restaurant on our platform and reach a wider audience. Join us and let diners discover your culinary delights!</p>
+                    </div>
+                }
+                else
+                {
+                    if (!isUserOwner)
+                    {
+                        var user = await userManager.FindByNameAsync(User.Identity.Name);
+                        if (user != null)
+                        {
+                            <div class="col-md-12">
+                            <h2 class="mb-4">Welcome back, @user.FirstName!</h2>
+                            <p>Ready to discover more delicious dining options? Explore our top-rated restaurants and find your next favorite spot. Don't forget, you can easily reserve a table at your chosen restaurant directly through our platform. Let's make your dining experiences memorable!</p>
+                            </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-md-12">
+                            <h2 class="mb-4">Welcome to the Owner's Panel!</h2>
+                            <p>Manage your restaurant. Add new meals, update your menu, and interact with your customers. Make your restaurant stand out and attract more diners!</p>
+                        </div>
+                    }
+                }
+            </div>
         </div>
     </div>
-}
-
-
-
-
-@section Scripts
-{
-    <script>statistics();</script>
 }
