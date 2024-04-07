@@ -1,13 +1,12 @@
 ﻿namespace RestaurantBookingApp.Services.Tests
 {
     using Microsoft.EntityFrameworkCore;
+    using Moq;
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
-    using Moq;
-    using static DbSeeder;
     using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
-    using RestaurantOnlineBookingApp.Data.Models;
+    using static DbSeeder;
 
     public class RestaurantServiceTests
     {

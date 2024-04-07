@@ -15,13 +15,18 @@
 
         public async Task AddReviewAsync(AddReviewViewModel model)
         {
+            if (!IsValidModel(model))
+            {
+                throw new InvalidOperationException("Invalid model");
+            }
+
             var review = new Review
             {
                 ReviewRating = model.Rating,
                 Comment = model.Comment,
                 GuestId = model.GuestId,
                 RestaurantId = model.RestaurantId,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             };
 
             await this._dbContext.Reviews.AddAsync(review);
@@ -87,6 +92,11 @@
             }
 
             return reviews;
+        }
+
+        private bool IsValidModel(AddReviewViewModel model)
+        {
+            return model != null && model.Rating > 0; 
         }
     }
 }
