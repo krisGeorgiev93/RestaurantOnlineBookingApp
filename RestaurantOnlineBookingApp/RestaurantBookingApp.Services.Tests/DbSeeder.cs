@@ -13,6 +13,7 @@
         public static AppUser GuestUser;
 
         public static Restaurant Restaurant;
+        public static Review Review;
         public static void SeedDatabase(RestaurantBookingDbContext dbContext)
         {
             OwnerUser1 = new AppUser()
@@ -95,6 +96,16 @@
                 OwnerId = Owner1.Id
             };
 
+            Review = new Review
+            {
+                ReviewRating = 10, 
+                Comment = "Great experience", 
+                GuestId = GuestUser.Id,
+                RestaurantId = Restaurant.Id, 
+                CreatedAt = DateTime.Now 
+            };
+
+            dbContext.Reviews.Add(Review);
             dbContext.Restaurants.Add(Restaurant);           
             
             dbContext.SaveChanges();
