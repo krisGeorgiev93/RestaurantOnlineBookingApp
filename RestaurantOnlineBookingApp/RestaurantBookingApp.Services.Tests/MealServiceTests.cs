@@ -126,6 +126,27 @@ namespace RestaurantBookingApp.Services.Tests
         }
 
         [Test]
+        public async Task GetAllMealsAsyncReturnsEmptyListWhenNoMealsExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new RestaurantBookingDbContext(options))
+            {
+                var mealService = new MealService(dbContext, Mock.Of<IPhotoService>());
+
+                // Act
+                var actualMeals = await mealService.GetAllMealsAsync();
+
+                // Assert
+                Assert.IsNotNull(actualMeals);
+                Assert.AreEqual(0, actualMeals.Count());
+            }
+        }
+
+        [Test]
         public async Task GetAllMealsForRestaurantByIdAsyncReturnsAllMealsForRestaurant()
         {
             // Arrange
@@ -162,6 +183,28 @@ namespace RestaurantBookingApp.Services.Tests
                     Assert.AreEqual(expectedMeal.Price, actualMeal.Price);
                     Assert.AreEqual(expectedMeal.ImageUrl, actualMeal.ImageUrl);
                 }
+            }
+        }
+
+        [Test]
+        public async Task GetAllMealsForRestaurantByIdAsync_ReturnsEmptyList_WhenNoMealsExistForRestaurant()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new RestaurantBookingDbContext(options))
+            {
+                var restaurantId = Guid.NewGuid().ToString();
+                var mealService = new MealService(dbContext, Mock.Of<IPhotoService>());
+
+                // Act
+                var actualMeals = await mealService.GetAllMealsForRestaurantByIdAsync(restaurantId);
+
+                // Assert
+                Assert.IsNotNull(actualMeals);
+                Assert.AreEqual(0, actualMeals.Count());
             }
         }
 
