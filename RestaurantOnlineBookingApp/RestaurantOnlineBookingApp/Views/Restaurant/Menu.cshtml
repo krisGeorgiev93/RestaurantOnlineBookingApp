@@ -7,6 +7,9 @@
 
 
 <h1 style="color: white;">Restaurant Menu</h1>
+<div>
+    <a href="@Url.Action("Details", "Restaurant", new { id = ViewBag.RestaurantId })" class="btn btn-secondary">Back to Restaurant Details</a>
+</div>
 
 @if (Model.Meals.Any())
 {

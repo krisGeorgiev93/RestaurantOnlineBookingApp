@@ -227,6 +227,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 Price = e.Price,
                 ImageUrl = e.ImageUrl
             }).ToList();
+            ViewBag.RestaurantId = restaurantId;
             return View(eventViewModels);
         }
 

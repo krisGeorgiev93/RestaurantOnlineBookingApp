@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<RestaurantOnlineBookingApp.Web.ViewModels.Event.EventViewModel>
 
+<div>
+    <a href="@Url.Action("Details", "Restaurant", new { id = ViewBag.RestaurantId })" class="btn btn-secondary">Back to Restaurant Details</a>
+</div>
+
 @if (Model.Any())
 {
     <h2>All Events</h2>

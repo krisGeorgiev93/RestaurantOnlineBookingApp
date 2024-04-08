@@ -417,7 +417,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                     ImageUrl = m.ImageUrl,
                     Price = m.Price,
                 });
-
+                ViewBag.RestaurantId = restaurantId;
                 return View((mealViewModels, isOwner));
             }
             catch (Exception)
@@ -463,8 +463,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 Name = r.Name,
                 Description = r.Description,
                 ImageUrl = r.ImageUrl,
-            });
-
+            });            
             return View(favoriteRestaurantsViewModels);
         }
 
