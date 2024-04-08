@@ -251,7 +251,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, RestaurantFormModel model)
+        public async Task<IActionResult> Edit(string id, RestaurantEditFormModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -289,7 +289,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             }
 
             try
-            {
+            {               
                 await this._restaurantService.EditRestaurantByIdAsync(id, model);
             }
             catch (Exception)

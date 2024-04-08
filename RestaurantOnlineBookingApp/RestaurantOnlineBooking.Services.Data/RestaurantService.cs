@@ -181,19 +181,19 @@
             await this.dBContext.SaveChangesAsync();
         }
 
-        public async Task EditRestaurantByIdAsync(string restaurantId, RestaurantFormModel model)
+        public async Task EditRestaurantByIdAsync(string restaurantId, RestaurantEditFormModel model)
         {
             Restaurant restaurant = await this.dBContext
                 .Restaurants
                 .Where(r => r.IsActive)
                 .FirstAsync(r => r.Id.ToString() == restaurantId);
 
-            var photo = await this.photoService.AddPhotoAsync(model.Image);
+           // var photo = await this.photoService.AddPhotoAsync(model.Image);
 
             restaurant.Name = model.Name;
             restaurant.Capacity = model.Capacity;
             restaurant.Address = model.Address;
-            restaurant.ImageUrl = photo.Url.ToString();
+           // restaurant.ImageUrl = photo.Url.ToString();
             restaurant.CategoryId = model.CategoryId;
             restaurant.CityId = model.CityId;
             restaurant.StartingTime = model.StartingTime;
