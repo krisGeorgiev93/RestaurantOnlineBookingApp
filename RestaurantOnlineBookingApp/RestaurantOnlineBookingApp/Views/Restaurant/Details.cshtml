@@ -19,6 +19,18 @@
             <a href="@Model.ImageUrl" target="_blank">
                 <img class="card-img-top" style="width: 100%;" src="@Model.ImageUrl" alt="Restaurant Image">
             </a>
+            <!-- Button for changing the main photo -->
+            @if (isUserOwnerOfTheRestaurant || User.IsAdmin())
+            {
+                <form method="post" enctype="multipart/form-data" asp-controller="Restaurant" asp-action="ChangeMainPhoto">
+                    <input type="hidden" name="restaurantId" value="@Model.Id" />
+                    <div class="mb-3">
+                        <label for="newMainPhoto" class="form-label">Select New Main Photo:</label>
+                        <input type="file" class="form-control" id="newMainPhoto" name="newMainPhoto" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Change Main Photo</button>
+                </form>
+            }
         </div>
         <div class="card col-8 border-0">
             <p style="font-size:25px;"><u>@Model.Name</u></p>

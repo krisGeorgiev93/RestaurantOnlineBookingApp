@@ -3,6 +3,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBooking.Services.Data.Models;
     using RestaurantOnlineBookingApp.Data;
@@ -24,7 +25,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         private readonly IUserService _userService;
         private readonly IPhotoService _photoService;
         private readonly RestaurantBookingDbContext _dbContext;
-
         public RestaurantController(IOwnerService ownerService, ICategoryService categoryService,
             RestaurantBookingDbContext dbContext, IRestaurantService restaurantService, ICityService cityService, IMealService mealService, ICapacityService capacityService
             , IUserService userService, IPhotoService photoService)
@@ -522,6 +522,57 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }           
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeMainPhoto(IFormFile newMainPhoto, string restaurantId)
+        {
+            // Проверка за наличие на избрана снимка
+            if (newMainPhoto == null || newMainPhoto.Length == 0)
+            {
+                ModelState.AddModelError("newMainPhoto", "Please select a photo to set as the main photo.");
+                return RedirectToAction("Details", "Restaurant", new { id = restaurantId }); 
+            }
+
+            // Проверка за съществуване на ресторанта
+            var restaurant = await _restaurantService.GetRestaurantByIdAsync(restaurantId);
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            // Проверка дали потребителят е собственик или администратор
+            //bool isUserOwner = await this._ownerService
+            //   .OwnerExistByIdAsync(GetUserId()!);           
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+                .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
+            if (!isOwnerOwnedRestaurant && !User.IsAdmin())
+            {
+                TempData["ErrorMessage"] = "Only the owner and admin can change the main photo!";
+                return RedirectToAction("All", "Restaurant");
+            }
+
+            // Промяна на главната снимка на ресторанта
+            try
+            {
+                var uploadResult = await _photoService.AddPhotoAsync(newMainPhoto);
+
+                // Обновяване на снимката на ресторанта в базата данни
+                restaurant.ImageUrl = uploadResult.Url.ToString();
+                this._dbContext.Entry(restaurant).Property(x => x.ImageUrl).IsModified = true;
+                await this._dbContext.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Main photo changed successfully!";
+                return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Unexpected error";
+                return RedirectToAction("Index", "Home");
+            }
         }
         public async Task<IActionResult> AllPhotos(string restaurantId)
         {

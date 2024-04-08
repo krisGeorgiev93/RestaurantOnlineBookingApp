@@ -1,6 +1,7 @@
 ﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
 @using RestaurantOnlineBookingApp.Data.Models
 @using System.Security.Claims
+@using RestaurantOnlineBookingApp.Infrastructure.Extensions
 @model IEnumerable<Photo>
 
 @inject IOwnerService OwnerService
@@ -38,7 +39,7 @@ else
 }
 
 <!-- Add New Photo Button -->
-@if (isUserOwner && isUserOwnerOfTheRestaurant)
+@if (isUserOwnerOfTheRestaurant || User.IsAdmin())
 {
     <div>
         <h3>Upload New Photo</h3>
