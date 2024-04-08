@@ -34,6 +34,11 @@
                 <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@Model.Id"
                    class="btn btn-success">Manage your restaurant</a>
             }
+            else if (this.User.IsAdmin())
+            {
+                <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@Model.Id"
+                   class="btn btn-success">Manage the restaurant</a>
+            }
             else
             {
                 <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@Model.Id"

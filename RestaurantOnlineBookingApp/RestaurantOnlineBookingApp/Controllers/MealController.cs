@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -101,7 +102,7 @@
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
 
             // Check if the current user is an admin
-            bool isAdmin = User.IsInRole("Administrator");
+            bool isAdmin = User.IsAdmin();
             // Check if the current user is neither an owner nor an admin
             if (!isUserOwner && !isAdmin)
             {
@@ -166,7 +167,7 @@
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
 
             // Check if the current user is an admin
-            bool isAdmin = User.IsInRole("Administrator");
+            bool isAdmin = User.IsAdmin();
             // Check if the current user is neither an owner nor an admin
             if (!isUserOwner && !isAdmin)
             {
@@ -233,7 +234,7 @@
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
 
             // Check if the current user is an admin
-            bool isAdmin = User.IsInRole("Administrator");
+            bool isAdmin = User.IsAdmin();
             // Check if the current user is neither an owner nor an admin
             if (!isUserOwner && !isAdmin)
             {

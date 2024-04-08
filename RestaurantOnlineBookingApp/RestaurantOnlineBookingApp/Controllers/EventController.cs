@@ -3,6 +3,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Event;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -31,11 +32,11 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             //only owners can add restaurants 
             bool isOwner = await this.ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            if (!isOwner)
+            if (!isOwner && !User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You must become an owner to add new restaurants!";
 
-                return RedirectToAction("Join", "Owner");
+                return RedirectToAction("All", "Restaurant");
             }
 
             string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -43,7 +44,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this.restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant if you want to add events"!;
 
@@ -94,7 +95,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Only owners can edit the restaurant events!";
             }
@@ -115,7 +116,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this.restaurantService
                .IsOwnerWithIdOwnedRestaurantWithIdAsync(eventRestaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant to edit the events"!;
 
@@ -171,7 +172,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Only owners can edit the restaurant events!";
             }
@@ -192,7 +193,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this.restaurantService
                .IsOwnerWithIdOwnedRestaurantWithIdAsync(eventRestaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant to edit the events"!;
 
@@ -243,7 +244,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
 
             bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Only owners can delete the restaurant events!";
             }
@@ -264,7 +265,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             bool isOwnerOwnedRestaurant = await this.restaurantService
                .IsOwnerWithIdOwnedRestaurantWithIdAsync(eventRestaurantId, ownerId!);
 
-            if (!isOwnerOwnedRestaurant)
+            if (!isOwnerOwnedRestaurant && !User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = "You have to be owner of the restaurant to delete the events"!;
 
