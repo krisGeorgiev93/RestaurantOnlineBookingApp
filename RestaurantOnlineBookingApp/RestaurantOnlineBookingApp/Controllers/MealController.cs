@@ -1,11 +1,14 @@
 ﻿namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Meal;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
+    [Authorize]
     public class MealController : Controller
     {
         private readonly IMealService _mealService;

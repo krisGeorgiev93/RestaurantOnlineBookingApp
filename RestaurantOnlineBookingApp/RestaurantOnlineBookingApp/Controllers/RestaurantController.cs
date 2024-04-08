@@ -396,6 +396,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Menu(string restaurantId)
         {
             var restaurant = await _restaurantService.GetRestaurantByIdAsync(restaurantId);
@@ -573,6 +574,8 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        [AllowAnonymous]
         public async Task<IActionResult> AllPhotos(string restaurantId)
         {
             var photos = await _restaurantService.GetRestaurantPhotosAsync(restaurantId);

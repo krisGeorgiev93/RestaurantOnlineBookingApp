@@ -2,6 +2,7 @@
 
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
@@ -10,6 +11,8 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using System.Globalization;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
+    [Authorize]
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;

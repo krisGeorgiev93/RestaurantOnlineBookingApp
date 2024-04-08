@@ -1,10 +1,13 @@
 ﻿namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Web.ViewModels.Review;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
+
+    [Authorize]
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
@@ -104,7 +107,8 @@
             return View(reviews);
         }
 
-        [HttpGet]        
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> All(Guid restaurantId)
         {
             var reviews = await _reviewService.GetReviewsForRestaurantAsync(restaurantId);
@@ -117,7 +121,8 @@
             return View(model);
         }
 
-        [HttpGet]        
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> SortReviews(Guid restaurantId, SortOption sortBy)
         {
             var sortedReviews = await _reviewService.GetSortedReviewsAsync(restaurantId, sortBy);

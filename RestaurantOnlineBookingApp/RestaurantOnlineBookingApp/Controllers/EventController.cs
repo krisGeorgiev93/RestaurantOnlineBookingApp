@@ -1,6 +1,7 @@
 ﻿
 namespace RestaurantOnlineBookingApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Infrastructure.Extensions;
@@ -8,6 +9,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
 
+    [Authorize]
     public class EventController : Controller
     {
         private readonly IEventService eventService;
@@ -214,6 +216,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> AllByRestaurant(string restaurantId)
         {
             var events = await this.eventService.GetAllEventsByRestaurantIdAsync(restaurantId);
