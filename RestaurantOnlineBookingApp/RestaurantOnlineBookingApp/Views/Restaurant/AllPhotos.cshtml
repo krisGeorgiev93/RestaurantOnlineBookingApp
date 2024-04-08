@@ -1,6 +1,13 @@
-﻿@using RestaurantOnlineBookingApp.Data.Models
+﻿@using RestaurantOnlineBooking.Services.Data.Interfaces
+@using RestaurantOnlineBookingApp.Data.Models
+@using System.Security.Claims
 @model IEnumerable<Photo>
 
+@inject IOwnerService OwnerService
+@{
+    bool isUserOwnerOfTheRestaurant = await OwnerService.HasRestaurantWithIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier), ViewBag.RestaurantId);
+    bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+}
 <h2>Restaurant Photos</h2>
 
 @if (!Model.Any())
@@ -31,14 +38,17 @@ else
 }
 
 <!-- Add New Photo Button -->
-<div>
-    <h3>Upload New Photo</h3>
-    <form method="post" enctype="multipart/form-data" asp-controller="Restaurant" asp-action="UploadPhotos">
-        <input type="hidden" name="restaurantId" value="@ViewBag.RestaurantId" />  
-        <div class="mb-3">
-            <label for="photoFiles" class="form-label">Select Photo(s):</label>
-            <input type="file" class="form-control" id="photoFiles" name="photoFiles" accept="image/*" multiple required>
-        </div>
-        <button type="submit" class="btn btn-primary">Upload Photos</button>
-    </form>
-</div>
+@if (isUserOwner && isUserOwnerOfTheRestaurant)
+{
+    <div>
+        <h3>Upload New Photo</h3>
+        <form method="post" enctype="multipart/form-data" asp-controller="Restaurant" asp-action="UploadPhotos">
+            <input type="hidden" name="restaurantId" value="@ViewBag.RestaurantId" />  
+            <div class="mb-3">
+                <label for="photoFiles" class="form-label">Select Photo(s):</label>
+                <input type="file" class="form-control" id="photoFiles" name="photoFiles" accept="image/*" multiple required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Photos</button>
+        </form>
+    </div>
+}

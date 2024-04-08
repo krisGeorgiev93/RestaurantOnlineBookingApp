@@ -217,7 +217,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
 
-                return this.RedirectToAction("Join", "Owner");
+                return this.RedirectToAction("All", "Restaurant");
             }
 
             string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
@@ -273,7 +273,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 this.TempData[ErrorMessage] = "Only owners can edit the restaurant information!";
 
-                return this.RedirectToAction("Join", "Owner");
+                return this.RedirectToAction("All", "Restaurant");
             }
 
             string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
@@ -482,15 +482,45 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 return NotFound();
             }
+           
 
-            foreach (var photoFile in photoFiles)
+            bool isUserOwner = await this._ownerService
+                .OwnerExistByIdAsync(GetUserId()!);
+
+            if (!isUserOwner && !this.User.IsAdmin())
             {
-                var uploadResult = await _photoService.AddPhotoAsync(photoFile);
-                var photo = new Photo { Url = uploadResult.SecureUrl.ToString(), RestaurantId = Guid.Parse(restaurantId) };
-                await _restaurantService.AddPhotoToRestaurantAsync(restaurantId.ToString(), photo);
+                this.TempData[ErrorMessage] = "Only the owner can edit the restaurant information!";
+
+                return this.RedirectToAction("All", "Restaurant");
             }
-            this.TempData[SuccessMessage] = "Photos uploaded successfully!";
-            return RedirectToAction("AllPhotos", "Restaurant", new { restaurantId });
+
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+
+            bool isOwnerOwnedRestaurant = await this._restaurantService
+                .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
+
+            if (!isOwnerOwnedRestaurant && !this.User.IsAdmin())
+            {
+                this.TempData[ErrorMessage] = "You have to be owner of the restaurant you want to upload photos"!;
+
+                return this.RedirectToAction("Mine", "Restaurant");
+            }
+            try
+            {
+                foreach (var photoFile in photoFiles)
+                {
+                    var uploadResult = await _photoService.AddPhotoAsync(photoFile);
+                    var photo = new Photo { Url = uploadResult.SecureUrl.ToString(), RestaurantId = Guid.Parse(restaurantId) };
+                    await _restaurantService.AddPhotoToRestaurantAsync(restaurantId.ToString(), photo);
+                }
+                this.TempData[SuccessMessage] = "Photos uploaded successfully!";
+                return RedirectToAction("AllPhotos", "Restaurant", new { restaurantId });
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Unexpected error";
+                return this.RedirectToAction("Index", "Home");
+            }           
 
         }
         public async Task<IActionResult> AllPhotos(string restaurantId)
