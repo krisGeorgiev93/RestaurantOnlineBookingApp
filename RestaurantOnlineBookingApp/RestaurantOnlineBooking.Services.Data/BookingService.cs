@@ -143,7 +143,7 @@
             // Извличане на всички резервации за дадения ресторант
             var bookings = await this.dBContext.Bookings
                 .Include(b => b.Restaurant)
-                .Where(b => b.RestaurantId == restaurantGuid)
+                .Where(b => b.RestaurantId == restaurantGuid && b.BookingDate >= DateTime.Today)
                 .ToListAsync();
 
             return bookings.Select(b => new BookingAllViewModel
