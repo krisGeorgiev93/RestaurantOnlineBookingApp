@@ -132,6 +132,34 @@
             return bookingModel;
         }
 
+        public async Task<IEnumerable<BookingAllViewModel>> GetBookingsByRestaurantIdAsync(string restaurantId)
+        {
+            // Проверка за валидност на restaurantId
+            if (!Guid.TryParse(restaurantId, out Guid restaurantGuid))
+            {
+                throw new ArgumentException("Invalid restaurantId");
+            }
+
+            // Извличане на всички резервации за дадения ресторант
+            var bookings = await this.dBContext.Bookings
+                .Include(b => b.Restaurant)
+                .Where(b => b.RestaurantId == restaurantGuid)
+                .ToListAsync();
+
+            return bookings.Select(b => new BookingAllViewModel
+            {
+                Id = b.Id,
+                BookingDate = b.BookingDate.Date.ToString("dd-MM-yyyy"),
+                ReservedTime = b.ReservedTime.ToString(@"hh\:mm"),
+                NumberOfGuests = b.NumberOfGuests,
+                RestaurantId = b.RestaurantId,
+                RestaurantName = b.Restaurant.Name,
+                ImageUrl = b.Restaurant.ImageUrl,
+                GuestEmail = b.Email,
+                GuestName = b.FirstName + " " + b.LastName
+            }).ToList();
+        }
+
         public async Task<IEnumerable<BookingAllViewModel>> GetBookingsByUserIdAsync(string userId)
         {
             var bookings = await this.dBContext.Bookings

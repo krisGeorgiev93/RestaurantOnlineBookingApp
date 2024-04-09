@@ -63,6 +63,8 @@
             {
                 if ((isUserOwner && isUserOwnerOfTheRestaurant) || this.User.IsAdmin())
                 {
+                    <a class="mt-2 btn btn-primary" asp-controller="Booking" asp-action="AllByRestaurant"
+                       asp-route-restaurantId="@Model.Id">View Reservations</a>
                     <a class="mt-2 btn btn-primary" asp-controller="Meal" asp-action="AddMeal"
                        asp-route-restaurantId="@Model.Id">Add Meal to Menu</a>
                     <a class="mt-2 btn btn-primary" asp-controller="Event" asp-action="Create"
@@ -75,6 +77,8 @@
                 else
                 {
                     <a asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Add Review</a>
+                    <a asp-controller="Booking" asp-action="BookTable" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Book Table</a>
+
                 }
             }
         </div>

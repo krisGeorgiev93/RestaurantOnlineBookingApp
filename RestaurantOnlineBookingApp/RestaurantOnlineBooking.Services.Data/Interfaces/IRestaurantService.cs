@@ -1,5 +1,4 @@
 ﻿using RestaurantOnlineBooking.Services.Data.Models;
-using RestaurantOnlineBooking.Services.Data.Models.Statistics;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Home;
 using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;

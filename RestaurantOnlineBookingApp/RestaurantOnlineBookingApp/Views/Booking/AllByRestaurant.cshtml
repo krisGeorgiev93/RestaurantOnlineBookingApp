@@ -1,0 +1,66 @@
+﻿@using RestaurantOnlineBookingApp.Web.ViewModels.Booking
+@model IEnumerable<BookingAllViewModel>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookings for Restaurant</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333; /* Тъмен фон */
+            color: #fff; /* Бели букви */
+        }      
+
+        .empty-message {
+            font-style: italic;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bookings for: @Model.FirstOrDefault()?.RestaurantName</h1>
+    @if (Model.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking Date</th>
+                    <th>Reserved Time</th>
+                    <th>Number of Guests</th>
+                    <th>Guest Name</th>
+                    <th>Guest Email</th>
+                    <th>Restaurant Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model)
+                {
+                    <tr>
+                        <td>@booking.BookingDate</td>
+                        <td>@booking.ReservedTime</td>
+                        <td>@booking.NumberOfGuests</td>
+                        <td>@booking.GuestName</td>
+                        <td>@booking.GuestEmail</td>
+                        <td>@booking.RestaurantName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="empty-message">No bookings available for this restaurant.</p>
+    }
+</body>
+</html>

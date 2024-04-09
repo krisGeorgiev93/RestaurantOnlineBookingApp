@@ -18,6 +18,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<BookingFormViewModel> GetBookingByIdAsync(string bookingId);
 
+        Task<IEnumerable<BookingAllViewModel>> GetBookingsByRestaurantIdAsync(string restaurantId);
+
         Task<bool> BookingExistsByIdAsync(string bookingId);
 
         List<string> GetReservedTimes(TimeSpan startingTime, TimeSpan endingTime, TimeSpan interval);

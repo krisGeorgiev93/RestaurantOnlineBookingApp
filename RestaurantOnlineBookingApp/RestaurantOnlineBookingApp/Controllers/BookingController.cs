@@ -125,6 +125,20 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AllByRestaurant(string restaurantId)
+        {
+            try
+            {
+                var bookings = await _bookingService.GetBookingsByRestaurantIdAsync(restaurantId);
+                return View(bookings);
+            }
+            catch (Exception ex)
+            {               
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
