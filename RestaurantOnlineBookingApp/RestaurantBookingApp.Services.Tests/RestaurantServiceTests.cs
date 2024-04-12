@@ -5,6 +5,8 @@
     using RestaurantOnlineBooking.Services.Data;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Data.Models;
+    using RestaurantOnlineBookingApp.Web.ViewModels.Home;
     using RestaurantOnlineBookingApp.Web.ViewModels.Restaurant;
     using static DbSeeder;
 
@@ -116,6 +118,118 @@
             Assert.IsNull(result);
         }
 
-      
+        [Test]
+        public async Task GetAllAsyncShouldReturnAllRestaurants()
+        {            
+            var result = await restaurantService.GetAllAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsInstanceOf<IEnumerable<AllRestaurantsViewModel>>(result);
+        }
+
+        [Test]
+        public async Task GetAllAsyncShouldReturnEmptyListWhenNoRestaurantsAreActive()
+        {
+            // Arrange            
+            foreach (var restaurant in this.dbContext.Restaurants)
+            {
+                restaurant.IsActive = false;
+            }
+            await this.dbContext.SaveChangesAsync();
+
+            // Act
+            var result = await this.restaurantService.GetAllAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsEmpty(result);
+        }
+
+
+        [Test]
+        public async Task GetRestaurantForDeleteByIdAsyncShouldReturnRestaurantDetailsForValidRestaurantId()
+        {
+            // Arrange
+            var restaurantId = Guid.NewGuid().ToString();
+            var expectedRestaurant = new Restaurant
+            {
+                Id = Guid.Parse(restaurantId),
+                Name = "Test",
+                Description = "Test",
+                Address = "Test",
+                ImageUrl = "testimage",
+                IsActive = true
+            };
+
+            this.dbContext.Restaurants.Add(expectedRestaurant);
+            await this.dbContext.SaveChangesAsync();
+
+            // Act
+            var result = await this.restaurantService.GetRestaurantForDeleteByIdAsync(restaurantId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.AreEqual(expectedRestaurant.Name, result.Name);
+            Assert.AreEqual(expectedRestaurant.Description, result.Description);
+            Assert.AreEqual(expectedRestaurant.Address, result.Address);
+            Assert.AreEqual(expectedRestaurant.ImageUrl, result.ImageUrl);
+        }
+
+        [Test]
+        public async Task GetRestaurantForDeleteByIdAsyncShouldReturnNullForNonExistentRestaurantId()
+        {
+            // Arrange
+            var nonExistentRestaurantId = Guid.NewGuid().ToString();
+
+            // Act
+            var result = await this.restaurantService.GetRestaurantForDeleteByIdAsync(nonExistentRestaurantId);
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        [Test]
+        public async Task GetRestaurantForEditByIdAsyncShouldThrowExceptionForNonExistentRestaurantId()
+        {
+            // Arrange
+            var nonExistentRestaurantId = Guid.NewGuid().ToString();
+
+            // Act & Assert
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await this.restaurantService.GetRestaurantForEditByIdAsync(nonExistentRestaurantId));
+        }
+                
+
+        [Test]
+        public async Task RestaurantExistsByIdAsyncShouldReturnFalseWhenRestaurantDoesNotExist()
+        {
+            // Arrange
+            var nonExistentRestaurantId = Guid.NewGuid().ToString();
+
+            // Act
+            var result = await this.restaurantService.RestaurantExistsByIdAsync(nonExistentRestaurantId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task AddRestaurantToFavoriteAsyncShouldAddRestaurantToUserFavorites()
+        {
+            // Arrange
+            var userId = Guid.NewGuid().ToString();
+            var restaurantId = Guid.NewGuid();
+
+            // Act
+            await this.restaurantService.AddRestaurantToFavoriteAsync(userId, restaurantId);
+
+            // Assert
+            var userFavorite = await this.dbContext.UserFavoriteRestaurants
+                .FirstOrDefaultAsync(ufr => ufr.UserId == new Guid(userId) && ufr.RestaurantId == restaurantId);
+
+            Assert.IsNotNull(userFavorite);
+        }
+
+       
     }
 }
