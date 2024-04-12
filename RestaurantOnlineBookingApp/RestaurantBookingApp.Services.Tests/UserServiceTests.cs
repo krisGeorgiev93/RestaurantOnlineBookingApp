@@ -124,6 +124,21 @@ namespace RestaurantBookingApp.Services.Tests
             }
         }
 
-        
+        [Test]
+        public async Task GetFullNameByIdAsyncShouldReturnNullIfNotExists()
+        {
+            // Arrange
+            using (var dbContext = new RestaurantBookingDbContext(this.dbContextOptions))
+            {
+                var userService = new UserService(dbContext);
+
+                // Act
+                var result = await userService.GetFullNameByIdAsync(Guid.NewGuid().ToString());
+
+                // Assert
+                Assert.IsNull(result);
+            }
+        }
+
     }
 }

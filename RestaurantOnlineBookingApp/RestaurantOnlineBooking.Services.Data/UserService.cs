@@ -72,7 +72,7 @@
                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
             if (user == null)
             {
-                return string.Empty;
+                return null;
             }
 
             return $"{user.FirstName} {user.LastName}";

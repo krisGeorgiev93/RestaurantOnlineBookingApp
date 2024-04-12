@@ -9,8 +9,68 @@ namespace RestaurantBookingApp.Services.Tests
 {
     public class EventServiceTests
     {
+
+        private DbContextOptions<RestaurantBookingDbContext> dbContextOptions;
+
+        [SetUp]
+        public void Setup()
+        {
+            this.dbContextOptions = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new RestaurantBookingDbContext(this.dbContextOptions))
+            {
+                DbSeeder.SeedDatabase(dbContext);
+            }
+        }
+
         [Test]
-        public async Task EventExistsByIdAsync_EventExists_ReturnsTrue()
+        public async Task GetAllEventsByRestaurantIdAsyncShouldReturnAllEventsForGivenRestaurantId()
+        {
+            // Arrange
+            var ownerServiceMock = new Mock<IOwnerService>();
+            var photoServiceMock = new Mock<IPhotoService>();
+
+            using (var dbContext = new RestaurantBookingDbContext(this.dbContextOptions))
+            {
+                var eventService = new EventService(dbContext, ownerServiceMock.Object, photoServiceMock.Object);
+
+                // Act
+                var restaurantId = DbSeeder.Restaurant.Id;
+                var result = await eventService.GetAllEventsByRestaurantIdAsync(restaurantId.ToString());
+
+                // Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(1, result.Count());
+                Assert.AreEqual("Test Event", result.First().Title);
+            }
+        }
+
+        [Test]
+        public async Task GetAllEventsByRestaurantIdAsyncShouldReturnEmptyListIfNoEventsExist()
+        {
+            // Arrange
+            var ownerServiceMock = new Mock<IOwnerService>();
+            var photoServiceMock = new Mock<IPhotoService>();
+            using (var dbContext = new RestaurantBookingDbContext(this.dbContextOptions))
+            {
+                var eventService = new EventService(dbContext, ownerServiceMock.Object, photoServiceMock.Object);
+
+                DbSeeder.SeedDatabase(dbContext);
+
+                var nonExistingRestaurantId = Guid.NewGuid().ToString();
+
+                // Act
+                var events = await eventService.GetAllEventsByRestaurantIdAsync(nonExistingRestaurantId);
+
+                // Assert
+                Assert.IsNotNull(events);
+                Assert.AreEqual(0, events.Count());
+            }
+        }
+        [Test]
+        public async Task EventExistsByIdAsyncEventExistsReturnsTrue()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
@@ -36,7 +96,7 @@ namespace RestaurantBookingApp.Services.Tests
         }
 
         [Test]
-        public async Task EventExistsByIdAsync_EventDoesNotExist_ReturnsFalse()
+        public async Task EventExistsByIdAsyncEventDoesNotExistReturnsFalse()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
@@ -61,7 +121,7 @@ namespace RestaurantBookingApp.Services.Tests
         }
 
         [Test]
-        public async Task GetEventByIdAsync_ReturnsCorrectEvent()
+        public async Task GetEventByIdAsyncReturnsCorrectEvent()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<RestaurantBookingDbContext>()
@@ -95,9 +155,11 @@ namespace RestaurantBookingApp.Services.Tests
                 Assert.IsNotNull(actualEventForm);
                 Assert.AreEqual(expectedEvent.Title, actualEventForm.Title);
                 Assert.AreEqual(expectedEvent.Description, actualEventForm.Description);
-             
+
             }
-        }       
+        }
+
+
 
 
     }
