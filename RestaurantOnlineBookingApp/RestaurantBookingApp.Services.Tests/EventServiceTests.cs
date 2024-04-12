@@ -160,7 +160,51 @@ namespace RestaurantBookingApp.Services.Tests
         }
 
 
+        [Test]
+        public async Task DeleteEventAsyncShouldDeleteEventIfExists()
+        {
+            // Arrange
+            using (var dbContext = new RestaurantBookingDbContext(dbContextOptions))
+            {
+                var ownerServiceMock = new Mock<IOwnerService>();
+                var photoServiceMock = new Mock<IPhotoService>();
 
+                var eventService = new EventService(dbContext, ownerServiceMock.Object, photoServiceMock.Object);
 
+                // Get the ID of an existing event to delete
+                var existingEventId = DbSeeder.Event.Id.ToString();
+
+                // Act
+                await eventService.DeleteEventAsync(existingEventId);
+
+                // Assert
+                // Check if the event has been deleted from the database
+                var deletedEvent = await dbContext.Events.FirstOrDefaultAsync(e => e.Id.ToString() == existingEventId);
+                Assert.IsNull(deletedEvent);
+            }
+        }
+
+        [Test]
+        public async Task DeleteEventAsyncShouldThrowExceptionIfEventNot_Found()
+        {
+            // Arrange
+            using (var dbContext = new RestaurantBookingDbContext(dbContextOptions))
+            {
+                var ownerServiceMock = new Mock<IOwnerService>();
+                var photoServiceMock = new Mock<IPhotoService>();
+
+                var eventService = new EventService(dbContext, ownerServiceMock.Object, photoServiceMock.Object);
+
+                // Non-existing event ID
+                var nonExistingEventId = Guid.NewGuid().ToString();
+
+                // Act & Assert
+                // Check if the method throws an exception when trying to delete a non-existing event
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                {
+                    await eventService.DeleteEventAsync(nonExistingEventId);
+                });
+            }
+        }
     }
 }

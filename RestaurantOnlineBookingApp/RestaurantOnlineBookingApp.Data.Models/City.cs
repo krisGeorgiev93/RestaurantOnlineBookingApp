@@ -10,9 +10,7 @@ namespace RestaurantOnlineBookingApp.Data.Models
         [Required]
         [MaxLength(NameMaxLength)]
         public string CityName { get; set; }
-
-        [Required]
-        public string ImageUrl { get; set; }
+        
 
         public virtual ICollection<Restaurant> Restaurants { get; set; } = null!;
 

@@ -16,6 +16,7 @@
         public static Review Review;
         public static Event Event;
         public static Meal Meal1;
+        
         public static void SeedDatabase(RestaurantBookingDbContext dbContext)
         {
             OwnerUser1 = new AppUser()
@@ -128,8 +129,19 @@
                 RestaurantId = Guid.NewGuid()
             };
 
+            City city1 = new City
+            {
+                CityName = "Sofia", 
+            };
+            dbContext.Cities.Add(city1);
+            City city2 = new City
+            {
+                CityName = "Plovdiv",
+            };
+            dbContext.Cities.Add(city2);
+
             dbContext.Events.Add(Event);
-            dbContext.Reviews.Add(Review);
+            dbContext.Reviews.Add(Review);           
             dbContext.Restaurants.Add(Restaurant);           
             
             dbContext.SaveChanges();
