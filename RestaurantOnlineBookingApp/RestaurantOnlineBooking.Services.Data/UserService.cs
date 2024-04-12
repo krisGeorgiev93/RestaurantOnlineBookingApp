@@ -61,21 +61,21 @@
 
         public async Task<string> GetFullNameByIdAsync(string userId)
         {
-            var user = await this.dbContext.Users.FindAsync(userId);
-            if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
-            {
-                return null;
-            }
-            return user.FirstName + " " + user.LastName;
-            //AppUser? user = await this.dbContext
-            //   .Users
-            //   .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-            //if (user == null)
+            //var user = await this.dbContext.Users.FindAsync(userId);
+            //if (string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName))
             //{
-            //    return string.Empty;
+            //    return null;
             //}
+            //return user.FirstName + " " + user.LastName;
+            AppUser? user = await this.dbContext
+               .Users
+               .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+            if (user == null)
+            {
+                return string.Empty;
+            }
 
-            //return $"{user.FirstName} {user.LastName}";
+            return $"{user.FirstName} {user.LastName}";
         }
 
 
