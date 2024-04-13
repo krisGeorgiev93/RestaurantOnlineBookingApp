@@ -58,15 +58,15 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             try
             {
                 await this._ownerService.Create(userId, model);
+                this.TempData[SuccessMessage] = "You have successfully joined to the owners club!";
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {
                 this.TempData[ErrorMessage] = "Unexpected error! Please try again later or contact administrator!";
 
                 return RedirectToAction("Index", "Home");                 
-            }
-
-            return RedirectToAction("All", "Restaurant");
+            }         
         }
     }
 }

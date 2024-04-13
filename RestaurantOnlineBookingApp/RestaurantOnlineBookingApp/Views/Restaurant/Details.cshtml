@@ -45,13 +45,13 @@
                  
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Owner Info</h5>
-                    @if(Model.OwnerInfo.FullName != null)
-                    {
-                    <p class ="card-text">Full Name: @Model.OwnerInfo.FullName</p>                        
-                    }
+                    <h5 class="card-title">Contact Restaurant</h5>                    
                     <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
                     <p class="card-text">Email: @Model.OwnerInfo.Email</p>
+                    @if (Model.OwnerInfo.FullName != null)
+                    {
+                        <p class="card-text">Owner Name: @Model.OwnerInfo.FullName</p>
+                    }
                 </div>
             </div>         
            

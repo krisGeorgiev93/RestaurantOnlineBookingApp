@@ -262,8 +262,7 @@
                 OpeningTime = restaurant.StartingTime,
                 ClosingTime = restaurant.EndingTime,
                 OwnerInfo = new OwnerInfoOnRestaurantViewModel
-                {
-                    //FullName = this.userService.GetFullNameByIdAsync(restaurant.Owner.UserId.ToString()).ToString(),
+                {                    
                     PhoneNumber = restaurant.Owner.PhoneNumber,
                     Email = restaurant.Owner.User.Email
                 },
