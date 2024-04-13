@@ -437,8 +437,12 @@
                 {
                     return BadRequest("Invalid user ID format.");
                 }
-
-                // Извикване на сървисния метод за добавяне на ресторант към списъка с любими
+                // Проверка дали ресторантът вече е добавен в любими
+                if (await _restaurantService.IsRestaurantInFavoritesAsync(userId, restaurantId.ToString()))
+                {
+                    TempData[ErrorMessage] = "This Restaurant is already in favorites.";
+                    return RedirectToAction("Favorites", "Restaurant");
+                }
                 await this._restaurantService.AddRestaurantToFavoriteAsync(userId, restaurantId);
 
                 return RedirectToAction("Favorites", "Restaurant");

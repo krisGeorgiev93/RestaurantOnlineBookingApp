@@ -419,6 +419,12 @@
                 await dBContext.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> IsRestaurantInFavoritesAsync(string userId, string restaurantId)
+        {
+            return await dBContext.UserFavoriteRestaurants
+                .AnyAsync(uf => uf.UserId == new Guid(userId) && uf.RestaurantId.ToString() == restaurantId);
+        }
     }
 
 }

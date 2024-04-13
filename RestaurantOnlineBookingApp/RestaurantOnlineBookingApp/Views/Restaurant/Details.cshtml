@@ -73,7 +73,12 @@
             <a asp-controller="Restaurant" asp-action="AllPhotos" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Photos</a>
             <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
             <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Reviews</a>
-            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>          
+            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>
+            <form asp-controller="Restaurant" asp-action="AddRestaurantToFavorites" method="post">
+                <input type="hidden" name="restaurantId" value="@Model.Id" />
+                <button type="submit" class="btn btn-primary mt-2">Add to Favorites</button>
+            </form>
+
         </div>
     </div>
 </div>

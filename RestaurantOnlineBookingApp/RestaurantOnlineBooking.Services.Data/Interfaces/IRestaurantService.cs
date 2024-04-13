@@ -39,6 +39,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId);
 
+        Task<bool> IsRestaurantInFavoritesAsync(string userId, string restaurantId);
+
         Task AddPhotoToRestaurantAsync(string restaurantId, Photo photo);
 
         Task<IEnumerable<Photo>> GetRestaurantPhotosAsync(string restaurantId);
