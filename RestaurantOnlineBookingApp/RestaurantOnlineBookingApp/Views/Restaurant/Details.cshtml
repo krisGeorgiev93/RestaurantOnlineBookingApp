@@ -19,50 +19,18 @@
             <a href="@Model.ImageUrl" target="_blank">
                 <img class="card-img-top" style="width: 100%;" src="@Model.ImageUrl" alt="Restaurant Image">
             </a>
-            <!-- Button for changing the main photo -->
-            @if (isUserOwnerOfTheRestaurant || User.IsAdmin())
-            {
-                <form method="post" enctype="multipart/form-data" asp-controller="Restaurant" asp-action="ChangeMainPhoto">
-                    <input type="hidden" name="restaurantId" value="@Model.Id" />
-                    <div class="mb-3">
-                        <label for="newMainPhoto" class="form-label">Select New Main Photo:</label>
-                        <input type="file" class="form-control" id="newMainPhoto" name="newMainPhoto" accept="image/*" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Change Main Photo</button>
-                </form>
-            }
-        </div>
-        <div class="card col-8 border-0">
-            <p style="font-size:25px;"><u>@Model.Name</u></p>
-            <p>City: <b>@Model.City</b></p>
-            <p>Address: <b>@Model.Address</b></p>  
-            <p>Description: <b>@Model.Description</b></p>
-            <p>Opening Time: <b>@Model.OpeningTime.ToString(@"hh\:mm")</b></p> @* formated TimeSpan *@
-            <p>Closing Time: <b>@Model.ClosingTime.ToString(@"hh\:mm")</b></p>
-            <p>Rating: <b>@Model.Rating</b></p>
-            <p>Capacity: <b>@Model.Capacity</b></p>
-            <p>Category: <b>@Model.Category</b></p>        
-                 
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Contact Restaurant</h5>                    
-                    <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
-                    <p class="card-text">Email: @Model.OwnerInfo.Email</p>
-                    @if (Model.OwnerInfo.FullName != null)
-                    {
-                        <p class="card-text">Owner Name: @Model.OwnerInfo.FullName</p>
-                    }
-                </div>
-            </div>         
-           
-            <a asp-controller="Restaurant" asp-action="AllPhotos" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Photos</a>
-            <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
-            <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Reviews</a>
-            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                if ((isUserOwner && isUserOwnerOfTheRestaurant) || this.User.IsAdmin())
+                @if (isUserOwner && isUserOwnerOfTheRestaurant || User.IsAdmin())
                 {
+                    <form method="post" enctype="multipart/form-data" asp-controller="Restaurant" asp-action="ChangeMainPhoto">
+                        <input type="hidden" name="restaurantId" value="@Model.Id" />
+                        <div class="mb-3">
+                            <label for="newMainPhoto" class="form-label">Select New Main Photo:</label>
+                            <input type="file" class="form-control" id="newMainPhoto" name="newMainPhoto" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change Main Photo</button>
+                    </form>
                     <a class="mt-2 btn btn-primary" asp-controller="Booking" asp-action="AllByRestaurant"
                        asp-route-restaurantId="@Model.Id">View Reservations</a>
                     <a class="mt-2 btn btn-primary" asp-controller="Meal" asp-action="AddMeal"
@@ -77,10 +45,35 @@
                 else
                 {
                     <a asp-controller="Review" asp-action="AddReview" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Add Review</a>
-                    <a asp-controller="Booking" asp-action="BookTable" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Book Table</a>
-
                 }
+                <a asp-controller="Booking" asp-action="BookTable" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">Book Table</a>
             }
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Name</u></p>
+            <p>City: <b>@Model.City</b></p>
+            <p>Address: <b>@Model.Address</b></p>
+            <p>Description: <b>@Model.Description</b></p>
+            <p>Opening Time: <b>@Model.OpeningTime.ToString(@"hh\:mm")</b></p> @* formated TimeSpan *@
+            <p>Closing Time: <b>@Model.ClosingTime.ToString(@"hh\:mm")</b></p>
+            <p>Rating: <b>@Model.Rating</b></p>
+            <p>Capacity: <b>@Model.Capacity</b></p>
+            <p>Category: <b>@Model.Category</b></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Contact Restaurant</h5>
+                    <p class="card-text">Phone Number: @Model.OwnerInfo.PhoneNumber</p>
+                    <p class="card-text">Email: @Model.OwnerInfo.Email</p>
+                    @if (Model.OwnerInfo.FullName != null)
+                    {
+                        <p class="card-text">Owner Name: @Model.OwnerInfo.FullName</p>
+                    }
+                </div>
+            </div>
+            <a asp-controller="Restaurant" asp-action="AllPhotos" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Photos</a>
+            <a asp-controller="Restaurant" asp-action="Menu" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View Menu</a>
+            <a asp-controller="Review" asp-action="All" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Reviews</a>
+            <a asp-controller="Event" asp-action="AllByRestaurant" asp-route-restaurantId="@Model.Id" class="btn btn-primary mt-2">View All Restaurant Events</a>          
         </div>
     </div>
 </div>

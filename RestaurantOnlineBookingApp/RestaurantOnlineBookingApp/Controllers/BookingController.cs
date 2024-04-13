@@ -69,7 +69,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             {
                 throw new FormatException("Invalid format for BookingDate");
             }
-            // var bookingTime = model.ReservedTime;
+            
             TimeSpan reservedTime;
             if (!TimeSpan.TryParse(model.ReservedTime, out reservedTime))
             {
