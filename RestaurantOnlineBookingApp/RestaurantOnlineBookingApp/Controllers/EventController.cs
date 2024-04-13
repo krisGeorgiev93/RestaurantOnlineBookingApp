@@ -32,7 +32,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return BadRequest("Invalid restaurantId");
             }
             //only owners can add restaurants 
-            bool isOwner = await this.ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            bool isOwner = await this.ownerService.OwnerExistByIdAsync(this.User.GetId()!);
 
             if (!isOwner && !User.IsAdmin())
             {
@@ -41,7 +41,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return RedirectToAction("All", "Restaurant");
             }
 
-            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this.restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
@@ -67,7 +67,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
             }
 
-            var ownerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var ownerId = Guid.Parse(User.GetId());
             var restaurantId = model.RestaurantId.ToString();
 
             try
@@ -95,14 +95,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
+            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Only owners can edit the restaurant events!";
             }
 
-            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
 
             var @event = await this.eventService.GetEventByIdAsync(id);
@@ -172,14 +172,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
+            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Only owners can edit the restaurant events!";
             }
 
-            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
 
             var @event = await this.eventService.GetEventByIdAsync(model.Id.ToString());
@@ -246,14 +246,14 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return RedirectToAction("AllByRestaurant");
             }
 
-            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(GetUserId()!);
+            bool isUserOwner = await this.ownerService.OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !User.IsAdmin())
             {
                 TempData[ErrorMessage] = "Only owners can delete the restaurant events!";
             }
 
-            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this.ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
 
             var @event = await this.eventService.GetEventByIdAsync(eventId);
@@ -303,7 +303,6 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
             return this.RedirectToAction("Index", "Home");
         }
 
-        private string GetUserId()
-           => User.FindFirstValue(ClaimTypes.NameIdentifier);
+      
     }
 }

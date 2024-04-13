@@ -7,6 +7,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using Microsoft.EntityFrameworkCore;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
     using RestaurantOnlineBookingApp.Data;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Booking;
     using System.Globalization;
     using System.Security.Claims;
@@ -90,7 +91,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
                //return RedirectToAction("All", "Restaurant");
             }
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.GetId();
             var result = await _bookingService.BookTableAsync(restaurantId,model,userId);
 
             if (result)
@@ -108,7 +109,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.GetId();
             var bookings = await _bookingService.GetBookingsByUserIdAsync(userId);
 
             var model = bookings.Select(b => new BookingAllViewModel

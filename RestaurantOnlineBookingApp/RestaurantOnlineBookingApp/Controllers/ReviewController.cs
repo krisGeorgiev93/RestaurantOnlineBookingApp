@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Review;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -25,7 +26,7 @@
         [HttpGet]
         public async Task<IActionResult> AddReview(Guid restaurantId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.GetId();
 
             if (!Guid.TryParse(userId, out Guid guestId))
             {
@@ -85,7 +86,7 @@
                 }
 
                 // Set the GuestId based on the current user
-                var userId = Guid.Parse(GetUserId());
+                var userId = Guid.Parse(User.GetId());
                 model.GuestId = userId;
 
                 await _reviewService.AddReviewAsync(model);
@@ -102,7 +103,7 @@
         [HttpGet]
         public async Task<IActionResult> MyReviews()
         {
-            var userId = GetUserId();
+            var userId = User.GetId();
             var reviews = await _reviewService.GetReviewsByUserIdAsync(userId);
             return View(reviews);
         }
@@ -134,11 +135,8 @@
             ViewBag.RestaurantId = restaurantId;
             return View("All", model);
         }
-               
+                     
        
-        private string GetUserId()
-           => User.FindFirstValue(ClaimTypes.NameIdentifier);
-
         private IActionResult Error()
         {
             this.TempData[ErrorMessage] = "Unexpected error";

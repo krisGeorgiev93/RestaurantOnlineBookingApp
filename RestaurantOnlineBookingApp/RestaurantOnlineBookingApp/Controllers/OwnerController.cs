@@ -4,6 +4,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using RestaurantOnlineBooking.Services.Data.Interfaces;
+    using RestaurantOnlineBookingApp.Infrastructure.Extensions;
     using RestaurantOnlineBookingApp.Web.ViewModels.Owner;
     using System.Security.Claims;
     using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -21,7 +22,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Join()
         {
-            string? userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? userId = this.User.GetId();
             bool isOwner = await this._ownerService.OwnerExistByIdAsync(userId);
             if (isOwner)
             {
@@ -35,7 +36,7 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Join(JoinOwnerFormModel model)
         {
-            string? userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string? userId = this.User.GetId();
             bool isOwner = await this._ownerService.OwnerExistByIdAsync(userId);
             if (isOwner)
             {

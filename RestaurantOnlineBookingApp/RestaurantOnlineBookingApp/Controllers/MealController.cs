@@ -102,7 +102,7 @@
                 return RedirectToAction("Mine", "Restaurant");
             }
 
-            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(User.GetId()!);
 
             // Check if the current user is an admin
             bool isAdmin = User.IsAdmin();
@@ -113,7 +113,7 @@
                 return RedirectToAction("Mine", "Restaurant");
             }           
             
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             var meal = await this._mealService.GetMealByIdAsync(id);
 
@@ -167,7 +167,7 @@
                 return RedirectToAction("Mine", "Restaurant");
             }
 
-            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(User.GetId()!);
 
             // Check if the current user is an admin
             bool isAdmin = User.IsAdmin();
@@ -178,7 +178,7 @@
                 return RedirectToAction("Mine", "Restaurant");
             }           
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
                         
 
             var meal = await this._mealService.GetMealByIdAsync(id);
@@ -234,7 +234,7 @@
                 return RedirectToAction("Mine", "Restaurant");
             }
 
-            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(GetUserId()!);
+            bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(User.GetId()!);
 
             // Check if the current user is an admin
             bool isAdmin = User.IsAdmin();
@@ -245,7 +245,7 @@
                 return RedirectToAction("Mine", "Restaurant");
             }
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             string restaurantId = mealModel.RestaurantId.ToString();
             bool isOwnerOwnedRestaurant = await this._restaurantService
@@ -276,8 +276,7 @@
         }      
 
 
-        private string GetUserId()
-           => User.FindFirstValue(ClaimTypes.NameIdentifier);
+       
 
 
         private IActionResult Error()

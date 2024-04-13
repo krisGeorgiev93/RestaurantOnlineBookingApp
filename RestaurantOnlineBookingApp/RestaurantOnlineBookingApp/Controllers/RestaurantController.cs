@@ -69,7 +69,7 @@
         public async Task<IActionResult> Add()
         {
             //only owners can add restaurants 
-            bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.GetId()!);
 
             if (!isOwner)
             {
@@ -96,7 +96,7 @@
         [HttpPost]
         public async Task<IActionResult> Add(RestaurantFormModel model)
         {
-            bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.GetId()!);
 
             if (!isOwner)
             {
@@ -122,7 +122,7 @@
             try
             {
                 string? ownerId =
-                    await _ownerService.OwnerIdByUserIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                    await _ownerService.OwnerIdByUserIdAsync(this.User.GetId()!);
                 string restaurantId =
                       await this._restaurantService.CreateAndReturnRestaurantIdAsync(model, ownerId!);
 
@@ -173,7 +173,7 @@
         {
             List<RestaurantAllViewModel> myRestaurants = new List<RestaurantAllViewModel>();
 
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            string userId = this.User.GetId()!;
 
             bool isUserOwner = await this._ownerService.OwnerExistByIdAsync(userId);
 
@@ -209,7 +209,7 @@
             }
 
             bool isUserOwner = await this._ownerService
-                .OwnerExistByIdAsync(GetUserId()!);
+                .OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !this.User.IsAdmin())
             {
@@ -218,7 +218,7 @@
                 return this.RedirectToAction("All", "Restaurant");
             }
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
@@ -265,7 +265,7 @@
             }
 
             bool isUserOwner = await this._ownerService
-                .OwnerExistByIdAsync(GetUserId()!);
+                .OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !this.User.IsAdmin())
             {
@@ -274,7 +274,7 @@
                 return this.RedirectToAction("All", "Restaurant");
             }
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
@@ -314,7 +314,7 @@
             }
 
             bool isUserOwner = await this._ownerService
-                .OwnerExistByIdAsync(GetUserId()!);
+                .OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !this.User.IsAdmin())
             {
@@ -323,7 +323,7 @@
                 return this.RedirectToAction("Join", "Owner");
             }
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
@@ -359,7 +359,7 @@
             }
 
             bool isUserOwner = await this._ownerService
-                .OwnerExistByIdAsync(GetUserId()!);
+                .OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !this.User.IsAdmin())
             {
@@ -368,7 +368,7 @@
                 return this.RedirectToAction("Join", "Owner");
             }
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(id, ownerId!);
@@ -431,7 +431,7 @@
         {
             try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = User.GetId();
 
                 if (!Guid.TryParse(userId, out Guid parsedUserId))
                 {
@@ -458,7 +458,7 @@
         {
             try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = User.GetId();
 
                 if (!Guid.TryParse(userId, out Guid parsedUserId))
                 {
@@ -478,7 +478,7 @@
         [HttpGet]
         public async Task<IActionResult> Favorites()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = this.User.GetId();
             var favoriteRestaurantsHashSet = await this._restaurantService.GetFavoriteRestaurantsAsync(userId);
 
             var favoriteRestaurantsList = favoriteRestaurantsHashSet.ToList();
@@ -509,7 +509,7 @@
            
 
             bool isUserOwner = await this._ownerService
-                .OwnerExistByIdAsync(GetUserId()!);
+                .OwnerExistByIdAsync(User.GetId()!);
 
             if (!isUserOwner && !this.User.IsAdmin())
             {
@@ -518,7 +518,7 @@
                 return this.RedirectToAction("All", "Restaurant");
             }
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
@@ -569,7 +569,7 @@
             //bool isUserOwner = await this._ownerService
             //   .OwnerExistByIdAsync(GetUserId()!);           
 
-            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(this.GetUserId()!);
+            string? ownerId = await this._ownerService.OwnerIdByUserIdAsync(User.GetId()!);
 
             bool isOwnerOwnedRestaurant = await this._restaurantService
                 .IsOwnerWithIdOwnedRestaurantWithIdAsync(restaurantId, ownerId!);
@@ -630,8 +630,6 @@
             return this.RedirectToAction("Index", "Home");
         }
 
-        // Get currently logged-in user's Id
-        private string GetUserId()
-           => User.FindFirstValue(ClaimTypes.NameIdentifier);
+       
     }
 }
