@@ -71,9 +71,9 @@
             //only owners can add restaurants 
             bool isOwner = await this._ownerService.OwnerExistByIdAsync(this.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            if (!isOwner && !this.User.IsAdmin())
+            if (!isOwner)
             {
-                this.TempData[ErrorMessage] = "You must become an owner to add new restaurants!";
+                this.TempData[ErrorMessage] = "You must join to owners club to add new restaurants!";
 
                 return RedirectToAction("Join", "Owner");
             }
@@ -100,7 +100,7 @@
 
             if (!isOwner)
             {
-                this.TempData[ErrorMessage] = "You must become an owner to add new restaurants!";
+                this.TempData[ErrorMessage] = "You must join to owners club to add new restaurants!";
 
                 return RedirectToAction("Join", "Owner");
             }
