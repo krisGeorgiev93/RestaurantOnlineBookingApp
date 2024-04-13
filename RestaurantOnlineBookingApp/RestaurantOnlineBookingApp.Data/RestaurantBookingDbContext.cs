@@ -4,6 +4,7 @@ namespace RestaurantOnlineBookingApp.Data
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using RestaurantOnlineBookingApp.Data.Configurations;
     using RestaurantOnlineBookingApp.Data.Models;
     using System.Reflection;
     using System.Reflection.Emit;
@@ -72,8 +73,38 @@ namespace RestaurantOnlineBookingApp.Data
             Assembly assembly = Assembly.GetAssembly(typeof(RestaurantBookingDbContext))
                 ?? Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(assembly);
-
+            builder.ApplyConfiguration(new RestaurantEntityConfiguration());
             base.OnModelCreating(builder);
-        }       
+
+            // Сийдване на ресторант и капацитет
+            SeedData(builder);
+        }
+        private void SeedData(ModelBuilder builder)
+        {
+            // Сийдване на ресторанта
+            var restaurants = new List<Restaurant>
+            {
+                new Restaurant
+                {
+                    Id = Guid.Parse("3614f373-2355-4e6c-96e5-542f0689752f"),
+                    Name = "Restaurant Italy",
+                    Address = "Georgi Georgiev 66",
+                    Description = "Family restaurant with italian food",
+                    StartingTime = new TimeSpan(12, 0, 0),
+                    EndingTime = new TimeSpan(23, 45, 0),
+                    ImageUrl = "https://www.japan-guide.com/g21/2036_family_01.jpg",
+                    Capacity = 100,
+                    CityId = 2,
+                    CategoryId = 1,
+                    OwnerId = Guid.Parse("44e7b2ef-dfa8-45ae-aca9-0b52b9a3df4d")
+                }
+            };
+
+            builder.Entity<Restaurant>().HasData(restaurants);
+
+            // Сийдване на капацитета отделно за всеки ден
+            var capacities = CapacityPerDateSeeder.SeedCapacities(restaurants);
+            builder.Entity<CapacityPerDate>().HasData(capacities);
+        }
     }
 }

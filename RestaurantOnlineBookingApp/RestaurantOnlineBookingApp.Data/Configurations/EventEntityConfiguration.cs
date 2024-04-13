@@ -33,7 +33,7 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
                 Description = "Description for Special Event 1",
                 Price = 50.00m,
                 ImageUrl = "https://www.eventbookings.com/wp-content/uploads/2018/03/event-ideas-for-party-eventbookings.jpg",
-                RestaurantId = Guid.Parse("E681A1DD-B85F-4860-8EB9-CF517E5C4FE8")
+                RestaurantId = Guid.Parse("3614f373-2355-4e6c-96e5-542f0689752f")
             };
             events.Add(@event);
 

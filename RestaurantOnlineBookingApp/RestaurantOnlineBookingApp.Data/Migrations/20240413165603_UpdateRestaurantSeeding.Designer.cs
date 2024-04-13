@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestaurantOnlineBookingApp.Data;
 
@@ -11,9 +12,10 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    partial class RestaurantBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240413165603_UpdateRestaurantSeeding")]
+    partial class UpdateRestaurantSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = new Guid("faf6dc41-ce01-44a9-b63c-0abd2df2d15f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c792f500-76f1-4305-a7b1-563835449943",
+                            ConcurrencyStamp = "251fc4d2-ddab-4312-8e10-b6c130a49507",
                             Email = "kiril@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Kiril",
@@ -249,7 +251,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "kiril@mail.com",
                             NormalizedUserName = "kiril@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELQZVLmdAhBBvLf9yet8113fpnUFcnmEUlv6NdJEhXINCbpqFznfDX+24joLay0cgQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF4SL90XdTmmxNDI0F3boYKJSl9XcAVqgschqGdw2UviDc0EB6fHvmnzhe5141e1ig==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "kiril@mail.com"
@@ -258,7 +260,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = new Guid("8099b56d-7710-415d-9c06-4569082c6758"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "95010be6-6fdc-401c-8029-0e90c112d7d8",
+                            ConcurrencyStamp = "342b2961-cdb5-48e6-ae8f-a9104841a425",
                             Email = "ivan@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Ivan",
@@ -266,7 +268,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ivan@mail.com",
                             NormalizedUserName = "ivan@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFVJSdERBhZSXe7R7YP9WdkoUxBesOAa9QBNPkQjg3EmrYSX3LFCR5xV/LzhaEQ2GQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEADJi9TDXOawx/EleRAmz3pduJoU763MyVsMKFYmCLGhvilHT//QmeDFIb87b4F3gQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "ivan@mail.com"
@@ -906,7 +908,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("26b62ad8-c022-4864-b6ff-0b9cd0ca0d22"),
+                            Id = new Guid("773df392-6ed5-4d0c-9964-6b50b537c54f"),
                             Date = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Description for Special Event 1",
                             ImageUrl = "https://www.eventbookings.com/wp-content/uploads/2018/03/event-ideas-for-party-eventbookings.jpg",
@@ -959,6 +961,15 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             ImageUrl = "https://www.simplyrecipes.com/thmb/KE6iMblr3R2Db6oE8HdyVsFSj2A=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-3-1024x682-583b275444104ef189d693a64df625da.jpg",
                             Name = "Pizza Peperoni",
                             Price = 10.50m,
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Chinese chicken noodles with eggs and onion",
+                            ImageUrl = "https://sinfullyspicy.com/wp-content/uploads/2023/01/1200-by-1200-images-5-500x375.jpg",
+                            Name = "Chicken Noodles",
+                            Price = 7.50m,
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
@@ -1060,9 +1071,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1242,7 +1251,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("CapacityPerDates")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
@@ -1264,7 +1273,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Meals")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Restaurant");
                 });
@@ -1296,13 +1305,13 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Category", "Category")
                         .WithMany("Restaurants")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.City", "City")
                         .WithMany("Restaurants")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
@@ -1312,7 +1321,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Owner", "Owner")
                         .WithMany("OwnedRestaurants")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
