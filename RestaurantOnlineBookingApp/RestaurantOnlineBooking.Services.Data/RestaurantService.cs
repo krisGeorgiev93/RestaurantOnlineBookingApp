@@ -371,6 +371,17 @@
             await dBContext.SaveChangesAsync();
         }
 
+        public async Task RemoveRestaurantFromFavoritesAsync(string userId, Guid restaurantId)
+        {
+            var userFavorite = await dBContext.UserFavoriteRestaurants
+                                               .FirstOrDefaultAsync(x => x.UserId == new Guid(userId) && x.RestaurantId == restaurantId);
+            if (userFavorite != null)
+            {
+                dBContext.UserFavoriteRestaurants.Remove(userFavorite);
+                await dBContext.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId)
         {
             var favoriteRestaurantIds = await dBContext.UserFavoriteRestaurants
@@ -384,7 +395,7 @@
 
             return favoriteRestaurants;
         }
-
+                
         public async Task AddPhotoToRestaurantAsync(string restaurantId, Photo photo)
         {
             // Проверяваме дали ресторантът съществува
@@ -425,6 +436,7 @@
             return await dBContext.UserFavoriteRestaurants
                 .AnyAsync(uf => uf.UserId == new Guid(userId) && uf.RestaurantId.ToString() == restaurantId);
         }
+       
     }
 
 }

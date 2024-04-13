@@ -453,6 +453,28 @@
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RemoveRestaurantFromFavorites(Guid restaurantId)
+        {
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                if (!Guid.TryParse(userId, out Guid parsedUserId))
+                {
+                    return BadRequest("Invalid user ID.");
+                }
+
+                await _restaurantService.RemoveRestaurantFromFavoritesAsync(userId, restaurantId);
+
+                return RedirectToAction("Favorites", "Restaurant");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while removing restaurant from favorites: {ex.Message}");
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Favorites()
         {
