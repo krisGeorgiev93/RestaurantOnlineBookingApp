@@ -385,7 +385,7 @@
         public async Task<IEnumerable<Restaurant>> GetFavoriteRestaurantsAsync(string userId)
         {
             var favoriteRestaurantIds = await dBContext.UserFavoriteRestaurants
-                .Where(uf => uf.UserId == new Guid(userId))
+                .Where(uf => uf.UserId == new Guid(userId) && uf.Restaurant.IsActive)
                 .Select(uf => uf.RestaurantId)
                 .ToListAsync();
 

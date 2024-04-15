@@ -43,7 +43,9 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
 
         public async Task<IActionResult> RestaurantCount()
         {
-            int restaurantCount = await dbContext.Restaurants.CountAsync();
+            int restaurantCount = await dbContext.Restaurants
+                .Where(r=> r.IsActive)
+                .CountAsync();
             ViewBag.RestaurantCount = restaurantCount;
             return View("RestaurantCount"); 
         }
