@@ -71,7 +71,7 @@
             <p>Description: <b>@Model.Description</b></p>
             <p>Opening Time: <b>@Model.OpeningTime.ToString(@"hh\:mm")</b></p> @* formated TimeSpan *@
             <p>Closing Time: <b>@Model.ClosingTime.ToString(@"hh\:mm")</b></p>
-            <p>Rating: <b>@Model.Rating</b></p>
+            <p>Rating: <b>@Model.Rating.ToString("0.00")</b></p>
             <p>Capacity: <b>@Model.Capacity</b></p>
             <p>Category: <b>@Model.Category</b></p>
             <div class="card" style="width: 18rem;">
