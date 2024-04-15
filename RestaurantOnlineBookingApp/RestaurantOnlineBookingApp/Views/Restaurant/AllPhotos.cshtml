@@ -10,7 +10,7 @@
     bool isUserOwner = await OwnerService.OwnerExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 }
 <h2>Restaurant Photos</h2>
-<div>
+<div style="margin-bottom: 20px;">
     <a href="@Url.Action("Details", "Restaurant", new { id = ViewBag.RestaurantId })" class="btn btn-secondary">Back to Restaurant Details</a>
 </div>
 @if (!Model.Any())

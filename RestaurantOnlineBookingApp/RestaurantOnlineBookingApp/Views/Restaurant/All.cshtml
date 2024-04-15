@@ -78,8 +78,8 @@
            asp-route-RestaurantsPerPage="@Model.RestaurantsPerPage"><<[Previous Page]</a>
     </div>
     @{
-        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
-        !Model.Restaurants.Any() || Model.Restaurants.Count() < Model.RestaurantsPerPage;
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Restaurants.Any() || 
+        Model.Restaurants.Count() < Model.RestaurantsPerPage;
     }
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-primary

@@ -23,7 +23,7 @@
         {
             // build expression tree only with 1 query
 
-            IQueryable<Restaurant> restaurantQuery = dBContext.Restaurants.AsQueryable();
+            IQueryable<Restaurant> restaurantQuery = dBContext.Restaurants.Where(r=> r.IsActive).AsQueryable();
 
 
             if (!string.IsNullOrWhiteSpace(model.Category))

@@ -31,7 +31,7 @@
         private static void SeedAdminUser(UserManager<AppUser> userManager)
         {
             // Check if the admin user already exists
-            if (userManager.FindByEmailAsync("admin@test.com").Result == null)
+            if (userManager.FindByEmailAsync("admintest@mail.com").Result == null)
             {
                 // Create a new admin user
                 var user = new AppUser
