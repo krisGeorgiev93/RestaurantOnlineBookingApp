@@ -50,11 +50,15 @@
                 return RedirectToAction("Mine", "Booking");
             }
 
+            // Проверка дали гостът вече е направил ревю
+            var hasReviewed = await _reviewService.HasReviewed(restaurantId.ToString(), guestId.ToString());
+            if (hasReviewed)
+            {
+                this.TempData[ErrorMessage] = "You have already reviewed this restaurant.";
+                return RedirectToAction("MyReviews", "Review");
+            }
 
-            var userEmail = User.Identity.Name;
-
-            var userFirstName = User.FindFirstValue(ClaimTypes.GivenName);
-            var userLastName = User.FindFirstValue(ClaimTypes.Surname);
+            var userEmail = User.Identity.Name;       
 
             var model = new AddReviewViewModel
             {
@@ -79,7 +83,7 @@
                 // Set the GuestId based on the current user
                 var userId = Guid.Parse(User.GetId());
                 model.GuestId = userId;
-
+              
                 await _reviewService.AddReviewAsync(model);
 
                 return RedirectToAction("Details", "Restaurant", new { id = model.RestaurantId });

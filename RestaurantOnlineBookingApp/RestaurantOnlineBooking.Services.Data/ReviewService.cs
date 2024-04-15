@@ -89,9 +89,11 @@
             return reviews;
         }
 
-        //private bool IsValidModel(AddReviewViewModel model)
-        //{
-        //    return model != null && model.Rating > 0; 
-        //}
+
+        public async Task<bool> HasReviewed(string restaurantId, string guestId)
+        {
+            return await _dbContext.Reviews.AnyAsync(r => r.RestaurantId.ToString() == restaurantId && r.GuestId.ToString() == guestId);
+        }
+       
     }
 }
