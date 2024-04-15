@@ -67,6 +67,12 @@ namespace RestaurantOnlineBookingApp.Web.Controllers
                 return View(model);
             }
 
+            if (model.Date < DateTime.Today)
+            {
+                ModelState.AddModelError("Date", "Event date cannot be in the past.");
+                return View(model);
+            }
+
             var ownerId = Guid.Parse(User.GetId());
             var restaurantId = model.RestaurantId.ToString();
 

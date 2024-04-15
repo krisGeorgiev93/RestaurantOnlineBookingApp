@@ -26,6 +26,19 @@ namespace RestaurantOnlineBookingApp.Common
 
         }
 
+        public static class Booking
+        {
+            public const int FirstNameMaxLength = 30;
+            public const int FirstNameMinLength = 2;
+            public const int LastNameMaxLength = 30;
+            public const int LastNameMinLength = 2;
+            public const int MaxPhoneLength = 14;
+            public const int MinPhoneLength = 10;
+            public const int EmailMaxLength = 30;
+            public const int EmailMinLength = 5;
+            public const int NumberOfGuestsMaxValue = 40;
+            public const int NumberOfGuestsMinValue = 1;
+        }
         public static class Category
         {
             public const int NameMinLength = 2;
