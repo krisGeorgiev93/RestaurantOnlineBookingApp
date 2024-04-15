@@ -33,7 +33,6 @@
                 return this.Error();
             }
 
-            // Проверка дали потребителят е собственик на ресторанта
             bool isOwner = await this._ownerService.HasRestaurantWithIdAsync(userId, restaurantId.ToString());
 
             if (isOwner)
@@ -42,36 +41,28 @@
                 return RedirectToAction("Mine", "Restaurant");
             }
 
-            // Проверка за наличие на валидна резервация с минала дата
             bool hasValidReservation = await _bookingService.HasValidReservationAsync(restaurantId, guestId);
 
-            // Проверка дали гостът има валидна резервация с минала дата
             if (!hasValidReservation)
             {
-                // Ако няма валидна резервация с минала дата, върнете грешка
+                // Ако няма валидна резервация с минала дата
                 this.TempData[ErrorMessage] = "You must have a valid reservation with a past date to leave a review.";
                 return RedirectToAction("Mine", "Booking");
             }
 
 
-            // Извличане на потребителския имейл от аутентикационния сервиз
             var userEmail = User.Identity.Name;
 
-            // Извличане на първото и последното име на потребителя от клеймовете
             var userFirstName = User.FindFirstValue(ClaimTypes.GivenName);
             var userLastName = User.FindFirstValue(ClaimTypes.Surname);
 
-            // Създаване на модела
             var model = new AddReviewViewModel
             {
                 GuestId = guestId,
                 RestaurantId = restaurantId,
-                GuestEmail = userEmail,
-                FirstName = userFirstName, 
-                LastName = userLastName 
+                GuestEmail = userEmail,               
             };
 
-            // Връщате изгледа, който показва формата за добавяне на ревюто, като предоставяте модела като данни за изгледа.
             return View(model);
         }
 

@@ -37,8 +37,8 @@
             if (restaurant == null)
             {
                 throw new ArgumentException("Invalid restaurant ID");
-            }          
-           
+            }
+
             TimeSpan reservedTime;
             if (!TimeSpan.TryParse(model.ReservedTime, out reservedTime))
             {
@@ -60,9 +60,9 @@
             // Проверка за наличност на капацитета за конкретната дата
             var capacityForDate = await this.dBContext.CapacitiesParDate
                 .FirstOrDefaultAsync(c => c.RestaurantId == restaurantGuid && c.Date == bookingDate);
-                       
+
             var booking = new Booking
-            {                
+            {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
@@ -87,8 +87,8 @@
         {
             var booking = await this.dBContext
                   .Bookings
-                  .Include(b=> b.Restaurant)
-                  .FirstOrDefaultAsync(b=> b.Id.ToString() == bookingId);
+                  .Include(b => b.Restaurant)
+                  .FirstOrDefaultAsync(b => b.Id.ToString() == bookingId);
 
             if (booking == null)
             {
@@ -110,7 +110,7 @@
 
         public async Task<BookingFormViewModel> GetBookingByIdAsync(string bookingId)
         {
-            var booking = await this.dBContext.Bookings.FirstAsync(b=> b.Id.ToString() == bookingId);
+            var booking = await this.dBContext.Bookings.FirstAsync(b => b.Id.ToString() == bookingId);
 
             if (booking == null)
             {
@@ -118,14 +118,14 @@
             }
 
             var bookingModel = new BookingFormViewModel()
-            {                
+            {
                 FirstName = booking.FirstName,
                 LastName = booking.LastName,
                 PhoneNumber = booking.PhoneNumber,
                 Email = booking.Email,
                 ReservedTime = booking.ReservedTime.ToString(),
                 BookingDate = booking.BookingDate.ToString(),
-                NumberOfGuests = booking.NumberOfGuests,              
+                NumberOfGuests = booking.NumberOfGuests,
 
             };
 
@@ -210,7 +210,9 @@
             }
 
             // Проверка дали резервацията е с минала дата
-            if (reservation.BookingDate < currentDate)
+            if (reservation.BookingDate.Date < currentDate.Date ||
+                (reservation.BookingDate.Date == currentDate.Date && 
+                reservation.ReservedTime < currentDate.TimeOfDay))
             {
                 return true;
             }

@@ -40,13 +40,13 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             return View(users);
         }
 
+
         public async Task<IActionResult> RestaurantCount()
         {
             int restaurantCount = await dbContext.Restaurants.CountAsync();
             ViewBag.RestaurantCount = restaurantCount;
             return View("RestaurantCount"); 
         }
-
         public async Task<IActionResult> UserCount()
         {
             int userCount = await dbContext.Users.CountAsync();
