@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RestaurantOnlineBookingApp.Web.ViewModels.Category
+﻿namespace RestaurantOnlineBookingApp.Web.ViewModels.Category
 {
+    using System.ComponentModel.DataAnnotations;
+    using static Common.ValidationConstants.Category;
     public class SelectCategoryFormModel
-    {
-        //receive this info from DB and initialize it in the form
+    {        
         public int Id { get; set; }
 
+        [MinLength(NameMinLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
 

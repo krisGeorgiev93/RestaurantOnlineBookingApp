@@ -18,12 +18,9 @@ namespace RestaurantOnlineBookingApp.Common
             public const int AddressMaxLength = 140;
 
             public const int DescriptionMinLength = 10;
-            public const int DescriptionMaxLength = 150;
+            public const int DescriptionMaxLength = 400;
 
             public const int ImageUrlMaxLength = 2000;
-
-
-
         }
 
         public static class Booking
@@ -70,13 +67,13 @@ namespace RestaurantOnlineBookingApp.Common
             public const int NameMaxLength = 50;
             public const int DescriptionMinLength = 5;
             public const int DescriptionMaxLength = 500;
-            public const string PriceMinValue = "0";
-            public const string PriceMaxValue = "6000";
+            public const string PriceMinValue = "0.10";
+            public const string PriceMaxValue = "1000";
         }
 
         public static class Owner
         {
-            public const int PhoneNumberMinLength = 6;
+            public const int PhoneNumberMinLength = 10;
             public const int PhoneNumberMaxLength = 14;
 
         }
