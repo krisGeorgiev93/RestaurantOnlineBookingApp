@@ -390,6 +390,7 @@
                 .ToListAsync();
 
             var favoriteRestaurants = await dBContext.Restaurants
+                 .Include(r => r.City)
                 .Where(r => favoriteRestaurantIds.Contains(r.Id))
                 .ToListAsync();
 

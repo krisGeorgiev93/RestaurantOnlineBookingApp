@@ -486,7 +486,7 @@
             {
                 Id = r.Id.ToString(),
                 Name = r.Name,
-                Description = r.Description,
+                City = r.City.CityName,
                 ImageUrl = r.ImageUrl,
             });            
             return View(favoriteRestaurantsViewModels);
