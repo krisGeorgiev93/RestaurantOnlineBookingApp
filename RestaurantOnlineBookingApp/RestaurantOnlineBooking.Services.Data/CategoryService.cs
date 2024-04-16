@@ -30,6 +30,13 @@
             return result;
         }
 
+        public async Task<bool> ExistByNameAsync(string categoryName)
+        {
+           bool result = await dBContext.Categories
+                .AnyAsync(c=> c.Name == categoryName);
+            return result;
+        }
+
         public async Task<IEnumerable<SelectCategoryFormModel>> GetAllCategoriesAsync()
         {
             var allCategories = await this.dBContext.Categories

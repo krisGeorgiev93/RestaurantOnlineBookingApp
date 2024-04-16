@@ -1,14 +1,13 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
+﻿namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 {
+    using System.ComponentModel.DataAnnotations;
+    using static Common.ApplicationConstants;
     public class AllRestaurantsQueryModel
     {
         public AllRestaurantsQueryModel()
         {
-            CurrentPage = 1;
-            RestaurantsPerPage = 6;
+            CurrentPage = DefaultPage;
+            RestaurantsPerPage = EntitiesPerPage;
             this.Categories = new HashSet<string>();
             this.Restaurants = new HashSet<RestaurantAllViewModel>();
             this.Cities = new HashSet<string>();
@@ -22,7 +21,7 @@ namespace RestaurantOnlineBookingApp.Web.ViewModels.Restaurant
 
         [Display(Name = "Sort restaurants by")]
 
-        public int TotalRestaurants { get; set; }        
+        public int TotalRestaurants { get; set; }
 
         [Display(Name = "Restaurants On Page")]
         public int RestaurantsPerPage { get; set; }

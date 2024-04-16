@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using RestaurantOnlineBooking.Services.Data;
 using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
+using RestaurantOnlineBookingApp.Web.ViewModels.Category;
 using RestaurantOnlineBookingApp.Web.ViewModels.User;
 using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -19,14 +21,16 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
         private readonly RestaurantBookingDbContext dbContext;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
+        private ICategoryService categoryService;
         public UserController(IUserService userService, IMemoryCache memoryCache,
-            RestaurantBookingDbContext dbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+            RestaurantBookingDbContext dbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> roleManager, ICategoryService categoryService)
         {
             this.userService = userService;
             this.memoryCache = memoryCache;
             this.dbContext = dbContext;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.categoryService = categoryService;
         }
 
         [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client, NoStore = false)]
@@ -151,5 +155,45 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             this.TempData[SuccessMessage] = "Admin role has been successfully removed from the user.";
             return RedirectToAction("RemoveAdmin");
         }
+
+        public IActionResult AllCategories()
+        {
+            var categories = dbContext.Categories.ToList();
+            return View(categories);
+        }
+
+        public IActionResult AddCategory()
+        {
+            return View();
+        }       
+
+        [HttpPost]
+        public async Task<IActionResult> AddCategory(AddCategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Проверка дали категорията вече съществува
+            bool categoryExists = await categoryService.ExistByNameAsync(model.Name);
+            if (categoryExists)
+            {
+                this.TempData[ErrorMessage] = "Category with this name already exists.";
+                return View(model);
+            }
+
+            var category = new Category
+            {
+                Name = model.Name
+            };
+
+            dbContext.Categories.Add(category);
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction("AllCategories", "User"); 
+        }
+
+      
     }
 }

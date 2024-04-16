@@ -1,0 +1,14 @@
+﻿@using RestaurantOnlineBookingApp.Web.ViewModels.Category
+@model AddCategoryViewModel
+
+
+<h1>Add Category</h1>
+
+<form asp-controller="User" asp-action="AddCategory" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Category Name:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</form>

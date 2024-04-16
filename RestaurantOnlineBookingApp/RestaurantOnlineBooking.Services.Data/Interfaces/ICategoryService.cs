@@ -8,6 +8,9 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<bool>ExistByIdAsync(int id);
 
+        Task<bool> ExistByNameAsync(string categoryName);
+
+
         Task<IEnumerable<string>> AllCategoryNamesAsync();
     }
 }

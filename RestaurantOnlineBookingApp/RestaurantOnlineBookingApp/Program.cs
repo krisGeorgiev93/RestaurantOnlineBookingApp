@@ -26,7 +26,6 @@ namespace RestaurantOnlineBookingApp.Web
                 options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase"); ;
                 options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-
             })
              .AddRoles<IdentityRole<Guid>>()
              .AddEntityFrameworkStores<RestaurantBookingDbContext>();
