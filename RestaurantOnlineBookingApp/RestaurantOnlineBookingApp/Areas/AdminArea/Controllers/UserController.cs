@@ -194,6 +194,29 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             return RedirectToAction("AllCategories", "User"); 
         }
 
-      
+        [HttpPost]
+        public async Task<IActionResult> RemoveCategory(int id)
+        {
+            var category = await dbContext.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            // Проверка за наличие на ресторанти със съответната категория
+            var restaurantsWithCategory = await dbContext.Restaurants.AnyAsync(r => r.CategoryId == id);
+            if (restaurantsWithCategory)
+            {
+                TempData[ErrorMessage] = "Cannot delete category because there are restaurants associated with it.";
+                return RedirectToAction("AllCategories", "User");
+            }
+
+            dbContext.Categories.Remove(category);
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction("AllCategories", "User");
+        }
+
+
     }
 }
