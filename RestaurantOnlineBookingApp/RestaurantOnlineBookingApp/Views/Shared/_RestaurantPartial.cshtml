@@ -27,7 +27,7 @@
         <div class="card-body text-center">
             <h4>@Model.Name</h4>
             <h6>City: <b>@Model.City</b></h6>
-            <h6>Address: <b>@Model.Address</b></h6>                
+            <h6>Rating: <b>@Model.Rating.ToString("0.00")</b></h6>
             <br />
             @if (isUserOwner && isUserOwnerOfTheRestaurant)
             {

@@ -217,6 +217,5 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             return RedirectToAction("AllCategories", "User");
         }
 
-
     }
 }
