@@ -1,0 +1,33 @@
+﻿@using RestaurantOnlineBookingApp.Data.Models
+@model List<City>
+
+<h1>All Cities</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="color: white;">Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var city in Model)
+        {
+            <tr>
+                <td style="color: white;">@city.CityName</td>
+                <td>
+                    <form method="post" asp-controller="User" asp-action="RemoveCity">
+                        <input type="hidden" name="id" value="@city.Id" />
+                        <button type="submit" class="btn btn-danger">Delete City</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="AddCity" class="btn btn-success">Add City</a>
+</div>
+
+

@@ -7,6 +7,7 @@ using RestaurantOnlineBooking.Services.Data.Interfaces;
 using RestaurantOnlineBookingApp.Data;
 using RestaurantOnlineBookingApp.Data.Models;
 using RestaurantOnlineBookingApp.Web.ViewModels.Category;
+using RestaurantOnlineBookingApp.Web.ViewModels.City;
 using RestaurantOnlineBookingApp.Web.ViewModels.User;
 using static RestaurantOnlineBookingApp.Common.ApplicationConstants;
 using static RestaurantOnlineBookingApp.Common.NotificationMessages;
@@ -22,8 +23,11 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
         private ICategoryService categoryService;
+        private ICityService cityService;
         public UserController(IUserService userService, IMemoryCache memoryCache,
-            RestaurantBookingDbContext dbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> roleManager, ICategoryService categoryService)
+            RestaurantBookingDbContext dbContext, 
+            UserManager<AppUser> userManager, RoleManager<IdentityRole<Guid>> roleManager,
+            ICategoryService categoryService, ICityService cityService)
         {
             this.userService = userService;
             this.memoryCache = memoryCache;
@@ -31,6 +35,7 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.categoryService = categoryService;
+            this.cityService = cityService;
         }
 
         [ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client, NoStore = false)]
@@ -156,12 +161,14 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             return RedirectToAction("RemoveAdmin");
         }
 
+        [HttpGet]
         public IActionResult AllCategories()
         {
             var categories = dbContext.Categories.ToList();
             return View(categories);
         }
 
+        [HttpGet]
         public IActionResult AddCategory()
         {
             return View();
@@ -215,6 +222,69 @@ namespace RestaurantOnlineBookingApp.Web.Areas.AdminArea.Controllers
             await dbContext.SaveChangesAsync();
 
             return RedirectToAction("AllCategories", "User");
+        }
+
+        [HttpGet]
+        public IActionResult AddCity()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCity(AddCityViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Проверка дали града вече съществува
+            bool cityExists = await cityService.ExistByNameAsync(model.Name);
+            if (cityExists)
+            {
+                this.TempData[ErrorMessage] = "City with this name already exists.";
+                return View(model);
+            }
+
+            var city = new City
+            {
+                CityName = model.Name
+            };
+
+            dbContext.Cities.Add(city);
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction("AllCities", "User");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveCity(int id)
+        {
+            var city = await dbContext.Cities.FindAsync(id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            // Проверка за наличие на ресторанти във съответния град
+            var restaurantsInThisCity = await dbContext.Restaurants.AnyAsync(r => r.CityId == id);
+            if (restaurantsInThisCity)
+            {
+                TempData[ErrorMessage] = "Cannot delete city because there are restaurants associated with it.";
+                return RedirectToAction("AllCities", "User");
+            }
+
+            dbContext.Cities.Remove(city);
+            await dbContext.SaveChangesAsync();
+
+            return RedirectToAction("AllCities", "User");
+        }
+
+        [HttpGet]
+        public IActionResult AllCities()
+        {
+            var cities = dbContext.Cities.ToList();
+            return View(cities);
         }
 
     }

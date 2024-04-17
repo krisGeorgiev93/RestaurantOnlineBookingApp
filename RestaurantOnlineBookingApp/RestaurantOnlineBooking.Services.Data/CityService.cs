@@ -23,6 +23,13 @@
             return allCitiesNames;
         }
 
+        public async Task<bool> ExistByNameAsync(string cityName)
+        {
+            bool result = await dBContext.Cities
+                .AnyAsync(c => c.CityName == cityName);
+            return result;
+        }
+
         public async Task<IEnumerable<SelectCityFormModel>> GetAllCitiesAsync()
         {
             var allCities = await this.dBContext.Cities

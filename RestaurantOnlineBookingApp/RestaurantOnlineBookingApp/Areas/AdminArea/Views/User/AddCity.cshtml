@@ -1,0 +1,16 @@
+﻿@using RestaurantOnlineBookingApp.Web.ViewModels.City
+@model AddCityViewModel
+
+
+<h1>Add City</h1>
+
+<form asp-controller="User" asp-action="AddCity" method="post">
+    <div class="form-group">
+        <label asp-for="Name">City Name:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div style="margin-top: 10px;">
+    <button type="submit" class="btn btn-primary">Add City</button>
+    </div>
+</form>

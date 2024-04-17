@@ -8,6 +8,8 @@ namespace RestaurantOnlineBooking.Services.Data.Interfaces
 
         Task<IEnumerable<string>> AllCitiesNamesAsync();
 
+        Task<bool> ExistByNameAsync(string cityName);
+
 
     }
 }
