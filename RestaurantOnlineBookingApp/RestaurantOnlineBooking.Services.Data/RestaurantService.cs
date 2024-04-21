@@ -415,8 +415,7 @@
         }
 
         public async Task<IEnumerable<Photo>> GetRestaurantPhotosAsync(string restaurantId)
-        {
-            // Вземете снимките за ресторанта с предоставения идентификатор
+        {            
             return await dBContext.Photos
                 .Where(p => p.RestaurantId.ToString() == restaurantId)
                 .ToListAsync();

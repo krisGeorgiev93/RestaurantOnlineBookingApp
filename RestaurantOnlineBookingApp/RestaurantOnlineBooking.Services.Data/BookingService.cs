@@ -95,7 +95,6 @@
                 throw new InvalidOperationException("Booking not found.");
             }
             // Increase the restaurant's capacity by the number of guests from the deleted booking
-            // booking.Restaurant.Capacity += booking.NumberOfGuests;
             var capacityForDate = await this.dBContext.CapacitiesParDate
                 .FirstOrDefaultAsync(c => c.RestaurantId == booking.RestaurantId && c.Date == booking.BookingDate);
             if (capacityForDate != null)

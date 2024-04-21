@@ -67,8 +67,8 @@ namespace RestaurantOnlineBookingApp.Common
             public const int NameMaxLength = 50;
             public const int DescriptionMinLength = 5;
             public const int DescriptionMaxLength = 500;
-            public const string PriceMinValue = "0.10";
-            public const string PriceMaxValue = "1000";
+            public const decimal PriceMinValue = 0.10m;
+            public const decimal PriceMaxValue = 1000m;
         }
 
         public static class Owner

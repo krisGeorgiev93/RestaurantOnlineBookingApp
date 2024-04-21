@@ -20,7 +20,7 @@
         [Required(ErrorMessage = "Please select an image.")]
         public IFormFile Image { get; set; } = null!;
 
-        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
+        [Range((double)PriceMinValue, (double)PriceMaxValue, ErrorMessage = "The price must be between {1} and {2}.")]
         [Display(Name = "Meal Price")]
         public decimal Price { get; set; }
 
