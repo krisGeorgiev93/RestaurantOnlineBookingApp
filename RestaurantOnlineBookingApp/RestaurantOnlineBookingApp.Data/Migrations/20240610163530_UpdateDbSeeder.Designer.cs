@@ -12,8 +12,8 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    [Migration("20240322210021_AddFavoritesRestaurantsTable")]
-    partial class AddFavoritesRestaurantsTable
+    [Migration("20240610163530_UpdateDbSeeder")]
+    partial class UpdateDbSeeder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,6 +237,42 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("faf6dc41-ce01-44a9-b63c-0abd2df2d15f"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "380bd0dd-8bdd-426b-b056-2e8a4c249227",
+                            Email = "kiril@mail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Kiril",
+                            LastName = "Ivanov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "kiril@mail.com",
+                            NormalizedUserName = "kiril@mail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGPquHZMA7zfzgsu5fxR9Erw3QZOl0JEJKtLUlLsISAKxYofRnve8IMbbfYcpMLqIQ==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "kiril@mail.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("8099b56d-7710-415d-9c06-4569082c6758"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1e2698ba-910c-4afd-a1e0-db17656bcbff",
+                            Email = "ivan@mail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Ivan",
+                            LastName = "Georgiev",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ivan@mail.com",
+                            NormalizedUserName = "ivan@mail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKke0ih0OggX8odq8jq++ZHAekd61t4qHu7BZIs3HTs06Pc3EIvoNdI5lhYENA/TmQ==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "ivan@mail.com"
+                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Booking", b =>
@@ -307,6 +343,428 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("CapacitiesParDate");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 12, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 21, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 6, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 9, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 12, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 21, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 7, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Capacity = 100,
+                            Date = new DateTime(2024, 8, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
+                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Category", b =>
@@ -382,10 +840,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
@@ -394,26 +848,22 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CityName = "Sofia",
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Sofia_333.jpg/800px-Sofia_333.jpg"
+                            CityName = "Sofia"
                         },
                         new
                         {
                             Id = 2,
-                            CityName = "Plovdiv",
-                            ImageUrl = "https://i.guim.co.uk/img/media/1e6a94ecca5c1df6696f6673fe657e5d16819933/366_620_5634_3380/master/5634.jpg?width=1900&dpr=2&s=none"
+                            CityName = "Plovdiv"
                         },
                         new
                         {
                             Id = 3,
-                            CityName = "Varna",
-                            ImageUrl = "https://content.r9cdn.net/rimg/dimg/e5/ce/ad8df304-city-12778-1656216d7ab.jpg?width=2160&height=1215&xhint=2049&yhint=1054&crop=true&outputtype=webp"
+                            CityName = "Varna"
                         },
                         new
                         {
                             Id = 4,
-                            CityName = "Burgas",
-                            ImageUrl = "https://www.kayak.co.uk/rimg/himg/33/36/89/expediav2-72370-760be8-606434.jpg?width=2160&height=1215&crop=true&outputtype=webp"
+                            CityName = "Burgas"
                         });
                 });
 
@@ -454,6 +904,19 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("98ff6720-bf93-4fe0-931e-b8fbac9917d9"),
+                            Date = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            Description = "Description for Special Event 1",
+                            ImageUrl = "https://www.eventbookings.com/wp-content/uploads/2018/03/event-ideas-for-party-eventbookings.jpg",
+                            Price = 50.00m,
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f"),
+                            Time = new TimeSpan(0, 18, 0, 0, 0),
+                            Title = "Special Event 1"
+                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Meal", b =>
@@ -498,16 +961,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             ImageUrl = "https://www.simplyrecipes.com/thmb/KE6iMblr3R2Db6oE8HdyVsFSj2A=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-3-1024x682-583b275444104ef189d693a64df625da.jpg",
                             Name = "Pizza Peperoni",
                             Price = 10.50m,
-                            RestaurantId = new Guid("1604f79d-c4a9-4413-9708-76a07686370d")
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "Chinese chicken noodles with eggs and onion",
-                            ImageUrl = "https://sinfullyspicy.com/wp-content/uploads/2023/01/1200-by-1200-images-5-500x375.jpg",
-                            Name = "Chicken Noodles",
-                            Price = 7.50m,
-                            RestaurantId = new Guid("1604f79d-c4a9-4413-9708-76a07686370d")
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
@@ -516,7 +970,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             ImageUrl = "https://tildaricelive.s3.eu-central-1.amazonaws.com/wp-content/uploads/2021/05/04111234/chicken-fried-rice-low-res-2.png",
                             Name = "Chicken Fried Rice",
                             Price = 9.20m,
-                            RestaurantId = new Guid("1604f79d-c4a9-4413-9708-76a07686370d")
+                            RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         });
                 });
 
@@ -539,6 +993,36 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Owners");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("44e7b2ef-dfa8-45ae-aca9-0b52b9a3df4d"),
+                            PhoneNumber = "+359888888888",
+                            UserId = new Guid("faf6dc41-ce01-44a9-b63c-0abd2df2d15f")
+                        });
+                });
+
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Restaurant", b =>
@@ -552,9 +1036,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasMaxLength(140)
                         .HasColumnType("nvarchar(140)");
 
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
@@ -566,8 +1047,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<TimeSpan>("EndingTime")
                         .HasColumnType("time");
@@ -581,7 +1062,9 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -596,15 +1079,32 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("GuestId");
+
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Restaurants");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3614f373-2355-4e6c-96e5-542f0689752f"),
+                            Address = "Georgi Georgiev 66",
+                            Capacity = 100,
+                            CategoryId = 1,
+                            CityId = 2,
+                            Description = "Family restaurant with italian food",
+                            EndingTime = new TimeSpan(0, 23, 45, 0, 0),
+                            ImageUrl = "https://www.japan-guide.com/g21/2036_family_01.jpg",
+                            IsActive = true,
+                            Name = "Restaurant Italy",
+                            OwnerId = new Guid("44e7b2ef-dfa8-45ae-aca9-0b52b9a3df4d"),
+                            StartingTime = new TimeSpan(0, 12, 0, 0, 0)
+                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.RestaurantGuest", b =>
@@ -632,6 +1132,9 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("GuestId")
                         .HasColumnType("uniqueidentifier");
@@ -728,7 +1231,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Bookings")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Guest");
@@ -741,7 +1244,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("CapacityPerDates")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
@@ -763,7 +1266,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Meals")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Restaurant");
                 });
@@ -779,33 +1282,46 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Photo", b =>
+                {
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
+                        .WithMany("Photos")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Restaurant", b =>
                 {
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", null)
-                        .WithMany("FavoriteRestaurants")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Category", "Category")
                         .WithMany("Restaurants")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.City", "City")
                         .WithMany("Restaurants")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
+                        .WithMany("FavoriteRestaurants")
+                        .HasForeignKey("GuestId");
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Owner", "Owner")
                         .WithMany("OwnedRestaurants")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("City");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("Owner");
                 });
@@ -821,7 +1337,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("RestaurantGuests")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Guest");
@@ -840,7 +1356,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Reviews")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Guest");
@@ -853,13 +1369,13 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany()
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
@@ -894,6 +1410,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("CapacityPerDates");
 
                     b.Navigation("Meals");
+
+                    b.Navigation("Photos");
 
                     b.Navigation("RestaurantGuests");
 

@@ -56,7 +56,6 @@ namespace RestaurantOnlineBookingApp.Data.Configurations
             .WithOne(b => b.Restaurant)
             .HasForeignKey(b => b.RestaurantId)
              .OnDelete(DeleteBehavior.NoAction);
-
         }
     }
 }

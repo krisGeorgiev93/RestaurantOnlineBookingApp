@@ -7,7 +7,6 @@ namespace RestaurantOnlineBookingApp.Data
     using RestaurantOnlineBookingApp.Data.Configurations;
     using RestaurantOnlineBookingApp.Data.Models;
     using System.Reflection;
-    using System.Reflection.Emit;
 
     public class RestaurantBookingDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {

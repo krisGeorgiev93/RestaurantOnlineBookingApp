@@ -241,7 +241,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = new Guid("faf6dc41-ce01-44a9-b63c-0abd2df2d15f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c792f500-76f1-4305-a7b1-563835449943",
+                            ConcurrencyStamp = "380bd0dd-8bdd-426b-b056-2e8a4c249227",
                             Email = "kiril@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Kiril",
@@ -249,7 +249,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "kiril@mail.com",
                             NormalizedUserName = "kiril@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELQZVLmdAhBBvLf9yet8113fpnUFcnmEUlv6NdJEhXINCbpqFznfDX+24joLay0cgQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGPquHZMA7zfzgsu5fxR9Erw3QZOl0JEJKtLUlLsISAKxYofRnve8IMbbfYcpMLqIQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "kiril@mail.com"
@@ -258,7 +258,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = new Guid("8099b56d-7710-415d-9c06-4569082c6758"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "95010be6-6fdc-401c-8029-0e90c112d7d8",
+                            ConcurrencyStamp = "1e2698ba-910c-4afd-a1e0-db17656bcbff",
                             Email = "ivan@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Ivan",
@@ -266,7 +266,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ivan@mail.com",
                             NormalizedUserName = "ivan@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFVJSdERBhZSXe7R7YP9WdkoUxBesOAa9QBNPkQjg3EmrYSX3LFCR5xV/LzhaEQ2GQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKke0ih0OggX8odq8jq++ZHAekd61t4qHu7BZIs3HTs06Pc3EIvoNdI5lhYENA/TmQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "ivan@mail.com"
@@ -347,420 +347,420 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         {
                             Id = 1,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 2,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 3,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 4,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 13, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 5,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 6,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 7,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 8,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 17, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 9,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 10,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 11,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 12,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 13,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 14,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 15,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 24, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 16,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 17,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 18,
                             Capacity = 100,
-                            Date = new DateTime(2024, 4, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 19,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 28, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 20,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 29, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 21,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 6, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 22,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 23,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 24,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 25,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 26,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 27,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 9, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 28,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 29,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 30,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 12, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 9, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 31,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 32,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 33,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 12, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 34,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 13, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 35,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 14, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 36,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 15, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 37,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 19, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 38,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 17, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 39,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 21, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 40,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 19, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 41,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 42,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 43,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 44,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 45,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 46,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 25, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 47,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 26, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 48,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 49,
                             Capacity = 100,
-                            Date = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 28, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 50,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 29, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 51,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 30, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 52,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 7, 31, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 53,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 1, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 54,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 5, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 2, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 55,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 6, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 56,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 4, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 57,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 5, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 58,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 9, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 6, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 59,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         },
                         new
                         {
                             Id = 60,
                             Capacity = 100,
-                            Date = new DateTime(2024, 6, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            Date = new DateTime(2024, 8, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             RestaurantId = new Guid("3614f373-2355-4e6c-96e5-542f0689752f")
                         });
                 });
@@ -906,8 +906,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("26b62ad8-c022-4864-b6ff-0b9cd0ca0d22"),
-                            Date = new DateTime(2024, 4, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("98ff6720-bf93-4fe0-931e-b8fbac9917d9"),
+                            Date = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local),
                             Description = "Description for Special Event 1",
                             ImageUrl = "https://www.eventbookings.com/wp-content/uploads/2018/03/event-ideas-for-party-eventbookings.jpg",
                             Price = 50.00m,
@@ -1045,8 +1045,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<TimeSpan>("EndingTime")
                         .HasColumnType("time");

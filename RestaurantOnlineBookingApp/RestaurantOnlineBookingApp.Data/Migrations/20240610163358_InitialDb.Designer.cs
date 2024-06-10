@@ -12,8 +12,8 @@ using RestaurantOnlineBookingApp.Data;
 namespace RestaurantOnlineBookingApp.Data.Migrations
 {
     [DbContext(typeof(RestaurantBookingDbContext))]
-    [Migration("20240227161430_ChangeEntities2")]
-    partial class ChangeEntities2
+    [Migration("20240610163358_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,10 +180,14 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -244,9 +248,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -273,13 +274,35 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
-
                     b.HasIndex("GuestId");
 
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.CapacityPerDate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("CapacitiesParDate");
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Category", b =>
@@ -298,48 +321,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Family"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Buffet"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Coffee house"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Mediterranean"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Desert House"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Chinese"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Indian"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Lebanese"
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.City", b =>
@@ -352,41 +333,12 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.Property<string>("CityName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CityName = "Sofia",
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Sofia_333.jpg/800px-Sofia_333.jpg"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CityName = "Plovdiv",
-                            ImageUrl = "https://i.guim.co.uk/img/media/1e6a94ecca5c1df6696f6673fe657e5d16819933/366_620_5634_3380/master/5634.jpg?width=1900&dpr=2&s=none"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CityName = "Varna",
-                            ImageUrl = "https://content.r9cdn.net/rimg/dimg/e5/ce/ad8df304-city-12778-1656216d7ab.jpg?width=2160&height=1215&xhint=2049&yhint=1054&crop=true&outputtype=webp"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CityName = "Burgas",
-                            ImageUrl = "https://www.kayak.co.uk/rimg/himg/33/36/89/expediav2-72370-760be8-606434.jpg?width=2160&height=1215&crop=true&outputtype=webp"
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Event", b =>
@@ -400,18 +352,30 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("MealId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MealId");
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Events");
                 });
@@ -426,16 +390,22 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("RestaurantId")
+                    b.Property<Guid?>("RestaurantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -466,6 +436,28 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.ToTable("Owners");
                 });
 
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Restaurant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -488,8 +480,8 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<TimeSpan>("EndingTime")
                         .HasColumnType("time");
@@ -503,9 +495,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -524,41 +514,11 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("GuestId");
+
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Restaurants");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dea7370f-5095-4e6e-b112-3995096f8f01"),
-                            Address = "Ivan Ivanov 26",
-                            Capacity = 100,
-                            CategoryId = 2,
-                            CityId = 1,
-                            Description = "Best food from Asia",
-                            EndingTime = new TimeSpan(0, 23, 30, 0, 0),
-                            ImageUrl = "https://cdn.vox-cdn.com/thumbor/Yb1U9a4hdQsC1iDQ_YIhJrqXL6g=/0x0:1024x682/1220x813/filters:focal(431x260:593x422):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/59443047/makinoheader.0.jpg",
-                            IsActive = false,
-                            Name = "Asian Buffet",
-                            OwnerId = new Guid("c4f8569c-1cda-4b0b-94e4-16b44a4631cf"),
-                            StartingTime = new TimeSpan(0, 17, 0, 0, 0)
-                        },
-                        new
-                        {
-                            Id = new Guid("16937200-8a94-4e3b-a787-72051b70efbc"),
-                            Address = "Hristo Botev 76",
-                            Capacity = 50,
-                            CategoryId = 6,
-                            CityId = 1,
-                            Description = "Best chinese in the country",
-                            EndingTime = new TimeSpan(0, 23, 0, 0, 0),
-                            ImageUrl = "https://www.opentable.co.uk/blog/wp-content/uploads/sites/110/2020/02/sweetmandarin1.jpg",
-                            IsActive = false,
-                            Name = "Best Of China",
-                            OwnerId = new Guid("c4f8569c-1cda-4b0b-94e4-16b44a4631cf"),
-                            StartingTime = new TimeSpan(0, 18, 0, 0, 0)
-                        });
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.RestaurantGuest", b =>
@@ -582,13 +542,21 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("GuestId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RestaurantId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ReviewGrade")
+                    b.Property<int>("ReviewRating")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -598,6 +566,21 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.UserFavoritesRestaurants", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "RestaurantId");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("UserFavoriteRestaurants");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -653,10 +636,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Booking", b =>
                 {
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Event", null)
-                        .WithMany("Bookings")
-                        .HasForeignKey("EventId");
-
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
                         .WithMany()
                         .HasForeignKey("GuestId")
@@ -666,7 +645,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Bookings")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Guest");
@@ -674,24 +653,33 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Event", b =>
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.CapacityPerDate", b =>
                 {
-                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Meal", "Meal")
-                        .WithMany()
-                        .HasForeignKey("MealId")
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
+                        .WithMany("CapacityPerDates")
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Meal");
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Event", b =>
+                {
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Meal", b =>
                 {
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Meals")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Restaurant");
                 });
@@ -707,29 +695,46 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Photo", b =>
+                {
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
+                        .WithMany("Photos")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Restaurant", b =>
                 {
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Category", "Category")
                         .WithMany("Restaurants")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.City", "City")
                         .WithMany("Restaurants")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "Guest")
+                        .WithMany("FavoriteRestaurants")
+                        .HasForeignKey("GuestId");
 
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Owner", "Owner")
                         .WithMany("OwnedRestaurants")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("City");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("Owner");
                 });
@@ -745,7 +750,7 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("RestaurantGuests")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Guest");
@@ -764,12 +769,36 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
                         .WithMany("Reviews")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Guest");
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.UserFavoritesRestaurants", b =>
+                {
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("RestaurantOnlineBookingApp.Data.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.AppUser", b =>
+                {
+                    b.Navigation("FavoriteRestaurants");
                 });
 
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Category", b =>
@@ -782,11 +811,6 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                     b.Navigation("Restaurants");
                 });
 
-            modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Event", b =>
-                {
-                    b.Navigation("Bookings");
-                });
-
             modelBuilder.Entity("RestaurantOnlineBookingApp.Data.Models.Owner", b =>
                 {
                     b.Navigation("OwnedRestaurants");
@@ -796,7 +820,11 @@ namespace RestaurantOnlineBookingApp.Data.Migrations
                 {
                     b.Navigation("Bookings");
 
+                    b.Navigation("CapacityPerDates");
+
                     b.Navigation("Meals");
+
+                    b.Navigation("Photos");
 
                     b.Navigation("RestaurantGuests");
 
